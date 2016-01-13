@@ -1,0 +1,2 @@
+# ig
+Pŕacticas Informática Gráfica
