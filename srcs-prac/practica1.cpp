@@ -58,7 +58,7 @@ Tetraedro::Tetraedro(){
     caras.push_back(Tupla3i(3, 0, 1)); 
 }
 
-unsigned objeto_activo = 0 ; // objeto activo: cubo (0), tetraedro (1), otros....
+unsigned p1_objeto_activo = 0 ; // objeto activo: cubo (0), tetraedro (1), otros....
 Cubo cubo;
 Tetraedro tetraedro;
 
@@ -71,7 +71,7 @@ Tetraedro tetraedro;
 void P1_Inicializar( int argc, char *argv[]){
     Cubo cubo = Cubo();
     Tetraedro tetraedro = Tetraedro();
-    objeto_activo = 0;
+    p1_objeto_activo = 0;
 }
 
 // ---------------------------------------------------------------------
@@ -80,14 +80,14 @@ void P1_Inicializar( int argc, char *argv[]){
 //
 //  - devuelve 'true' si la tecla se usa en esta práctica para cambiar 
 //    entre el cubo, el tetraedro u otros objetos (cambia el valor de
-//    'objeto_activo').
+//    'p1_objeto_activo').
 //  - devuelve 'false' si la tecla no se usa en esta práctica (no ha
 //    cambiado nada)
 
 bool P1_FGE_PulsarTeclaNormal( unsigned char tecla ) {
-    if (tecla == 's'){
-        objeto_activo += 1;
-        objeto_activo %= 2;
+    if (toupper(tecla) == 'O'){
+        p1_objeto_activo += 1;
+        p1_objeto_activo %= 2;
         return true;
     }
         
@@ -100,7 +100,7 @@ bool P1_FGE_PulsarTeclaNormal( unsigned char tecla ) {
 // modo: 0 - puntos, 1 - alambre, 2 - sólido, 3 - sólido ajedrez , >=4 otros....
 
 void P1_DibujarObjetos( unsigned modo ){
-    if (objeto_activo == 0)
+    if (p1_objeto_activo == 0)
         cubo.visualizar (modo);
     else
         tetraedro.visualizar (modo);

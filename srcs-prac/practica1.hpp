@@ -8,7 +8,7 @@
 #ifndef IG_PRACTICA1_HPP
 #define IG_PRACTICA1_HPP
 #include "MallaInd.hpp"
-
+#include <cctype>
 
 class Cubo : public MallaInd{
 public:

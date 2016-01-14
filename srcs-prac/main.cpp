@@ -16,6 +16,7 @@
 
 // includes de archivos en el directorio de trabajo (de las prácticas)
 #include "practica1.hpp"
+#include "practica2.hpp"
 
 // evita la necesidad de escribir std:: 
 using namespace std ;
@@ -56,7 +57,7 @@ int
 
 unsigned
     modo_vis  ,  // modo de visualización (0,1,3,4) 
-    practica_actual ;  // practica actual (cambiable por teclado) (1,2,3,4,5)  
+    practica_activa ;  // practica actual (cambiable por teclado) (1,2,3,4,5)  
 
 // *********************************************************************
 // **
@@ -162,14 +163,17 @@ void LimpiarVentana(){
 // dibuja los objetos de la escena
 
 void DibujarObjetos(){
-    switch( practica_actual ){
+    switch( practica_activa ){
     case 1 : 
         P1_DibujarObjetos( modo_vis ) ; // definido en 'practica1.hpp'
         break ;
         // falta: case 2: ... case 3: ..... case 4: ..... case 5: .....
         //
+    case 2 :
+        P2_DibujarObjetos( modo_vis );
+        break;
     default :
-        cout << "El valor de 'practica_actual' (" << practica_actual  << ") es incorrecto" << endl ;
+        cout << "El valor de 'practica_activa' (" << practica_activa  << ") es incorrecto" << endl ;
         break ;
     }
 }
@@ -231,11 +235,27 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton ){
     case '-' :
         frustum_factor_escala /= 1.05;
         break;
+    case 'P':
+        // Cambiar cuando lleguemos a 4 prácticas
+        practica_activa += 1;
+        practica_activa %= 2;
+        practica_activa += 1;
     default:
         redibujar = false ;
-        switch( practica_actual ) {
+        switch( practica_activa ) {
         case 1 :
             redibujar = P1_FGE_PulsarTeclaNormal( tecla ) ; // true si es necesario redibujar
+            // Cambiar el modo de visualizacion
+            if (toupper(tecla) == 'M'){
+                modo_vis += 1;
+                modo_vis %= 4;
+                redibujar = true;
+            }
+            
+            break ;
+            // falta: case 2, case 3, etc....
+        case 2:
+            redibujar = P2_FGE_PulsarTeclaNormal( tecla ) ; // true si es necesario redibujar
             // Cambiar el modo de visualizacion
             if (toupper(tecla) == 'M'){
                 modo_vis += 1;
@@ -362,7 +382,7 @@ void Inicializa_Vars( ){
     camara_angulo_y = 0.0 ;
 
     // inicializar práctica actual y modo de visualización inicial
-    practica_actual = 1 ;
+    practica_activa = 1 ;
     modo_vis = 1 ;
 }
 
@@ -426,6 +446,9 @@ void Inicializar( int argc, char *argv[] ){
    
     // inicializar práctica 1.
     P1_Inicializar( argc, argv ) ;
+
+    // inicializar práctica 2.
+    P2_Inicializar( argc, argv ) ;
 }
 
 // *********************************************************************
