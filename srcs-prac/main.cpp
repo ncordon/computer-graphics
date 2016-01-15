@@ -237,9 +237,9 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton ){
         break;
     case 'P':
         // Cambiar cuando lleguemos a 4 prácticas
-        practica_activa += 1;
         practica_activa %= 2;
         practica_activa += 1;
+        FGE_Redibujado();
     default:
         redibujar = false ;
         switch( practica_activa ) {
@@ -272,7 +272,7 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton ){
     }
     using namespace std ;
     //cout << "tecla normal....." << frustum_factor_escala << endl ;
-   
+    
     // si se ha cambiado algo, forzar evento de redibujado
     if (redibujar)
         glutPostRedisplay();
@@ -448,7 +448,7 @@ void Inicializar( int argc, char *argv[] ){
     P1_Inicializar( argc, argv ) ;
 
     // inicializar práctica 2.
-    P2_Inicializar( argc, argv ) ;
+    //P2_Inicializar( argc, argv ) ;
 }
 
 // *********************************************************************
