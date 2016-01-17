@@ -99,7 +99,7 @@ MallaRevol::MallaRevol( const char * nombre_arch, unsigned n_perfiles ){
                                         vertices_ply[i*3+1],
                                         -seno * vertices_ply [i*3] + coseno * vertices_ply [i*3+2]
                                         ) );
-            if (i!=0){    
+            if(i!=0){    
                 caras.push_back(Tupla3i( j*n_vertices + i,
                                          ( (j+1) % n_perfiles) * n_vertices + i,
                                          j*n_vertices + i -1
@@ -110,7 +110,7 @@ MallaRevol::MallaRevol( const char * nombre_arch, unsigned n_perfiles ){
                                          ));
                                 
 
-            }
+                                         }
             
         }
     }
@@ -118,13 +118,21 @@ MallaRevol::MallaRevol( const char * nombre_arch, unsigned n_perfiles ){
     vertices.push_back(Tupla3f(0.0, vertices_ply[1], 0.0));
     vertices.push_back(Tupla3f(0.0, vertices_ply[(n_vertices-1)*3+1], 0.0));
 
+    int upper_vertex = vertices.size()-1;
+    int lower_vertex = vertices.size()-2;
+    
+
+
+    // Los separamos en 2 for para que los colores se alternen
     for (int j=0; j < n_perfiles; ++j){
         caras.push_back(Tupla3i( j * n_vertices,
                                  ( (j+1) % n_perfiles) * n_vertices,
-                                 n_vertices+1));
+                                 lower_vertex));
+    }
+    for (int j=0; j < n_perfiles; ++j){
         caras.push_back(Tupla3i( (j+1) * n_vertices-1,
-                                 n_vertices+2,
-                                 ( (j+2) % n_perfiles )*n_vertices - 1
+                                 upper_vertex,
+                                 ( ((j+2)*n_vertices - 1) % (n_perfiles * n_vertices))
                                  ));
     }
                                 
