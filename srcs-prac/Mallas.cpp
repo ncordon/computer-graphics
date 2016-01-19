@@ -95,9 +95,9 @@ MallaRevol::MallaRevol( const char * nombre_arch, unsigned n_perfiles ){
             coseno = cos(2*PI*j/n_perfiles);
             seno = sin(2*PI*j/n_perfiles);
             
-            vertices.push_back(Tupla3f( coseno * vertices_ply [i*3] + seno * vertices_ply [i*3+2],
+            vertices.push_back(Tupla3f( coseno * vertices_ply [i*3] - seno * vertices_ply [i*3+2],
                                         vertices_ply[i*3+1],
-                                        -seno * vertices_ply [i*3] + coseno * vertices_ply [i*3+2]
+                                        seno * vertices_ply [i*3] + coseno * vertices_ply [i*3+2]
                                         ) );
             if(i!=0){    
                 caras.push_back(Tupla3i( j*n_vertices + i,
@@ -114,6 +114,8 @@ MallaRevol::MallaRevol( const char * nombre_arch, unsigned n_perfiles ){
             
         }
     }
+    
+    
     // Metemos la tapa inferior y superior
     vertices.push_back(Tupla3f(0.0, vertices_ply[1], 0.0));
     vertices.push_back(Tupla3f(0.0, vertices_ply[(n_vertices-1)*3+1], 0.0));
