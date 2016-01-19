@@ -6,6 +6,7 @@
 using namespace std;
 
 // Entrada de un nodo. Puede ser un objeto o una transformación
+
 struct EntradaNodo{
     bool es_transformacion;
 
@@ -14,20 +15,33 @@ struct EntradaNodo{
         Matriz4f * matriz;
     }
 
-    NodoEscena( Objeto3D * obj);
-    NodoEscena ( Matriz4f * mat);
+    // Crea el nodo con un objeto 3D
+    EntradaNodo( Objeto3D * obj);
+    // Crea el nodo con una matriz de transformación
+    EntradaNodo( Matriz4f * mat);
+    // Destructor
+    ~EntradaNodo();
 };
 
 
 // Clase nodo del grafo de escena
 
-class Nodo : public Objeto3D{
+class NodoEscena : public Objeto3D{
 protected:
-    stack<EntradaNodo> escena;
+    // Pila de entradas
+    stack<EntradaNodo*> escena;
 public:
-    virtual void visualizar ( ContextoVis & cv);
+    virtual void visualizar ();
 
-    void push (EntradaNodo *entrada);
+    // Introduce una nueva entrada
+    inline void push (EntradaNodo *entrada){
+        escena.push(entrada);
+    }
+    
+    // Saca la última entrada del nodo
+    inline void.pop (){
+        escena.pop();
+    }
 };
 
 #endif
