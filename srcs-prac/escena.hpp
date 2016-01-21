@@ -1,7 +1,7 @@
 #ifndef _ESCENA_h_
 #define _ESCENA_h_
 #include "matrices-tr.hpp"
-#include <stack>
+#include <vector>
 
 using namespace std;
 
@@ -29,7 +29,7 @@ struct EntradaNodo{
 class NodoEscena : public Objeto3D{
 protected:
     // Pila de entradas
-    stack<EntradaNodo*> escena;
+    vector<EntradaNodo*> escena;
 public:
     virtual void visualizar ();
 

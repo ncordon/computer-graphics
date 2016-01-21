@@ -165,15 +165,16 @@ void LimpiarVentana(){
 void DibujarObjetos(){
     switch( practica_activa ){
     case 1 : 
-        P1_DibujarObjetos( modo_vis ) ; // definido en 'practica1.hpp'
+        P1_DibujarObjetos( modo_vis );
         break ;
-        // falta: case 2: ... case 3: ..... case 4: ..... case 5: .....
-        //
     case 2 :
         P2_DibujarObjetos( modo_vis );
         break;
+    case 3 :
+        P3_DibujarObjetos( modo_vis );
+        break;
     default :
-        cout << "El valor de 'practica_activa' (" << practica_activa  << ") es incorrecto" << endl ;
+        cerr << "El valor de 'practica_activa' (" << practica_activa  << ") es incorrecto" << endl ;
         break ;
     }
 }
@@ -237,36 +238,35 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton ){
         break;
     case 'P':
         // Cambiar cuando lleguemos a 4 prácticas
-        practica_activa %= 2;
+        practica_activa %= 3;
         practica_activa += 1;
         FGE_Redibujado();
     default:
-        redibujar = false ;
+        
         switch( practica_activa ) {
+        // Practica 1
         case 1 :
-            redibujar = P1_FGE_PulsarTeclaNormal( tecla ) ; // true si es necesario redibujar
-            // Cambiar el modo de visualizacion
-            if (toupper(tecla) == 'M'){
-                modo_vis += 1;
-                modo_vis %= 4;
-                redibujar = true;
-            }
-            
+            redibujar = P1_FGE_PulsarTeclaNormal( tecla ) ;
             break ;
-            // falta: case 2, case 3, etc....
+            
+        // Practica 2 
         case 2:
-            redibujar = P2_FGE_PulsarTeclaNormal( tecla ) ; // true si es necesario redibujar
-            // Cambiar el modo de visualizacion
+            redibujar = P2_FGE_PulsarTeclaNormal( tecla ) ;
+            break;
+
+        //Practica 3
+        case 3:
+            redibujar = P3_FGE_PulsarTeclaNormal( tecla ) ;
+            break;
+            
+        default :
+            redibujar = false ;
             if (toupper(tecla) == 'M'){
                 modo_vis += 1;
                 modo_vis %= 4;
                 redibujar = true;
             }
             
-            break ;
-            // falta: case 2, case 3, etc....
-        default :
-            redibujar = false ; // la tecla no es de la práctica activa (no es necesario redibujar)
         }
         break ;
     }
