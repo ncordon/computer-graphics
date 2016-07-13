@@ -17,7 +17,7 @@
 // includes de archivos en el directorio de trabajo (de las prácticas)
 #include "practica1.hpp"
 
-// evita la necesidad de escribir std:: 
+// evita la necesidad de escribir std::
 using namespace std ;
 
 // *********************************************************************
@@ -29,25 +29,25 @@ using namespace std ;
 
 // variables que definen la posicion de la camara en coordenadas polares
 
-float 
+float
     camara_angulo_x ,   // angulo de rotación entorno al eje X
     camara_angulo_y ;   // angulo de rotación entorno al eje Y
 
 // ---------------------------------------------------------------------
 // variables que definen el view-frustum (zona visible del mundo)
 
-float 
+float
     frustum_factor_escala ,  // factor de escala homogeneo que se aplica al frustum (sirve para alejar o acercar)
     frustum_ancho ,          // ancho, en coordenadas del mundo
     frustum_dis_del ,        // distancia al plano de recorte delantero (near)
     frustum_dis_tra ;        // distancia al plano de recorte trasero (far)
 
 // ---------------------------------------------------------------------
-// variables que determinan la posicion y tamaño inicial de la ventana 
+// variables que determinan la posicion y tamaño inicial de la ventana
 // (el tamaño se actualiza al cambiar el tamaño durante la ejecución)
 
-int 
-    ventana_pos_x  ,  // posicion (X) inicial de la ventana, en pixels 
+int
+    ventana_pos_x  ,  // posicion (X) inicial de la ventana, en pixels
     ventana_pos_y  ,  // posicion (Y) inicial de la ventana, en pixels
     ventana_tam_x  ,  // ancho inicial y actual de la ventana, en pixels
     ventana_tam_y  ;  // alto inicial actual de la ventana, en pixels
@@ -55,8 +55,8 @@ int
 // ---------------------------------------------------------------------
 
 unsigned
-    modo_vis  ,  // modo de visualización (0,1,3,4) 
-    practica_actual ;  // practica actual (cambiable por teclado) (1,2,3,4,5)  
+    modo_vis  ,  // modo de visualización (0,1,3,4)
+    practica_actual ;  // practica actual (cambiable por teclado) (1,2,3,4,5)
 
 // *********************************************************************
 // **
@@ -67,11 +67,12 @@ unsigned
 
 // fija la transformación de proyeccion (zona visible del mundo == frustum)
 
-void FijarProyeccion(){
+void FijarProyeccion()
+{
     const GLfloat ratioYX = GLfloat( ventana_tam_y )/GLfloat( ventana_tam_x );
-   
+
     CError();
-   
+
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
@@ -84,15 +85,15 @@ void FijarProyeccion(){
            +frustum_dis_del,
            +frustum_dis_tra
            );
-   
 
-    // (2) situar el origen (0,0,0), en mitad del view frustum 
+
+    // (2) situar el origen (0,0,0), en mitad del view frustum
     //     (en la rama negativa del eje Z)
     glTranslatef( 0.0,0.0,-0.5*(frustum_dis_del+frustum_dis_tra));
-   
+
     // (1) aplicar factor de escala
     glScalef( frustum_factor_escala, frustum_factor_escala,  frustum_factor_escala );
-   
+
     CError();
 }
 
@@ -100,7 +101,8 @@ void FijarProyeccion(){
 // ---------------------------------------------------------------------
 // fijar viewport y proyección (viewport ocupa toda la ventana)
 
-void FijarViewportProyeccion(){
+void FijarViewportProyeccion()
+{
     glViewport( 0, 0, ventana_tam_x, ventana_tam_y );
     FijarProyeccion() ;
 }
@@ -108,26 +110,28 @@ void FijarViewportProyeccion(){
 // ---------------------------------------------------------------------
 // fija la transformación de vista (posiciona la camara)
 
-void FijarCamara(){   
+void FijarCamara()
+{
     CError();
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-   
+
     glRotatef(camara_angulo_x,1,0,0);
     glRotatef(camara_angulo_y,0,1,0);
-   
+
     CError();
 }
 
 // ---------------------------------------------------------------------
 // dibuja los ejes utilizando la primitiva grafica de lineas
 
-void DibujarEjes(){
+void DibujarEjes()
+{
     const float long_ejes = 30.0 ;
-   
+
     // establecer modo de dibujo a lineas (podría estar en puntos)
     glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
-   
+
     // dibujar tres segmentos
     glBegin(GL_LINES);
     // eje X, color rojo
@@ -143,28 +147,30 @@ void DibujarEjes(){
     glVertex3f( 0.0, 0.0, -long_ejes );
     glVertex3f( 0.0, 0.0, +long_ejes );
     glEnd();
-   
+
     // bola en el origen, negra
     glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
     glColor3f(0.0,0.0,0.0);
     glutSolidSphere(0.01,8,8);
-   
+
 }
 
 // ---------------------------------------------------------------------
 // asigna el color de fondo actual a todos los pixels de la ventana
 
-void LimpiarVentana(){
+void LimpiarVentana()
+{
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 }
 
 // ---------------------------------------------------------------------
 // dibuja los objetos de la escena
 
-void DibujarObjetos(){
-    switch( practica_actual ){
-    case 1 : 
-        P1_DibujarObjetos( modo_vis ) ; // definido en 'practica1.hpp'
+void DibujarObjetos()
+{
+    switch(practica_actual){
+    case 1 :
+        P1_DibujarObjetos(modo_vis) ; // definido en 'practica1.hpp'
         break ;
         // falta: case 2: ... case 3: ..... case 4: ..... case 5: .....
         //
@@ -181,10 +187,11 @@ void DibujarObjetos(){
 // **
 // *********************************************************************
 
-// F.G. del evento de redibujado (se produce cuando hay que volver a 
+// F.G. del evento de redibujado (se produce cuando hay que volver a
 // dibujar la ventana, tipicamente tras producirse otros eventos)
 
-void FGE_Redibujado(){
+void FGE_Redibujado()
+{
     using namespace std ;
     //cout << "redibujado......" << endl << flush ;
     FijarViewportProyeccion() ; // necesario pues la escala puede cambiar
@@ -198,14 +205,15 @@ void FGE_Redibujado(){
 // ---------------------------------------------------------------------
 // F.G. del evento de cambio de tamaño de la ventana
 
-void FGE_CambioTamano( int nuevoAncho, int nuevoAlto ){
+void FGE_CambioTamano( int nuevoAncho, int nuevoAlto )
+{
     // guardar nuevo tamaño de la ventana
     ventana_tam_x  = nuevoAncho;
     ventana_tam_y  = nuevoAlto ;
-   
+
     // reestablecer frustum, viewport y proyección
     FijarViewportProyeccion();
-   
+
     // forzar un nuevo evento de redibujado, para actualizar ventana
     glutPostRedisplay();
 }
@@ -217,11 +225,16 @@ void FGE_CambioTamano( int nuevoAncho, int nuevoAlto ){
 //       tecla: carácter corresondiente a la tecla (minúscula)
 //       x_raton, y_raton : posición del ratón al pulsar
 
-void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton ){
+void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
+{
     // true si al acabar de procesar el evento resulta que es necesario redibujar
-    
+
     bool redibujar = true ;
     switch (toupper(tecla)){
+    case ' ' :
+        modo_vis += 1;
+        modo_vis %= 4;
+        break;
     case 'Q' :
         exit( 0 );
         break ;
@@ -236,13 +249,6 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton ){
         switch( practica_actual ) {
         case 1 :
             redibujar = P1_FGE_PulsarTeclaNormal( tecla ) ; // true si es necesario redibujar
-            // Cambiar el modo de visualizacion
-            if (toupper(tecla) == 'M'){
-                modo_vis += 1;
-                modo_vis %= 4;
-                redibujar = true;
-            }
-            
             break ;
             // falta: case 2, case 3, etc....
         default :
@@ -252,7 +258,7 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton ){
     }
     using namespace std ;
     //cout << "tecla normal....." << frustum_factor_escala << endl ;
-   
+
     // si se ha cambiado algo, forzar evento de redibujado
     if (redibujar)
         glutPostRedisplay();
@@ -270,7 +276,7 @@ void FGE_PulsarTeclaEspecial( int tecla, int x_raton, int y_raton )
 {
     bool redisp = true ;
     const float da = 5.0 ; // incremento en grados de ángulos de camara
-   
+
     switch ( tecla )
         {
         case GLUT_KEY_LEFT:
@@ -312,37 +318,37 @@ void FGE_PulsarTeclaEspecial( int tecla, int x_raton, int y_raton )
 
 void Inicializa_GLUT( int argc, char * argv[] )
 {
-   
+
     // inicializa variables globales usadas en esta función (y otras)
     ventana_pos_x  = 50 ;
     ventana_pos_y  = 50  ;
     ventana_tam_x  = 800 ;  // ancho inicial y actual de la ventana, en pixels
     ventana_tam_y  = 800 ;  // alto inicial actual de la ventana, en pixels
-   
+
     // inicializa glut:
     glutInit( &argc, argv );
-   
+
     // establece posicion inicial de la ventana:
     glutInitWindowPosition( ventana_pos_x, ventana_pos_y );
-   
+
     // establece tamaño inicial de la ventana:
     glutInitWindowSize( ventana_tam_x, ventana_tam_y );
-   
+
     // establece atributos o tipo de ventana:
     glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
-   
+
     // crea y visualiza una ventana:
     glutCreateWindow("Practicas IG GIM (15-16)");
-   
+
     // establece función gestora del evento de redibujado:
     glutDisplayFunc( FGE_Redibujado );
-   
+
     // establece función gestora del evento de cambio de tamaño:
     glutReshapeFunc( FGE_CambioTamano );
-   
+
     // establece función gestora del evento de pulsación de tecla normal:
     glutKeyboardFunc( FGE_PulsarTeclaNormal );
-    
+
     // establece función gestora del evento de pulsación de tecla especial:
     glutSpecialFunc( FGE_PulsarTeclaEspecial );
 }
@@ -372,41 +378,41 @@ void Inicializa_Vars( ){
 void Inicializa_OpenGL( ){
     // borrar posibles errores anteriores
     CError();
-   
+
     // habilitar test de comparación de profundidades para 3D (y 2D)
     // es necesario, no está habilitado por defecto:
     // https://www.opengl.org/wiki/Depth_Buffer
     glEnable( GL_DEPTH_TEST );
-   
+
     // establecer color de fondo: (1,1,1) (blanco)
     glClearColor( 1.0, 1.0, 1.0, 1.0 ) ;
-   
+
     // establecer color inicial para todas las primitivas
     glColor3f( 0.7, 0.2, 0.4 ) ;
-   
+
     // establecer ancho de línea
     glLineWidth( 1.0 );
-   
+
     // establecer tamaño de los puntos
     glPointSize( 5.0 );
-   
+
     // establecer modo de visualización de prim.
     // (las tres posibilidades son: GL_POINT, GL_LINE, GL_FILL)
     glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
-   
+
     // establecer la cámara, la proyección y el viewport
     FijarViewportProyeccion() ;
     FijarCamara() ;
-   
+
     // imprimir datos del hardware y la implementación de OpenGL
     using namespace std ;
     cout  << "Datos de versión e implementación de OpenGL" << endl
-          << "  implementación de : " << glGetString(GL_VENDOR)  << endl 
-          << "  hardware          : " << glGetString(GL_RENDERER) << endl 
-          << "  version de OpenGL : " << glGetString(GL_VERSION) << endl 
-          << "  version de GLSL   : " << glGetString(GL_SHADING_LANGUAGE_VERSION) << endl 
+          << "  implementación de : " << glGetString(GL_VENDOR)  << endl
+          << "  hardware          : " << glGetString(GL_RENDERER) << endl
+          << "  version de OpenGL : " << glGetString(GL_VERSION) << endl
+          << "  version de GLSL   : " << glGetString(GL_SHADING_LANGUAGE_VERSION) << endl
           << flush ;
-   
+
     // ya está
     CError();
 }
@@ -420,10 +426,10 @@ void Inicializar( int argc, char *argv[] ){
 
     // glut (crea la ventana)
     Inicializa_GLUT( argc, argv ) ;
-   
+
     // opengl: define proyección y atributos iniciales
     Inicializa_OpenGL() ;
-   
+
     // inicializar práctica 1.
     P1_Inicializar( argc, argv ) ;
 }
@@ -438,11 +444,11 @@ void Inicializar( int argc, char *argv[] ){
 int main( int argc, char *argv[] ){
     // incializar el programa
     Inicializar( argc, argv ) ;
-    
-    // llamar al bucle de gestión de eventos de glut, tiene el 
+
+    // llamar al bucle de gestión de eventos de glut, tiene el
     // control hasta el final de la aplicación
     glutMainLoop();
-   
+
     // ya está
     return 0;
 }
