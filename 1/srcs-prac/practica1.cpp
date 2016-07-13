@@ -12,6 +12,8 @@
 // ---------------------------------------------------------------------
 // declaraciones de estructuras de datos....
 unsigned objeto_activo = 0 ; // objeto activo: cubo (0), tetraedro (1), otros....
+int num_caras = 50;
+const double PI = 3.14159265359;
 std::vector<MallaInd> objetos;
 
 
@@ -63,6 +65,78 @@ Tetraedro::Tetraedro(){
     caras.push_back(Tupla3i(0, 1, 3));
 }
 
+Cilindro::Cilindro(){
+    nombre_obj = "Mi cilindro";
+    double angulo = 2*PI/num_caras;
+    int tapa_sup, tapa_inf, inf, sup;
+
+    for (int i=0; i<num_caras; i++){
+        // Vértice de la cara inferior
+        vertices.push_back(0.5f*Tupla3f(cos(angulo*i), -1, sin(angulo*i)));
+        // Vértice de la cara superior
+        vertices.push_back(0.5f*Tupla3f(cos(angulo*i), 1, sin(angulo*i)));
+    }
+
+    // Vértices del eje central
+    tapa_inf = vertices.size();
+    tapa_sup = tapa_inf+1;
+    vertices.push_back(Tupla3f(0,-0.5,0));
+    vertices.push_back(Tupla3f(0,0.5,0));
+
+    for (int i=0; i<num_caras; i++){
+        inf = i*2;
+        sup = inf+1;
+        // Laterales
+        caras.push_back(Tupla3i(inf, (inf+2)%(2*num_caras), (inf+3)%(2*num_caras)));
+        caras.push_back(Tupla3i(sup, (sup+2)%(2*num_caras), inf));
+        // Tapaderas
+        if (i%2==0){
+            caras.push_back(Tupla3i(sup, (sup+2)%(2*num_caras), tapa_sup));
+            caras.push_back(Tupla3i(inf, (inf+2)%(2*num_caras), tapa_inf));
+        }
+        else{
+            caras.push_back(Tupla3i(inf, (inf+2)%(2*num_caras), tapa_inf));
+            caras.push_back(Tupla3i(sup, (sup+2)%(2*num_caras), tapa_sup));
+        }
+    }
+}
+
+
+Cono::Cono(){
+    nombre_obj = "Mi cono";
+    double angulo = 2*PI/num_caras;
+    int pico, tapa_inf;
+
+    for (int i=0; i<num_caras; i++){
+        // Vértice de la cara inferior
+        vertices.push_back(0.5f*Tupla3f(cos(angulo*i), -1, sin(angulo*i)));
+    }
+
+    // Vértices del eje central
+    tapa_inf = vertices.size();
+    pico = tapa_inf+1;
+    vertices.push_back(Tupla3f(0,-0.5,0));
+    vertices.push_back(Tupla3f(0,0.5,0));
+
+    for (int i=0; i<num_caras; i++){
+        // Laterales
+        if (i%2==0){
+            // Laterales
+            caras.push_back(Tupla3i(i, (i+1)%num_caras, pico));
+            // Tapadera
+            caras.push_back(Tupla3i(i, (i+1)%num_caras, tapa_inf));        }
+        else{
+            // Tapadera
+            caras.push_back(Tupla3i(i, (i+1)%num_caras, tapa_inf));
+            // Laterales
+            caras.push_back(Tupla3i(i, (i+1)%num_caras, pico));
+        }
+    }
+}
+
+//Toro::Toro(){
+//
+//}
 
 
 // ---------------------------------------------------------------------
@@ -73,6 +147,8 @@ Tetraedro::Tetraedro(){
 void P1_Inicializar( int argc, char *argv[]){
     objetos.push_back(Cubo());
     objetos.push_back(Tetraedro());
+    objetos.push_back(Cilindro());
+    objetos.push_back(Cono());
     objeto_activo = 0;
 }
 
