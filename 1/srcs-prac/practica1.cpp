@@ -12,7 +12,7 @@
 // ---------------------------------------------------------------------
 // declaraciones de estructuras de datos....
 unsigned objeto_activo = 0 ; // objeto activo: cubo (0), tetraedro (1), otros....
-int num_caras = 50;
+int N = 20;
 const double PI = 3.14159265359;
 std::vector<MallaInd> objetos;
 
@@ -67,10 +67,10 @@ Tetraedro::Tetraedro(){
 
 Cilindro::Cilindro(){
     nombre_obj = "Mi cilindro";
-    double angulo = 2*PI/num_caras;
+    double angulo = 2*PI/N;
     int tapa_sup, tapa_inf, inf, sup;
 
-    for (int i=0; i<num_caras; i++){
+    for (int i=0; i<N; i++){
         // Vértice de la cara inferior
         vertices.push_back(0.5f*Tupla3f(cos(angulo*i), -1, sin(angulo*i)));
         // Vértice de la cara superior
@@ -83,20 +83,20 @@ Cilindro::Cilindro(){
     vertices.push_back(Tupla3f(0,-0.5,0));
     vertices.push_back(Tupla3f(0,0.5,0));
 
-    for (int i=0; i<num_caras; i++){
+    for (int i=0; i<N; i++){
         inf = i*2;
         sup = inf+1;
         // Laterales
-        caras.push_back(Tupla3i(inf, (inf+2)%(2*num_caras), (inf+3)%(2*num_caras)));
-        caras.push_back(Tupla3i(sup, (sup+2)%(2*num_caras), inf));
+        caras.push_back(Tupla3i(inf, (inf+2)%(2*N), (inf+3)%(2*N)));
+        caras.push_back(Tupla3i(sup, (sup+2)%(2*N), inf));
         // Tapaderas
         if (i%2==0){
-            caras.push_back(Tupla3i(sup, (sup+2)%(2*num_caras), tapa_sup));
-            caras.push_back(Tupla3i(inf, (inf+2)%(2*num_caras), tapa_inf));
+            caras.push_back(Tupla3i(sup, (sup+2)%(2*N), tapa_sup));
+            caras.push_back(Tupla3i(inf, (inf+2)%(2*N), tapa_inf));
         }
         else{
-            caras.push_back(Tupla3i(inf, (inf+2)%(2*num_caras), tapa_inf));
-            caras.push_back(Tupla3i(sup, (sup+2)%(2*num_caras), tapa_sup));
+            caras.push_back(Tupla3i(inf, (inf+2)%(2*N), tapa_inf));
+            caras.push_back(Tupla3i(sup, (sup+2)%(2*N), tapa_sup));
         }
     }
 }
@@ -104,10 +104,10 @@ Cilindro::Cilindro(){
 
 Cono::Cono(){
     nombre_obj = "Mi cono";
-    double angulo = 2*PI/num_caras;
+    double angulo = 2*PI/N;
     int pico, tapa_inf;
 
-    for (int i=0; i<num_caras; i++){
+    for (int i=0; i<N; i++){
         // Vértice de la cara inferior
         vertices.push_back(0.5f*Tupla3f(cos(angulo*i), -1, sin(angulo*i)));
     }
@@ -118,25 +118,43 @@ Cono::Cono(){
     vertices.push_back(Tupla3f(0,-0.5,0));
     vertices.push_back(Tupla3f(0,0.5,0));
 
-    for (int i=0; i<num_caras; i++){
+    for (int i=0; i<N; i++){
         // Laterales
         if (i%2==0){
             // Laterales
-            caras.push_back(Tupla3i(i, (i+1)%num_caras, pico));
+            caras.push_back(Tupla3i(i, (i+1)%N, pico));
             // Tapadera
-            caras.push_back(Tupla3i(i, (i+1)%num_caras, tapa_inf));        }
+            caras.push_back(Tupla3i(i, (i+1)%N, tapa_inf));        }
         else{
             // Tapadera
-            caras.push_back(Tupla3i(i, (i+1)%num_caras, tapa_inf));
+            caras.push_back(Tupla3i(i, (i+1)%N, tapa_inf));
             // Laterales
-            caras.push_back(Tupla3i(i, (i+1)%num_caras, pico));
+            caras.push_back(Tupla3i(i, (i+1)%N, pico));
         }
     }
 }
 
-//Toro::Toro(){
-//
-//}
+Toro::Toro(double radio_menor, double radio_mayor)
+    : r(radio_menor), R(radio_mayor){
+    nombre_obj = "Mi toro";
+    double angulo = 2*PI/N;
+
+    // Vamos dando vueltas a la circunferencia exterior
+    for (int i=0; i<N; i++){
+        // Creamos el efecto "donut"
+        for (int j=0; j<N; j++){
+            vertices.push_back( Tupla3f(cos(angulo*j)*(R + r*cos(angulo*i)),
+                sin(angulo*j)*(R + r*cos(angulo*i)), r*sin(angulo*i)) );
+        }
+    }
+
+    for (int i=0; i<N; i++){
+        for (int j=0; j<N; j++){
+            caras.push_back(Tupla3i( i*N+j, (i*N+j+1)%(N*N), ((i+1)*N+j+1)%(N*N) ));
+            caras.push_back(Tupla3i( i*N+j, ((i+1)*N+j)%(N*N), ((i+1)*N+j+1)%(N*N) ));
+        }
+    }
+}
 
 
 // ---------------------------------------------------------------------
@@ -149,6 +167,7 @@ void P1_Inicializar( int argc, char *argv[]){
     objetos.push_back(Tetraedro());
     objetos.push_back(Cilindro());
     objetos.push_back(Cono());
+    objetos.push_back(Toro(0.25, 0.5));
     objeto_activo = 0;
 }
 

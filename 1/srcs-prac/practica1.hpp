@@ -30,6 +30,15 @@ public:
     Cono();
 };
 
+
+class Toro : public MallaInd{
+    const double r;
+    const double R;
+public:
+    Toro(double radio_menor, double radio_mayor);
+};
+
+
 void P1_Inicializar( int argc, char *argv[] ) ;
 bool P1_FGE_PulsarTeclaNormal(  unsigned char tecla ) ;
 void P1_DibujarObjetos( unsigned modo ) ;
