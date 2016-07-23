@@ -13,7 +13,6 @@
 // declaraciones de estructuras de datos....
 unsigned p1_objeto_activo = 0 ; // objeto activo: cubo (0), tetraedro (1), otros....
 int N = 20;
-const double PI = 3.14159265359;
 std::vector<MallaInd> p1_objetos;
 
 
