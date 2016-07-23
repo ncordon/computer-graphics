@@ -11,10 +11,10 @@
 
 // ---------------------------------------------------------------------
 // declaraciones de estructuras de datos....
-unsigned objeto_activo = 0 ; // objeto activo: cubo (0), tetraedro (1), otros....
+unsigned p1_objeto_activo = 0 ; // objeto activo: cubo (0), tetraedro (1), otros....
 int N = 20;
 const double PI = 3.14159265359;
-std::vector<MallaInd> objetos;
+std::vector<MallaInd> p1_objetos;
 
 
 Cubo::Cubo(){
@@ -163,12 +163,12 @@ Toro::Toro(double radio_menor, double radio_mayor)
 // incializado OpenGL.
 
 void P1_Inicializar( int argc, char *argv[]){
-    objetos.push_back(Cubo());
-    objetos.push_back(Tetraedro());
-    objetos.push_back(Cilindro());
-    objetos.push_back(Cono());
-    objetos.push_back(Toro(0.25, 0.5));
-    objeto_activo = 0;
+    p1_objetos.push_back(Cubo());
+    p1_objetos.push_back(Tetraedro());
+    p1_objetos.push_back(Cilindro());
+    p1_objetos.push_back(Cono());
+    p1_objetos.push_back(Toro(0.25, 0.5));
+    p1_objeto_activo = 0;
 }
 
 // ---------------------------------------------------------------------
@@ -185,8 +185,8 @@ bool P1_FGE_PulsarTeclaNormal(unsigned char tecla){
     bool tecla_correcta = false;
 
     if (tecla == 'O'){
-        objeto_activo += 1;
-        objeto_activo %= objetos.size();
+        p1_objeto_activo += 1;
+        p1_objeto_activo %= p1_objetos.size();
         tecla_correcta = true;
     }
 
@@ -199,5 +199,5 @@ bool P1_FGE_PulsarTeclaNormal(unsigned char tecla){
 // modo: 0 - puntos, 1 - alambre, 2 - sólido, 3 - sólido ajedrez , >=4 otros....
 
 void P1_DibujarObjetos(unsigned modo){
-    objetos[objeto_activo].visualizar(modo);
+    p1_objetos[p1_objeto_activo].visualizar(modo);
 }

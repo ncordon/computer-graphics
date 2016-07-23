@@ -5,14 +5,14 @@
 // **
 // *********************************************************************
 
-#include "aux.hpp"
-#include "tuplasg.hpp"   // Tupla3f 
+
 #include "practica2.hpp"
 
 
 unsigned p2_objeto_activo;
-MallaPLY * obj;
-MallaRevol * obj_rev;
+static MallaPLY * obj = NULL;
+static MallaRevol * obj_rev = NULL;
+const unsigned N_OBJETOS = 2;
 
 void P2_Inicializar( int argc, char *argv[]){
     // Crear objeto de tipo malla PLY y objeto de revolución con new.
@@ -25,7 +25,7 @@ void P2_Inicializar( int argc, char *argv[]){
 
     obj = new MallaPLY(argv[1]);
     obj_rev = new MallaRevol(argv[2], atoi(argv[3]));
-    // Objeto 0 = obj, objeto 1 = revolución
+    // Objeto 0 = ply, objeto 1 = revolución
     p2_objeto_activo = 0;
 }
 
@@ -38,12 +38,14 @@ void P2_DibujarObjetos( unsigned modo ){
 }
 
 
-bool P2_FGE_PulsarTeclaNormal( unsigned char tecla ) {
-    if (toupper(tecla) == 'O'){
+bool P2_FGE_PulsarTeclaNormal(unsigned char tecla){
+    bool tecla_correcta = false;
+
+    if (tecla == 'O'){
         p2_objeto_activo += 1;
-        p2_objeto_activo %= 2;
-        return true;
+        p2_objeto_activo %= N_OBJETOS;
+        tecla_correcta = true;
     }
-        
-    return false ;
+
+    return tecla_correcta;
 }

@@ -16,10 +16,13 @@
 
 // includes de archivos en el directorio de trabajo (de las prácticas)
 #include "practica1.hpp"
+#include "practica2.hpp"
 
 // evita la necesidad de escribir std::
 using namespace std ;
 
+// Número de prácticas
+const unsigned N_PRACTICAS = 2;
 // *********************************************************************
 // **
 // ** Variables globales
@@ -174,6 +177,11 @@ void DibujarObjetos()
         break ;
         // falta: case 2: ... case 3: ..... case 4: ..... case 5: .....
         //
+    case 2 :
+        P2_DibujarObjetos(modo_vis) ; // definido en 'practica1.hpp'
+        break ;
+        // falta: case 2: ... case 3: ..... case 4: ..... case 5: .....
+        //
     default :
         cout << "El valor de 'practica_actual' (" << practica_actual  << ") es incorrecto" << endl ;
         break ;
@@ -230,7 +238,9 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
     // true si al acabar de procesar el evento resulta que es necesario redibujar
 
     bool redibujar = true ;
-    switch (toupper(tecla)){
+    tecla = toupper(tecla);
+
+    switch (tecla){
     case 'M' :
         modo_vis += 1;
         modo_vis %= 4;
@@ -244,13 +254,20 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
     case '-' :
         frustum_factor_escala /= 1.05;
         break;
+    case 'P':
+        // Cambiar cuando lleguemos a 4 prácticas
+        practica_actual %= N_PRACTICAS;
+        practica_actual += 1;
+        break;
     default:
         redibujar = false ;
         switch( practica_actual ) {
-        case 1 :
-            redibujar = P1_FGE_PulsarTeclaNormal( toupper(tecla) ) ; // true si es necesario redibujar
-            break ;
-            // falta: case 2, case 3, etc....
+        case 1:
+            redibujar = P1_FGE_PulsarTeclaNormal(tecla) ; // true si es necesario redibujar
+            break;
+        case 2:
+            redibujar = P2_FGE_PulsarTeclaNormal(tecla);
+            break;
         default :
             redibujar = false ; // la tecla no es de la práctica activa (no es necesario redibujar)
         }
@@ -368,7 +385,7 @@ void Inicializa_Vars( ){
     camara_angulo_y = 0.0 ;
 
     // inicializar práctica actual y modo de visualización inicial
-    practica_actual = 1 ;
+    practica_actual = 2 ;
     modo_vis = 1 ;
 }
 
@@ -432,6 +449,9 @@ void Inicializar( int argc, char *argv[] ){
 
     // inicializar práctica 1.
     P1_Inicializar( argc, argv ) ;
+
+    // inicializar práctica 2.
+    P2_Inicializar( argc, argv ) ;
 }
 
 // *********************************************************************

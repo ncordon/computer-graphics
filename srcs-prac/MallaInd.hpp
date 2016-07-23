@@ -3,6 +3,8 @@
 #include "tuplasg.hpp"
 #include "aux.hpp"
 
+#ifndef _MALLAIND_H_
+#define _MALLAIND_H_
 
 // clase para mallas indexadas o mallas TVT
 class MallaInd : public Objeto3D{
@@ -12,3 +14,5 @@ protected:
 public:
     virtual void visualizar(unsigned modo_vis);
 };
+
+#endif

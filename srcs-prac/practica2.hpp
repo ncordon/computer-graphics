@@ -7,11 +7,10 @@
 
 #ifndef IG_PRACTICA2_HPP
 #define IG_PRACTICA2_HPP
-//#include "MallaInd.hpp"
 #include "stdlib.h"
-#include "Mallas.hpp"
+#include "MallaRev.hpp"
+#include "MallaPLY.hpp"
 #include <iostream>
-#include <cctype>
 
 using namespace std;
 
