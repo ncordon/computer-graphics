@@ -10,6 +10,7 @@
 #include "stdlib.h"
 #include "MallaRev.hpp"
 #include "MallaPLY.hpp"
+#include "MallaBarrido.hpp"
 #include <iostream>
 
 using namespace std;

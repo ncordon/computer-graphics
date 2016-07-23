@@ -1,6 +1,6 @@
 #include "MallaRev.hpp"
 
-MallaRevol::MallaRevol( const char * nombre_arch, unsigned n_perfiles ){
+MallaRev::MallaRev( const char * nombre_arch, unsigned n_perfiles ){
     std::vector<float> vertices_ply;
 
     ply::read_vertices(nombre_arch, vertices_ply);

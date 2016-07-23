@@ -11,7 +11,7 @@ class MallaPLY : public MallaInd {
 public:
    // Constructor
    // Se debe especificar el nombre completo del archivo a leer
-   MallaPLY( const char * nombre_arch ) ;
+   MallaPLY(const char * nombre_arch) ;
 };
 
 #endif
