@@ -42,7 +42,7 @@ void P2_Inicializar( int argc, char *argv[]){
         archivo_rev = "../plys/peon.ply";
         archivo_barrido = "../plys/peon.ply";
         n_perfiles = 20;
-        dir = Tupla3f(1,0,0);
+        dir = Tupla3f(0,0,1);
     }
 
     obj_ply = new MallaPLY(&archivo_ply[0]);
