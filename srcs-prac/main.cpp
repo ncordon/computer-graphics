@@ -231,7 +231,7 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
 
     bool redibujar = true ;
     switch (toupper(tecla)){
-    case ' ' :
+    case 'M' :
         modo_vis += 1;
         modo_vis %= 4;
         break;
@@ -248,7 +248,7 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
         redibujar = false ;
         switch( practica_actual ) {
         case 1 :
-            redibujar = P1_FGE_PulsarTeclaNormal( tecla ) ; // true si es necesario redibujar
+            redibujar = P1_FGE_PulsarTeclaNormal( toupper(tecla) ) ; // true si es necesario redibujar
             break ;
             // falta: case 2, case 3, etc....
         default :

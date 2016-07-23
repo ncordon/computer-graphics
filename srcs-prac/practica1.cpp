@@ -184,7 +184,7 @@ void P1_Inicializar( int argc, char *argv[]){
 bool P1_FGE_PulsarTeclaNormal(unsigned char tecla){
     bool tecla_correcta = false;
 
-    if (tecla == 'd'){
+    if (tecla == 'O'){
         objeto_activo += 1;
         objeto_activo %= objetos.size();
         tecla_correcta = true;
