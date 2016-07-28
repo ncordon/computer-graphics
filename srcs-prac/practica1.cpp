@@ -20,14 +20,14 @@ Cubo::Cubo(){
     nombre_obj = "Mi cubo";
 
     // Vértices que conforman el cubo
-    vertices.push_back(Tupla3f(-0.5, -0.5, 0.5));
-    vertices.push_back(Tupla3f(0.5, -0.5, 0.5));
-    vertices.push_back(Tupla3f(0.5, 0.5, 0.5));
-    vertices.push_back(Tupla3f(-0.5, 0.5, 0.5));
-    vertices.push_back(Tupla3f(-0.5, -0.5, -0.5));
-    vertices.push_back(Tupla3f(0.5, -0.5, -0.5));
-    vertices.push_back(Tupla3f(0.5, 0.5, -0.5));
-    vertices.push_back(Tupla3f(-0.5, 0.5, -0.5));
+    vertices.push_back(Tupla3f(0,0,1));
+    vertices.push_back(Tupla3f(1,0,1));
+    vertices.push_back(Tupla3f(1,1,1));
+    vertices.push_back(Tupla3f(0,1,1));
+    vertices.push_back(Tupla3f(0,0,0));
+    vertices.push_back(Tupla3f(1,0,0));
+    vertices.push_back(Tupla3f(1,1,0));
+    vertices.push_back(Tupla3f(0,1,0));
 
     // Triángulos que conforman las caras.
     // En sentido antihorario, las caras laterales.
@@ -50,10 +50,10 @@ Tetraedro::Tetraedro(){
     nombre_obj = "Mi tetraedro";
 
     // Vértices que conforman el tetraedro
-    vertices.push_back(Tupla3f(-0.5, -0.5, 0.5));
-    vertices.push_back(Tupla3f(0.5, -0.5, 0.5));
-    vertices.push_back(Tupla3f(-0.5, -0.5, -0.5));
-    vertices.push_back(Tupla3f(-0.5, 0.5, -0.5));
+    vertices.push_back(Tupla3f(0,0,1));
+    vertices.push_back(Tupla3f(1,0,1));
+    vertices.push_back(Tupla3f(0,0,0));
+    vertices.push_back(Tupla3f(0,1,0));
 
     // Triángulos que conforman las caras
     // Primero tapa inferior
@@ -71,16 +71,16 @@ Cilindro::Cilindro(){
 
     for (int i=0; i<N; i++){
         // Vértice de la cara inferior
-        vertices.push_back(0.5f*Tupla3f(cos(angulo*i), -1, sin(angulo*i)));
+        vertices.push_back(Tupla3f(0.5*cos(angulo*i), 0, 0.5*sin(angulo*i)));
         // Vértice de la cara superior
-        vertices.push_back(0.5f*Tupla3f(cos(angulo*i), 1, sin(angulo*i)));
+        vertices.push_back(Tupla3f(0.5*cos(angulo*i), 1, 0.5*sin(angulo*i)));
     }
 
     // Vértices del eje central
     tapa_inf = vertices.size();
     tapa_sup = tapa_inf+1;
-    vertices.push_back(Tupla3f(0,-0.5,0));
-    vertices.push_back(Tupla3f(0,0.5,0));
+    vertices.push_back(Tupla3f(0,0,0));
+    vertices.push_back(Tupla3f(0,1,0));
 
     for (int i=0; i<N; i++){
         inf = i*2;
@@ -108,14 +108,14 @@ Cono::Cono(){
 
     for (int i=0; i<N; i++){
         // Vértice de la cara inferior
-        vertices.push_back(0.5f*Tupla3f(cos(angulo*i), -1, sin(angulo*i)));
+        vertices.push_back(Tupla3f(0.5*cos(angulo*i),0, 0.5*sin(angulo*i)));
     }
 
     // Vértices del eje central
     tapa_inf = vertices.size();
     pico = tapa_inf+1;
-    vertices.push_back(Tupla3f(0,-0.5,0));
-    vertices.push_back(Tupla3f(0,0.5,0));
+    vertices.push_back(Tupla3f(0,0,0));
+    vertices.push_back(Tupla3f(0,1,0));
 
     for (int i=0; i<N; i++){
         // Laterales
@@ -166,7 +166,7 @@ void P1_Inicializar( int argc, char *argv[]){
     p1_objetos.push_back(Tetraedro());
     p1_objetos.push_back(Cilindro());
     p1_objetos.push_back(Cono());
-    p1_objetos.push_back(Toro(0.25, 0.5));
+    p1_objetos.push_back(Toro(0.5, 1));
     p1_objeto_activo = 0;
 }
 
