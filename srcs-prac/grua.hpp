@@ -31,25 +31,34 @@ public:
     ParArmazon();
 };
 
-class CuboBasico : public NodoEscena{
+
+class TiraTriangulada : public NodoEscena{
 public:
-    CuboBasico();
+    TiraTriangulada(unsigned num_cubos);
 };
 
-class CuboTriangulado : public NodoEscena{
+
+class ParTiraTriangulada : public NodoEscena{
 public:
-    CuboTriangulado();
+    ParTiraTriangulada(unsigned num_cubos);
 };
 
-class BrazoGrua : public NodoEscena{
+
+class BrazoVertical: public NodoEscena{
 public:
-    BrazoGrua(unsigned num_cubos);
+    BrazoVertical(unsigned num_cubos);
+};
+
+class BrazoHorizontal: public NodoEscena{
+public:
+    BrazoHorizontal(unsigned num_cubos);
 };
 
 class Grua : public NodoEscena{
 public:
     Grua(){
-        agregar(new BrazoGrua(10));
+        agregar(new BrazoVertical(10));
+        agregar(new BrazoHorizontal(10));
     }
 };
 
