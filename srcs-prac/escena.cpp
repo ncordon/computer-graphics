@@ -1,16 +1,5 @@
 #include "escena.hpp"
 
-EntradaNodo::EntradaNodo(Objeto3D *obj){
-    objeto = obj;
-    transformacion = NULL;
-    es_transformacion = false;
-}
-
-EntradaNodo::EntradaNodo(const Matriz4f &mat){
-    objeto = NULL;
-    transformacion = new Matriz4f(mat);
-    es_transformacion = true;
-}
 /*
 EntradaNodo::~EntradaNodo(){
     if(objeto != NULL)
@@ -29,7 +18,7 @@ void NodoEscena::visualizar(unsigned modo){
         }
         else{
             // Visualizar el objeto
-            escena.at(i).objeto-> visualizar(modo);
+            escena[i].objeto-> visualizar(modo);
         }
     }
 

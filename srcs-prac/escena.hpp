@@ -16,9 +16,13 @@ struct EntradaNodo{
     };
 
     // Crea el nodo con un objeto 3D
-    EntradaNodo(Objeto3D *obj);
+    EntradaNodo(Objeto3D *obj) : objeto(obj){
+        es_transformacion = false;
+    }
     // Crea el nodo con una matriz de transformación
-    EntradaNodo(const Matriz4f &mat);
+    EntradaNodo(const Matriz4f &mat) : transformacion(new Matriz4f(mat)){
+        es_transformacion = true;
+    }
     // Destructor
     // ¿Esto funcionará?
     //~EntradaNodo();
@@ -34,8 +38,8 @@ public:
     virtual void visualizar(unsigned modo);
 
     // Introduce una nueva entrada
-    void agregar(EntradaNodo entrada){
-        escena.push_back(entrada);
+    void agregar(EntradaNodo *entrada){
+        escena.push_back(*entrada);
     }
 
     // Agrega un objeto 3D

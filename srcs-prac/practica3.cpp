@@ -5,12 +5,12 @@
 // Grado de libertad actual seleccionado en el programa
 int p3_grado_libertad_activo;
 const int NUM_GRADOS_LIBERTAD = 3;
-
+static NodoEscena *p3_obj;
 
 
 void P3_Inicializar( int argc, char *argv[] ){
     p3_grado_libertad_activo = 0;
-
+    p3_obj = new Grua;
 }
 
 
@@ -41,5 +41,5 @@ bool P3_FGE_PulsarTeclaNormal(  unsigned char tecla ){
 }
 
 void P3_DibujarObjetos( unsigned modo ){
-
+    p3_obj->visualizar(modo);
 }
