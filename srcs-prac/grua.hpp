@@ -7,6 +7,13 @@
 #ifndef _GRUA_H_
 #define _GRUA_H_
 
+
+class Viga : public NodoEscena{
+public:
+    Viga(double longitud = 1.0);
+};
+
+
 class ParColumnas : public NodoEscena{
 public:
     ParColumnas();
@@ -18,16 +25,31 @@ public:
     ArmazonBasico();
 };
 
-class Viga : public NodoEscena{
+
+class ParArmazon : public NodoEscena{
 public:
-    Viga(double longitud = 1.0);
+    ParArmazon();
 };
 
+class CuboBasico : public NodoEscena{
+public:
+    CuboBasico();
+};
+
+class CuboTriangulado : public NodoEscena{
+public:
+    CuboTriangulado();
+};
+
+class BrazoGrua : public NodoEscena{
+public:
+    BrazoGrua(unsigned num_cubos);
+};
 
 class Grua : public NodoEscena{
 public:
     Grua(){
-        agregar(new ArmazonBasico);
+        agregar(new BrazoGrua(10));
     }
 };
 
