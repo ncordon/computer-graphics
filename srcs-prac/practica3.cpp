@@ -1,27 +1,27 @@
-#include "Practica3.hpp"
+#include "practica3.hpp"
 
 
 
 // Grado de libertad actual seleccionado en el programa
-int p3_degree;
-
+int p3_grado_libertad_activo;
+const int NUM_GRADOS_LIBERTAD = 3;
 
 
 
 void P3_Inicializar( int argc, char *argv[] ){
-    p3_degree = 0;
+    p3_grado_libertad_activo = 0;
 
 }
 
 
 
 bool P3_FGE_PulsarTeclaNormal(  unsigned char tecla ){
-    bool redibuja = true;
-    
-    switch(toupper(tecla)){
+    bool tecla_correcta = false;
+
+    switch(tecla){
     case 'G':
-        p3_fdegree += 1;
-        p3_fdegree %= 3;
+        p3_grado_libertad_activo += 1;
+        p3_grado_libertad_activo %= NUM_GRADOS_LIBERTAD;
 
         break;
     case '>':
@@ -34,10 +34,12 @@ bool P3_FGE_PulsarTeclaNormal(  unsigned char tecla ){
         break;
 
     default:
-        redibujar = false;        
+        tecla_correcta = false;
     }
 
+    return tecla_correcta;
+}
 
-    
-    return redibujar;
+void P3_DibujarObjetos( unsigned modo ){
+
 }

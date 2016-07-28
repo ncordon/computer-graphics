@@ -17,12 +17,13 @@
 // includes de archivos en el directorio de trabajo (de las prácticas)
 #include "practica1.hpp"
 #include "practica2.hpp"
+#include "practica3.hpp"
 
 // evita la necesidad de escribir std::
 using namespace std ;
 
 // Número de prácticas
-const unsigned N_PRACTICAS = 2;
+const unsigned N_PRACTICAS = 3;
 // *********************************************************************
 // **
 // ** Variables globales
@@ -175,13 +176,12 @@ void DibujarObjetos()
     case 1 :
         P1_DibujarObjetos(modo_vis) ; // definido en 'practica1.hpp'
         break ;
-        // falta: case 2: ... case 3: ..... case 4: ..... case 5: .....
-        //
     case 2 :
-        P2_DibujarObjetos(modo_vis) ; // definido en 'practica1.hpp'
+        P2_DibujarObjetos(modo_vis) ; // definido en 'practica2.hpp'
         break ;
-        // falta: case 2: ... case 3: ..... case 4: ..... case 5: .....
-        //
+    case 3 :
+        P3_DibujarObjetos(modo_vis) ; // definido en 'practica3.hpp'
+        break ;
     default :
         cout << "El valor de 'practica_actual' (" << practica_actual  << ") es incorrecto" << endl ;
         break ;
@@ -267,6 +267,9 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
             break;
         case 2:
             redibujar = P2_FGE_PulsarTeclaNormal(tecla);
+            break;
+        case 3:
+            redibujar = P3_FGE_PulsarTeclaNormal(tecla);
             break;
         default :
             redibujar = false ; // la tecla no es de la práctica activa (no es necesario redibujar)
@@ -385,7 +388,7 @@ void Inicializa_Vars( ){
     camara_angulo_y = 0.0 ;
 
     // inicializar práctica actual y modo de visualización inicial
-    practica_actual = 2 ;
+    practica_actual = N_PRACTICAS ;
     modo_vis = 1 ;
 }
 
@@ -452,6 +455,9 @@ void Inicializar( int argc, char *argv[] ){
 
     // inicializar práctica 2.
     P2_Inicializar( argc, argv ) ;
+
+    // inicializar práctica 2.
+    P3_Inicializar( argc, argv ) ;
 }
 
 // *********************************************************************

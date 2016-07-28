@@ -9,7 +9,8 @@
 #define IG_PRACTICA3_HPP
 //#include "MallaInd.hpp"
 #include "stdlib.h"
-#include "Mallas.hpp"
+#include "escena.hpp"
+#include "grua.hpp"
 #include <iostream>
 #include <cctype>
 
