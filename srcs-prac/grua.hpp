@@ -92,35 +92,64 @@ public:
     BaseGrua();
 };
 
+class HiloGancho : public NodoEscena{
+protected:
+    double longitud;
+    unsigned indice_escalado;
+public:
+    HiloGancho(double longitud);
+
+    void aumentarLongitud(double offset);
+};
+
+class CableGancho : public NodoEscena{
+protected:
+    double longitud;
+    unsigned indice_traslacion, indice_hilo;
+public:
+    CableGancho(double longitud);
+
+    void aumentarLongitud(double offset);
+};
+
+class SujecionCable : public NodoEscena{
+public:
+    SujecionCable();
+};
+
 
 class Gancho : public NodoEscena{
+    unsigned indice_gancho;
+    unsigned indice_traslacion;
+    double traslacion;
 public:
-    Gancho(unsigned longitud, unsigned pos_izda);
+    Gancho(unsigned longitud, double traslacion);
+
+    void aumentarLongitud(double offset);
+
+    void aumentarTraslacion(double offset);
 };
 
 class Grua : public NodoEscena{
-public:
-    Grua(){
-        unsigned num_cubos_vertical = 10;
-        unsigned longitud_gancho = 6;
-        unsigned num_cubos_horizontal = 7;
-        unsigned longitud_contrapeso = 6;
-        double alpha=45.0;
+protected:
+    unsigned longitud_vertical;
+    unsigned longitud_gancho;
+    unsigned longitud_horizontal;
+    unsigned longitud_contrapeso;
+    double giro_cabeza;
 
-        agregar(new BaseGrua);
-        agregar(MAT_Traslacion(0,0.5,0));
-        agregar(new BrazoVertical(num_cubos_vertical));
-        agregar(MAT_Traslacion(0, num_cubos_vertical,0));
-        agregar(MAT_Traslacion(0.5,0,0.5));
-        agregar(MAT_Rotacion(alpha,0,1,0));
-        agregar(MAT_Traslacion(-0.5,0,-0.5));
-        agregar(new CablesTensores(num_cubos_horizontal, longitud_contrapeso));
-        agregar(new RemateBrazoHorizontal);
-        agregar(new ContrapesoBrazoHorizontal(longitud_contrapeso));
-        agregar(new Gancho(longitud_gancho, num_cubos_horizontal));
-        agregar(MAT_Traslacion(0, sqrt(1-0.5*0.5),0));
-        agregar(new BrazoHorizontal(num_cubos_horizontal));
-    }
+    unsigned indice_giro_cabeza;
+    unsigned indice_gancho;
+    unsigned indice_altura;
+public:
+    Grua(unsigned longitud_vertical, unsigned longitud_gancho,
+         unsigned longitud_horizontal, unsigned longitud_contrapeso, double giro_cabeza);
+
+    void aumentarTraslacionGancho(double offset);
+
+    void aumentarLongitudGancho(double offset);
+
+    void girarCabezaGrua(double alpha);
 };
 
 #endif

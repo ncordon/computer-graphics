@@ -146,26 +146,104 @@ CablesTensores::CablesTensores(unsigned longitud_brazo, unsigned longitud_contra
     agregar(cable_izda);
 }
 
-Gancho::Gancho(unsigned longitud, unsigned pos_izda){
-    NodoEscena *plat_movil = new NodoEscena;
-    NodoEscena *cable = new NodoEscena;
+HiloGancho::HiloGancho(double longitud){
+    this->longitud = longitud;
+    indice_escalado = entradas.size();
+    agregar(MAT_Escalado(0.3,longitud,0.3));
+    agregar(new Viga);
+}
 
-    plat_movil->agregar(MAT_Escalado(2,-0.1,1));
-    plat_movil->agregar(new Cubo);
+void HiloGancho::aumentarLongitud(double offset){
+    longitud = longitud + offset;
+    entradas.at(indice_escalado) = MAT_Escalado(0.3,longitud,0.3);
+}
 
-    cable->agregar(MAT_Escalado(0.3,longitud,0.3));
-    cable->agregar(new Viga);
+CableGancho::CableGancho(double longitud){
+    this->longitud = longitud;
 
-    agregar(MAT_Traslacion(-1.0*pos_izda,0,0));
-    agregar(plat_movil);
-    agregar(MAT_Traslacion(1,-1.0*longitud-0.1,0.5));
-    agregar(cable);
+    indice_traslacion = entradas.size();
+    agregar(MAT_Traslacion(1,-longitud-0.1,0.5));
+    indice_hilo = entradas.size();
+    agregar(new HiloGancho(longitud));
+    // Final del gancho
     agregar(MAT_Escalado(0.1,-0.2, 0.1));
     agregar(new Cilindro);
+}
+
+void CableGancho::aumentarLongitud(double offset){
+    longitud = longitud + offset;
+    entradas.at(indice_traslacion) = MAT_Traslacion(1,-1.0*longitud-0.1,0.5);
+    HiloGancho *hilo = (HiloGancho*)entradas.at(indice_hilo).objeto;
+    hilo->aumentarLongitud(offset);
+}
+
+SujecionCable::SujecionCable(){
+    agregar(MAT_Escalado(2,-0.1,1));
+    agregar(new Cubo);
+}
+
+Gancho::Gancho(unsigned longitud, double traslacion){
+    indice_traslacion = entradas.size();
+    agregar(MAT_Traslacion(-traslacion,0,0));
+    agregar(new SujecionCable);
+    indice_gancho = entradas.size();
+    agregar(new CableGancho(longitud));
+}
+
+void Gancho::aumentarLongitud(double offset){
+    CableGancho *cable = (CableGancho *)entradas.at(indice_gancho).objeto;
+    cable->aumentarLongitud(offset);
+}
+
+void Gancho::aumentarTraslacion(double offset){
+    traslacion = traslacion + offset;
+    entradas.at(indice_traslacion) = MAT_Traslacion(-traslacion,0,0);
 }
 
 BaseGrua::BaseGrua(){
     agregar(MAT_Traslacion(-0.25,0,-0.25));
     agregar(MAT_Escalado(1.5,0.5,1.5));
     agregar(new Cubo);
+}
+
+Grua::Grua(unsigned longitud_vertical, unsigned longitud_gancho,
+     unsigned longitud_horizontal, unsigned longitud_contrapeso, double giro_cabeza){
+
+    this->longitud_vertical = longitud_vertical;
+    this->longitud_gancho = longitud_gancho;
+    this->longitud_horizontal = longitud_horizontal;
+    this->longitud_contrapeso = longitud_contrapeso;
+    this->giro_cabeza = giro_cabeza;
+
+    agregar(new BaseGrua);
+    agregar(MAT_Traslacion(0,0.5,0));
+    agregar(new BrazoVertical(longitud_vertical));
+    agregar(MAT_Traslacion(0, longitud_vertical,0));
+    agregar(MAT_Traslacion(0.5,0,0.5));
+    indice_giro_cabeza = entradas.size();
+    agregar(MAT_Rotacion(giro_cabeza,0,1,0));
+    agregar(MAT_Traslacion(-0.5,0,-0.5));
+    agregar(new CablesTensores(longitud_horizontal, longitud_contrapeso));
+    agregar(new RemateBrazoHorizontal);
+    agregar(new ContrapesoBrazoHorizontal(longitud_contrapeso));
+    indice_gancho = entradas.size();
+    agregar(new Gancho(longitud_gancho, longitud_horizontal));
+    agregar(MAT_Traslacion(0, sqrt(1-0.5*0.5),0));
+    agregar(new BrazoHorizontal(longitud_horizontal));
+}
+
+
+void Grua::aumentarTraslacionGancho(double offset){
+    Gancho *gancho = (Gancho *) entradas.at(indice_gancho).objeto;
+    gancho->aumentarTraslacion(offset);
+}
+
+void Grua::aumentarLongitudGancho(double offset){
+    Gancho *gancho = (Gancho *) entradas.at(indice_gancho).objeto;
+    gancho->aumentarLongitud(offset);
+}
+
+void Grua::girarCabezaGrua(double alpha){
+    giro_cabeza = giro_cabeza + alpha;
+    entradas.at(indice_giro_cabeza) = MAT_Rotacion(giro_cabeza,0,1,0);
 }

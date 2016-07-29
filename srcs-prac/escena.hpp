@@ -33,23 +33,23 @@ struct EntradaNodo{
 class NodoEscena : public Objeto3D{
 protected:
     // Pila de entradas
-    vector<EntradaNodo> escena;
+    vector<EntradaNodo> entradas;
 public:
     virtual void visualizar(unsigned modo);
 
     // Introduce una nueva entrada
     void agregar(EntradaNodo *entrada){
-        escena.push_back(*entrada);
+        entradas.push_back(*entrada);
     }
 
     // Agrega un objeto 3D
     void agregar(Objeto3D *obj){
-        escena.push_back(EntradaNodo(obj));
+        entradas.push_back(EntradaNodo(obj));
     }
 
     // Agrega una matriz de transformación
     void agregar(const Matriz4f &mat){
-        escena.push_back(EntradaNodo(mat));
+        entradas.push_back(EntradaNodo(mat));
     }
 };
 

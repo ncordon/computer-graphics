@@ -10,7 +10,7 @@ static NodoEscena *p3_obj;
 
 void P3_Inicializar( int argc, char *argv[] ){
     p3_grado_libertad_activo = 0;
-    p3_obj = new Grua;
+    p3_obj = new Grua(10,6,7,6,45);
 }
 
 
