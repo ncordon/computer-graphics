@@ -124,6 +124,28 @@ ContrapesoBrazoHorizontal::ContrapesoBrazoHorizontal(unsigned longitud){
     agregar(new Cubo);
 }
 
+CablesTensores::CablesTensores(unsigned longitud_brazo, unsigned longitud_contrapeso){
+    double offset_dcha = 2 - 0.1 - sqrt(1-0.5*0.5);
+    double longitud_dcha = sqrt((longitud_contrapeso-1)*(longitud_contrapeso-1) + 4);
+    double longitud_izda = sqrt((longitud_brazo-1)*(longitud_brazo-1) + offset_dcha*offset_dcha);
+    double ang_contrapeso = -180+180*atan((longitud_contrapeso-1)/2.0)/PI;
+    double ang_brazo = 180-180*atan((longitud_brazo-1)/offset_dcha)/PI;
+
+    NodoEscena *cable_dcha = new NodoEscena;
+    cable_dcha->agregar(MAT_Rotacion(ang_contrapeso,0,0,1));
+    cable_dcha->agregar(MAT_Escalado(0.1,longitud_dcha,0.1));
+    cable_dcha->agregar(new Viga);
+
+    NodoEscena *cable_izda = new NodoEscena;
+    cable_izda->agregar(MAT_Rotacion(ang_brazo,0,0,1));
+    cable_izda->agregar(MAT_Escalado(0.1,longitud_izda,0.1));
+    cable_izda->agregar(new Viga);
+
+    agregar(MAT_Traslacion(0.5,2-0.1,0.5));
+    agregar(cable_dcha);
+    agregar(cable_izda);
+}
+
 BaseGrua::BaseGrua(){
     agregar(MAT_Traslacion(-0.25,0,-0.25));
     agregar(MAT_Escalado(1.5,0.5,1.5));
