@@ -67,10 +67,19 @@ public:
     BrazoHorizontal(unsigned num_cubos);
 };
 
+class TrianguloRemate : public NodoEscena{
+public:
+    TrianguloRemate();
+};
 
 class RemateBrazoHorizontal : public NodoEscena{
 public:
-    RemateBrazoHorizontal(unsigned num_cubos);
+    RemateBrazoHorizontal();
+};
+
+class ContrapesoBrazoHorizontal : public NodoEscena{
+public:
+    ContrapesoBrazoHorizontal(unsigned longitud);
 };
 
 class BaseGrua : public NodoEscena{
@@ -82,11 +91,16 @@ class Grua : public NodoEscena{
 public:
     Grua(){
         unsigned num_cubos_vertical = 10;
-        unsigned num_cubos_horizontal = (int)(num_cubos_vertical*5.0/6);
+        unsigned num_cubos_horizontal = 7;
+        unsigned longitud_contrapeso = 6;
+
         agregar(new BaseGrua);
         agregar(MAT_Traslacion(0,0.5,0));
         agregar(new BrazoVertical(num_cubos_vertical));
-        agregar(MAT_Traslacion(0, num_cubos_vertical+sqrt(1-0.5*0.5),0));
+        agregar(MAT_Traslacion(0, num_cubos_vertical,0));
+        agregar(new RemateBrazoHorizontal);
+        agregar(new ContrapesoBrazoHorizontal(longitud_contrapeso));
+        agregar(MAT_Traslacion(0, sqrt(1-0.5*0.5),0));
         agregar(new BrazoHorizontal(num_cubos_horizontal));
     }
 };

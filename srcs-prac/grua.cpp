@@ -89,8 +89,39 @@ BrazoHorizontal::BrazoHorizontal(unsigned num_cubos){
     agregar(tapa);
 }
 
-RemateBrazoHorizontal::RemateBrazoHorizontal(unsigned num_cubos){
-    agregar(new Cilindro);
+TrianguloRemate::TrianguloRemate(){
+    NodoEscena *viga_diag = new NodoEscena;
+    double alpha = 90 - atan(2/0.5)/PI*180;
+
+    viga_diag->agregar(MAT_Rotacion(-alpha,0,0,1));
+    viga_diag->agregar(new Viga(sqrt(5)-0.2));
+    agregar(MAT_Rotacion(alpha,1,0,0));
+    agregar(viga_diag);
+    // El 1.1 me permite corregir la anchura de la barra
+    agregar(MAT_Traslacion(1,0,0));
+    agregar(MAT_Escalado(-1,1,1));
+    agregar(viga_diag);
+}
+
+RemateBrazoHorizontal::RemateBrazoHorizontal(){
+    agregar(new TrianguloRemate);
+    agregar(MAT_Traslacion(0,0,1));
+    agregar(MAT_Escalado(1,1,-1));
+    agregar(new TrianguloRemate);
+}
+
+
+ContrapesoBrazoHorizontal::ContrapesoBrazoHorizontal(unsigned longitud){
+    NodoEscena *contrapeso = new NodoEscena;
+
+    contrapeso->agregar(MAT_Escalado(2,-1,1));
+    contrapeso->agregar(new Cubo);
+
+    agregar(MAT_Traslacion(longitud+1,0,0));
+    agregar(MAT_Escalado(-1,1,1));
+    agregar(contrapeso);
+    agregar(MAT_Escalado(longitud,0.1,1));
+    agregar(new Cubo);
 }
 
 BaseGrua::BaseGrua(){
