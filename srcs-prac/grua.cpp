@@ -146,6 +146,24 @@ CablesTensores::CablesTensores(unsigned longitud_brazo, unsigned longitud_contra
     agregar(cable_izda);
 }
 
+Gancho::Gancho(unsigned longitud, unsigned pos_izda){
+    NodoEscena *plat_movil = new NodoEscena;
+    NodoEscena *cable = new NodoEscena;
+
+    plat_movil->agregar(MAT_Escalado(2,-0.1,1));
+    plat_movil->agregar(new Cubo);
+
+    cable->agregar(MAT_Escalado(0.3,longitud,0.3));
+    cable->agregar(new Viga);
+
+    agregar(MAT_Traslacion(-1.0*pos_izda,0,0));
+    agregar(plat_movil);
+    agregar(MAT_Traslacion(1,-1.0*longitud-0.1,0.5));
+    agregar(cable);
+    agregar(MAT_Escalado(0.1,-0.2, 0.1));
+    agregar(new Cilindro);
+}
+
 BaseGrua::BaseGrua(){
     agregar(MAT_Traslacion(-0.25,0,-0.25));
     agregar(MAT_Escalado(1.5,0.5,1.5));

@@ -92,13 +92,19 @@ public:
     BaseGrua();
 };
 
+
+class Gancho : public NodoEscena{
+public:
+    Gancho(unsigned longitud, unsigned pos_izda);
+};
+
 class Grua : public NodoEscena{
 public:
     Grua(){
         unsigned num_cubos_vertical = 10;
+        unsigned longitud_gancho = 6;
         unsigned num_cubos_horizontal = 7;
         unsigned longitud_contrapeso = 6;
-
 
         agregar(new BaseGrua);
         agregar(MAT_Traslacion(0,0.5,0));
@@ -107,6 +113,7 @@ public:
         agregar(new CablesTensores(num_cubos_horizontal, longitud_contrapeso));
         agregar(new RemateBrazoHorizontal);
         agregar(new ContrapesoBrazoHorizontal(longitud_contrapeso));
+        agregar(new Gancho(longitud_gancho, num_cubos_horizontal));
         agregar(MAT_Traslacion(0, sqrt(1-0.5*0.5),0));
         agregar(new BrazoHorizontal(num_cubos_horizontal));
     }
