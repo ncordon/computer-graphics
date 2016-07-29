@@ -105,11 +105,15 @@ public:
         unsigned longitud_gancho = 6;
         unsigned num_cubos_horizontal = 7;
         unsigned longitud_contrapeso = 6;
+        double alpha=45.0;
 
         agregar(new BaseGrua);
         agregar(MAT_Traslacion(0,0.5,0));
         agregar(new BrazoVertical(num_cubos_vertical));
         agregar(MAT_Traslacion(0, num_cubos_vertical,0));
+        agregar(MAT_Traslacion(0.5,0,0.5));
+        agregar(MAT_Rotacion(alpha,0,1,0));
+        agregar(MAT_Traslacion(-0.5,0,-0.5));
         agregar(new CablesTensores(num_cubos_horizontal, longitud_contrapeso));
         agregar(new RemateBrazoHorizontal);
         agregar(new ContrapesoBrazoHorizontal(longitud_contrapeso));
