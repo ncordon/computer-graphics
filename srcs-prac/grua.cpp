@@ -75,14 +75,14 @@ BrazoHorizontal::BrazoHorizontal(unsigned num_cubos){
     NodoEscena *otro_lateral = new NodoEscena;
     NodoEscena *tapa = new NodoEscena;
     un_lateral->agregar(MAT_Rotacion(-30,0,1,0));
-    un_lateral->agregar(new LateralBrazoHorizontal(num_cubos));
+    un_lateral->agregar(new LateralBrazoHorizontal(num_cubos-1));
     otro_lateral->agregar(MAT_Rotacion(30,0,1,0));
-    otro_lateral->agregar(new LateralBrazoHorizontal(num_cubos));
+    otro_lateral->agregar(new LateralBrazoHorizontal(num_cubos-1));
     tapa->agregar(MAT_Traslacion(sqrt(1-0.5*0.5),-1,0.5));
     tapa->agregar(MAT_Rotacion(90,0,1,0));
-    tapa->agregar(new TiraTriangulada(num_cubos+1));
+    tapa->agregar(new TiraTriangulada(num_cubos));
 
-    agregar(MAT_Traslacion(-1.0*num_cubos,0,0.5));
+    agregar(MAT_Traslacion(-1.0*(num_cubos-1),0,0.5));
     agregar(MAT_Rotacion(-90,0,0,1));
     agregar(un_lateral);
     agregar(otro_lateral);
@@ -183,6 +183,10 @@ SujecionCable::SujecionCable(){
 }
 
 Gancho::Gancho(unsigned longitud, double traslacion){
+    this->traslacion = traslacion;
+    this->max_traslacion = traslacion;
+    this->min_traslacion = 3;
+
     indice_traslacion = entradas.size();
     agregar(MAT_Traslacion(-traslacion,0,0));
     agregar(new SujecionCable);
@@ -197,6 +201,12 @@ void Gancho::aumentarLongitud(double offset){
 
 void Gancho::aumentarTraslacion(double offset){
     traslacion = traslacion + offset;
+
+    if(traslacion > max_traslacion)
+        traslacion = max_traslacion;
+    if(traslacion < min_traslacion)
+        traslacion = min_traslacion;
+
     entradas.at(indice_traslacion) = MAT_Traslacion(-traslacion,0,0);
 }
 
@@ -208,11 +218,12 @@ BaseGrua::BaseGrua(){
 
 Grua::Grua(unsigned longitud_vertical, unsigned longitud_gancho,
      unsigned longitud_horizontal, unsigned longitud_contrapeso, double giro_cabeza){
-
+/*
     this->longitud_vertical = longitud_vertical;
     this->longitud_gancho = longitud_gancho;
     this->longitud_horizontal = longitud_horizontal;
     this->longitud_contrapeso = longitud_contrapeso;
+*/
     this->giro_cabeza = giro_cabeza;
 
     agregar(new BaseGrua);

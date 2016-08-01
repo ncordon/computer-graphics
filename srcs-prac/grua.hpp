@@ -122,6 +122,7 @@ class Gancho : public NodoEscena{
     unsigned indice_gancho;
     unsigned indice_traslacion;
     double traslacion;
+    double max_traslacion, min_traslacion;
 public:
     Gancho(unsigned longitud, double traslacion);
 
@@ -132,15 +133,16 @@ public:
 
 class Grua : public NodoEscena{
 protected:
-    unsigned longitud_vertical;
+/*  unsigned longitud_vertical;
     unsigned longitud_gancho;
     unsigned longitud_horizontal;
     unsigned longitud_contrapeso;
+*/
     double giro_cabeza;
 
     unsigned indice_giro_cabeza;
     unsigned indice_gancho;
-    unsigned indice_altura;
+    //unsigned indice_altura;
 public:
     Grua(unsigned longitud_vertical, unsigned longitud_gancho,
          unsigned longitud_horizontal, unsigned longitud_contrapeso, double giro_cabeza);
