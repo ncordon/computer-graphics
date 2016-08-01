@@ -128,7 +128,7 @@ CablesTensores::CablesTensores(unsigned longitud_brazo, unsigned longitud_contra
     double offset_dcha = 2 - 0.1 - sqrt(1-0.5*0.5);
     double longitud_dcha = sqrt((longitud_contrapeso-1)*(longitud_contrapeso-1) + 4);
     double longitud_izda = sqrt((longitud_brazo-1)*(longitud_brazo-1) + offset_dcha*offset_dcha);
-    double ang_contrapeso = -180+180*atan((longitud_contrapeso-1)/2.0)/PI;
+    double ang_contrapeso = -180+180*atan((longitud_contrapeso-1)/(2.0-0.1))/PI;
     double ang_brazo = 180-180*atan((longitud_brazo-1)/offset_dcha)/PI;
 
     NodoEscena *cable_dcha = new NodoEscena;
@@ -230,6 +230,7 @@ Grua::Grua(unsigned longitud_vertical, unsigned longitud_gancho,
     agregar(new Gancho(longitud_gancho, longitud_horizontal));
     agregar(MAT_Traslacion(0, sqrt(1-0.5*0.5),0));
     agregar(new BrazoHorizontal(longitud_horizontal));
+    //agregar(new Gancho(longitud_gancho, longitud_horizontal));
 }
 
 
@@ -243,7 +244,16 @@ void Grua::aumentarLongitudGancho(double offset){
     gancho->aumentarLongitud(offset);
 }
 
-void Grua::girarCabezaGrua(double alpha){
-    giro_cabeza = giro_cabeza + alpha;
+void Grua::girarCabezaGrua(double offset){
+    giro_cabeza = giro_cabeza + offset;
+
+    while(giro_cabeza > 360){
+        giro_cabeza -= 360;
+    }
+
+    while(giro_cabeza < 0){
+        giro_cabeza += 360;
+    }
+
     entradas.at(indice_giro_cabeza) = MAT_Rotacion(giro_cabeza,0,1,0);
 }

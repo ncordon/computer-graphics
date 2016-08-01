@@ -149,7 +149,7 @@ public:
 
     void aumentarLongitudGancho(double offset);
 
-    void girarCabezaGrua(double alpha);
+    void girarCabezaGrua(double offset);
 };
 
 #endif
