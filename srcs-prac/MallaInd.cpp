@@ -4,7 +4,7 @@ void MallaInd::visualizar(unsigned modo_vis){
 
 
     if (modo_vis < 3){
-        glColor3f(0.2, 0.2, 0.2);
+        glColor3f(color(R), color(G), color(B));
 
         switch(modo_vis){
         case(0):

@@ -95,19 +95,10 @@ public:
 class HiloGancho : public NodoEscena{
 protected:
     double longitud;
+    double max_longitud, min_longitud;
     unsigned indice_escalado;
 public:
-    HiloGancho(double longitud);
-
-    void aumentarLongitud(double offset);
-};
-
-class CableGancho : public NodoEscena{
-protected:
-    double longitud;
-    unsigned indice_traslacion, indice_hilo;
-public:
-    CableGancho(double longitud);
+    HiloGancho(double longitud, double min_longitud, double max_longitud);
 
     void aumentarLongitud(double offset);
 };
@@ -117,14 +108,14 @@ public:
     SujecionCable();
 };
 
-
 class Gancho : public NodoEscena{
-    unsigned indice_gancho;
-    unsigned indice_traslacion;
+    unsigned indice_traslacion, indice_hilo, indice_cable;
     double traslacion;
     double max_traslacion, min_traslacion;
+    double longitud;
+    double max_longitud, min_longitud;
 public:
-    Gancho(unsigned longitud, double traslacion);
+    Gancho(double longitud, double traslacion);
 
     void aumentarLongitud(double offset);
 

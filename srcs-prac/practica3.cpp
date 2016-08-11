@@ -7,12 +7,14 @@ int p3_grado_libertad_activo;
 const int NUM_GRADOS_LIBERTAD = 3;
 static NodoEscena *p3_obj;
 static double   giro_offset,
-                traslacion_offset;
+                traslacion_offset,
+                longitud_offset;
 
 void P3_Inicializar( int argc, char *argv[] ){
     p3_grado_libertad_activo = 1;
     giro_offset = 45;
     traslacion_offset = 1;
+    longitud_offset = 1;
     p3_obj = new Grua(10,6,8,6,45);
 }
 
@@ -39,6 +41,7 @@ bool P3_FGE_PulsarTeclaNormal(  unsigned char tecla ){
             ((Grua*)p3_obj)->aumentarTraslacionGancho(traslacion_offset);
             break;
         case 3:
+            ((Grua*)p3_obj)->aumentarLongitudGancho(longitud_offset);
             break;
         default:
             break;
@@ -58,6 +61,7 @@ bool P3_FGE_PulsarTeclaNormal(  unsigned char tecla ){
             ((Grua*)p3_obj)->aumentarTraslacionGancho(-traslacion_offset);
             break;
         case 3:
+            ((Grua*)p3_obj)->aumentarLongitudGancho(-longitud_offset);
             break;
         default:
             break;

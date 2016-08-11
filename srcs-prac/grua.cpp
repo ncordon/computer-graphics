@@ -2,7 +2,9 @@
 
 Viga::Viga(double longitud){
     agregar(MAT_Escalado(0.05,longitud,0.05));
-    agregar(new Cilindro);
+    Cilindro *cilindro = new Cilindro;
+    cilindro->changeColor(Tupla3f(0.72,0.64,0.12));
+    agregar(cilindro);
 }
 
 
@@ -115,13 +117,17 @@ ContrapesoBrazoHorizontal::ContrapesoBrazoHorizontal(unsigned longitud){
     NodoEscena *contrapeso = new NodoEscena;
 
     contrapeso->agregar(MAT_Escalado(2,-1,1));
-    contrapeso->agregar(new Cubo);
+    Cubo *cubo = new Cubo;
+    cubo->changeColor(Tupla3f(0.5,0.5,0.5));
+    contrapeso->agregar(cubo);
 
     agregar(MAT_Traslacion(longitud+1,0,0));
     agregar(MAT_Escalado(-1,1,1));
     agregar(contrapeso);
     agregar(MAT_Escalado(longitud,0.1,1));
-    agregar(new Cubo);
+    Cubo *tablon = new Cubo;
+    tablon->changeColor(Tupla3f(0.74,0.74,0.66));
+    agregar(tablon);
 }
 
 CablesTensores::CablesTensores(unsigned longitud_brazo, unsigned longitud_contrapeso){
@@ -146,8 +152,10 @@ CablesTensores::CablesTensores(unsigned longitud_brazo, unsigned longitud_contra
     agregar(cable_izda);
 }
 
-HiloGancho::HiloGancho(double longitud){
+HiloGancho::HiloGancho(double longitud, double min_longitud, double max_longitud){
     this->longitud = longitud;
+    this->max_longitud = max_longitud;
+    this->min_longitud = min_longitud;
     indice_escalado = entradas.size();
     agregar(MAT_Escalado(0.3,longitud,0.3));
     agregar(new Viga);
@@ -155,34 +163,25 @@ HiloGancho::HiloGancho(double longitud){
 
 void HiloGancho::aumentarLongitud(double offset){
     longitud = longitud + offset;
+
+    if(longitud > max_longitud)
+        longitud = max_longitud;
+    if(longitud < min_longitud)
+        longitud = min_longitud;
+
     entradas.at(indice_escalado) = MAT_Escalado(0.3,longitud,0.3);
 }
 
-CableGancho::CableGancho(double longitud){
-    this->longitud = longitud;
-
-    indice_traslacion = entradas.size();
-    agregar(MAT_Traslacion(1,-longitud-0.1,0.5));
-    indice_hilo = entradas.size();
-    agregar(new HiloGancho(longitud));
-    // Final del gancho
-    agregar(MAT_Escalado(0.1,-0.2, 0.1));
-    agregar(new Cilindro);
-}
-
-void CableGancho::aumentarLongitud(double offset){
-    longitud = longitud + offset;
-    entradas.at(indice_traslacion) = MAT_Traslacion(1,-1.0*longitud-0.1,0.5);
-    HiloGancho *hilo = (HiloGancho*)entradas.at(indice_hilo).objeto;
-    hilo->aumentarLongitud(offset);
-}
 
 SujecionCable::SujecionCable(){
     agregar(MAT_Escalado(2,-0.1,1));
     agregar(new Cubo);
 }
 
-Gancho::Gancho(unsigned longitud, double traslacion){
+Gancho::Gancho(double longitud, double traslacion){
+    this->longitud = longitud;
+    this->max_longitud = longitud;
+    this->min_longitud = 3;
     this->traslacion = traslacion;
     this->max_traslacion = traslacion;
     this->min_traslacion = 3;
@@ -190,13 +189,28 @@ Gancho::Gancho(unsigned longitud, double traslacion){
     indice_traslacion = entradas.size();
     agregar(MAT_Traslacion(-traslacion,0,0));
     agregar(new SujecionCable);
-    indice_gancho = entradas.size();
-    agregar(new CableGancho(longitud));
+    indice_cable = entradas.size();
+    agregar(MAT_Traslacion(1,-longitud-0.1,0.5));
+    indice_hilo = entradas.size();
+    agregar(new HiloGancho(longitud, min_longitud, max_longitud));
+    // Final del gancho
+    agregar(MAT_Escalado(0.1,-0.2, 0.1));
+    agregar(new Cilindro);
+
 }
 
 void Gancho::aumentarLongitud(double offset){
-    CableGancho *cable = (CableGancho *)entradas.at(indice_gancho).objeto;
-    cable->aumentarLongitud(offset);
+    longitud = longitud + offset;
+
+    if(longitud > max_longitud)
+        longitud = max_longitud;
+    if(longitud < min_longitud)
+        longitud = min_longitud;
+
+    entradas.at(indice_cable) = MAT_Traslacion(1,-longitud-0.1,0.5);
+    HiloGancho *hilo = (HiloGancho*)entradas.at(indice_hilo).objeto;
+    hilo->aumentarLongitud(offset);
+
 }
 
 void Gancho::aumentarTraslacion(double offset){
@@ -213,7 +227,9 @@ void Gancho::aumentarTraslacion(double offset){
 BaseGrua::BaseGrua(){
     agregar(MAT_Traslacion(-0.25,0,-0.25));
     agregar(MAT_Escalado(1.5,0.5,1.5));
-    agregar(new Cubo);
+    Cubo *cubo = new Cubo;
+    cubo->changeColor(Tupla3f(0.74,0.74,0.66));
+    agregar(cubo);
 }
 
 Grua::Grua(unsigned longitud_vertical, unsigned longitud_gancho,
