@@ -73,9 +73,9 @@ LateralBrazoHorizontal::LateralBrazoHorizontal(unsigned num_cubos){
 }
 
 BrazoHorizontal::BrazoHorizontal(unsigned num_cubos){
-    NodoEscena *un_lateral = new NodoEscena;
-    NodoEscena *otro_lateral = new NodoEscena;
-    NodoEscena *tapa = new NodoEscena;
+    NodoGrafoEscena *un_lateral = new NodoGrafoEscena;
+    NodoGrafoEscena *otro_lateral = new NodoGrafoEscena;
+    NodoGrafoEscena *tapa = new NodoGrafoEscena;
     un_lateral->agregar(MAT_Rotacion(-30,0,1,0));
     un_lateral->agregar(new LateralBrazoHorizontal(num_cubos-1));
     otro_lateral->agregar(MAT_Rotacion(30,0,1,0));
@@ -92,7 +92,7 @@ BrazoHorizontal::BrazoHorizontal(unsigned num_cubos){
 }
 
 TrianguloRemate::TrianguloRemate(){
-    NodoEscena *viga_diag = new NodoEscena;
+    NodoGrafoEscena *viga_diag = new NodoGrafoEscena;
     double alpha = 90 - atan(2/0.5)/PI*180;
 
     viga_diag->agregar(MAT_Rotacion(-alpha,0,0,1));
@@ -114,7 +114,7 @@ RemateBrazoHorizontal::RemateBrazoHorizontal(){
 
 
 ContrapesoBrazoHorizontal::ContrapesoBrazoHorizontal(unsigned longitud){
-    NodoEscena *contrapeso = new NodoEscena;
+    NodoGrafoEscena *contrapeso = new NodoGrafoEscena;
 
     contrapeso->agregar(MAT_Escalado(2,-1,1));
     Cubo *cubo = new Cubo;
@@ -137,12 +137,12 @@ CablesTensores::CablesTensores(unsigned longitud_brazo, unsigned longitud_contra
     double ang_contrapeso = -180+180*atan((longitud_contrapeso-1)/(2.0-0.1))/PI;
     double ang_brazo = 180-180*atan((longitud_brazo-1)/offset_dcha)/PI;
 
-    NodoEscena *cable_dcha = new NodoEscena;
+    NodoGrafoEscena *cable_dcha = new NodoGrafoEscena;
     cable_dcha->agregar(MAT_Rotacion(ang_contrapeso,0,0,1));
     cable_dcha->agregar(MAT_Escalado(0.1,longitud_dcha,0.1));
     cable_dcha->agregar(new Viga);
 
-    NodoEscena *cable_izda = new NodoEscena;
+    NodoGrafoEscena *cable_izda = new NodoGrafoEscena;
     cable_izda->agregar(MAT_Rotacion(ang_brazo,0,0,1));
     cable_izda->agregar(MAT_Escalado(0.1,longitud_izda,0.1));
     cable_izda->agregar(new Viga);

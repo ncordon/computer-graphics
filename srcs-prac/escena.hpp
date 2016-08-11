@@ -30,7 +30,7 @@ struct EntradaNodo{
 
 
 // Clase nodo del grafo de escena
-class NodoEscena : public Objeto3D{
+class NodoGrafoEscena : public Objeto3D{
 protected:
     // Pila de entradas
     vector<EntradaNodo> entradas;

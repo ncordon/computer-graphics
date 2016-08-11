@@ -1,6 +1,6 @@
 #include "escena.hpp"
 
-void NodoEscena::visualizar(unsigned modo){
+void NodoGrafoEscena::visualizar(unsigned modo){
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
 

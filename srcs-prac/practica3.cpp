@@ -5,7 +5,7 @@
 // Grado de libertad actual seleccionado en el programa
 int p3_grado_libertad_activo;
 const int NUM_GRADOS_LIBERTAD = 3;
-static NodoEscena *p3_obj;
+static NodoGrafoEscena *p3_obj;
 static double   giro_offset,
                 traslacion_offset,
                 longitud_offset;
@@ -15,7 +15,7 @@ void P3_Inicializar( int argc, char *argv[] ){
     giro_offset = 45;
     traslacion_offset = 1;
     longitud_offset = 1;
-    p3_obj = new Grua(10,6,8,6,45);
+    p3_obj = new Grua(10,7,8,6,45);
 }
 
 
