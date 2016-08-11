@@ -32,12 +32,6 @@ public:
 };
 
 
-class ParArmazon : public NodoGrafoEscena{
-public:
-    ParArmazon();
-};
-
-
 class TiraTriangulada : public NodoGrafoEscena{
 public:
     TiraTriangulada(unsigned num_cubos);
@@ -109,6 +103,7 @@ public:
 };
 
 class Gancho : public NodoGrafoEscena{
+protected:
     unsigned indice_traslacion, indice_hilo, indice_cable;
     double traslacion;
     double max_traslacion, min_traslacion;
@@ -124,16 +119,9 @@ public:
 
 class Grua : public NodoGrafoEscena{
 protected:
-/*  unsigned longitud_vertical;
-    unsigned longitud_gancho;
-    unsigned longitud_horizontal;
-    unsigned longitud_contrapeso;
-*/
     double giro_cabeza;
-
     unsigned indice_giro_cabeza;
     unsigned indice_gancho;
-    //unsigned indice_altura;
 public:
     Grua(unsigned longitud_vertical, unsigned longitud_gancho,
          unsigned longitud_horizontal, unsigned longitud_contrapeso, double giro_cabeza);

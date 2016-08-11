@@ -10,8 +10,7 @@ Viga::Viga(double longitud){
 
 VigaDiagonal::VigaDiagonal(double longitud){
     agregar(MAT_Traslacion(1,0,0));
-    agregar(MAT_Escalado(-1,1,1));
-    agregar(MAT_Rotacion(-45,0,0,1));
+    agregar(MAT_Rotacion(45,0,0,1));
     agregar(new Viga(longitud));
 }
 
@@ -30,15 +29,6 @@ ArmazonBasico::ArmazonBasico(){
     agregar(MAT_Rotacion(90,0,0,1));
     agregar(new ParColumnas);
 }
-
-
-ParArmazon::ParArmazon(){
-    agregar(new ArmazonBasico);
-    agregar(MAT_Traslacion(1,0,1));
-    agregar(MAT_Escalado(-1,1,1));
-    agregar(new ArmazonBasico);
-}
-
 
 
 TiraTriangulada::TiraTriangulada(unsigned num_cubos){
@@ -131,11 +121,11 @@ ContrapesoBrazoHorizontal::ContrapesoBrazoHorizontal(unsigned longitud){
 }
 
 CablesTensores::CablesTensores(unsigned longitud_brazo, unsigned longitud_contrapeso){
-    double offset_dcha = 2 - 0.1 - sqrt(1-0.5*0.5);
+    double offset_izda = 2 - 0.1 - sqrt(1-0.5*0.5);
     double longitud_dcha = sqrt((longitud_contrapeso-1)*(longitud_contrapeso-1) + 4);
-    double longitud_izda = sqrt((longitud_brazo-1)*(longitud_brazo-1) + offset_dcha*offset_dcha);
+    double longitud_izda = sqrt((longitud_brazo-1)*(longitud_brazo-1) + offset_izda*offset_izda);
     double ang_contrapeso = -180+180*atan((longitud_contrapeso-1)/(2.0-0.1))/PI;
-    double ang_brazo = 180-180*atan((longitud_brazo-1)/offset_dcha)/PI;
+    double ang_brazo = 180-180*atan((longitud_brazo-1)/offset_izda)/PI;
 
     NodoGrafoEscena *cable_dcha = new NodoGrafoEscena;
     cable_dcha->agregar(MAT_Rotacion(ang_contrapeso,0,0,1));
@@ -231,15 +221,10 @@ BaseGrua::BaseGrua(){
     cubo->changeColor(Tupla3f(0.74,0.74,0.66));
     agregar(cubo);
 }
-
+//(10,7,8,6,45)
 Grua::Grua(unsigned longitud_vertical, unsigned longitud_gancho,
      unsigned longitud_horizontal, unsigned longitud_contrapeso, double giro_cabeza){
-/*
-    this->longitud_vertical = longitud_vertical;
-    this->longitud_gancho = longitud_gancho;
-    this->longitud_horizontal = longitud_horizontal;
-    this->longitud_contrapeso = longitud_contrapeso;
-*/
+
     this->giro_cabeza = giro_cabeza;
 
     agregar(new BaseGrua);
@@ -247,17 +232,16 @@ Grua::Grua(unsigned longitud_vertical, unsigned longitud_gancho,
     agregar(new BrazoVertical(longitud_vertical));
     agregar(MAT_Traslacion(0, longitud_vertical,0));
     agregar(MAT_Traslacion(0.5,0,0.5));
-    indice_giro_cabeza = entradas.size();
+    this->indice_giro_cabeza = entradas.size();
     agregar(MAT_Rotacion(giro_cabeza,0,1,0));
     agregar(MAT_Traslacion(-0.5,0,-0.5));
     agregar(new CablesTensores(longitud_horizontal, longitud_contrapeso));
     agregar(new RemateBrazoHorizontal);
     agregar(new ContrapesoBrazoHorizontal(longitud_contrapeso));
-    indice_gancho = entradas.size();
+    this->indice_gancho = entradas.size();
     agregar(new Gancho(longitud_gancho, longitud_horizontal));
     agregar(MAT_Traslacion(0, sqrt(1-0.5*0.5),0));
     agregar(new BrazoHorizontal(longitud_horizontal));
-    //agregar(new Gancho(longitud_gancho, longitud_horizontal));
 }
 
 
