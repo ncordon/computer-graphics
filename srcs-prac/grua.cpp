@@ -55,7 +55,7 @@ BrazoVertical::BrazoVertical(unsigned num_cubos){
 }
 
 LateralBrazoHorizontal::LateralBrazoHorizontal(unsigned num_cubos){
-    agregar(new TiraTriangulada(num_cubos));
+    agregar(new TiraTriangulada(num_cubos-1));
     agregar(MAT_Traslacion(0,-1,0));
     agregar(new VigaDiagonal(sqrt(2)));
     agregar(MAT_Traslacion(1,0,0));
@@ -67,9 +67,9 @@ BrazoHorizontal::BrazoHorizontal(unsigned num_cubos){
     NodoGrafoEscena *otro_lateral = new NodoGrafoEscena;
     NodoGrafoEscena *tapa = new NodoGrafoEscena;
     un_lateral->agregar(MAT_Rotacion(-30,0,1,0));
-    un_lateral->agregar(new LateralBrazoHorizontal(num_cubos-1));
+    un_lateral->agregar(new LateralBrazoHorizontal(num_cubos));
     otro_lateral->agregar(MAT_Rotacion(30,0,1,0));
-    otro_lateral->agregar(new LateralBrazoHorizontal(num_cubos-1));
+    otro_lateral->agregar(new LateralBrazoHorizontal(num_cubos));
     tapa->agregar(MAT_Traslacion(sqrt(1-0.5*0.5),-1,0.5));
     tapa->agregar(MAT_Rotacion(90,0,1,0));
     tapa->agregar(new TiraTriangulada(num_cubos));
@@ -86,10 +86,10 @@ TrianguloRemate::TrianguloRemate(){
     double alpha = 90 - atan(2/0.5)/PI*180;
 
     viga_diag->agregar(MAT_Rotacion(-alpha,0,0,1));
-    viga_diag->agregar(new Viga(sqrt(5)-0.2));
+    viga_diag->agregar(new Viga(sqrt(4+0.5*0.5)));
     agregar(MAT_Rotacion(alpha,1,0,0));
     agregar(viga_diag);
-    // El 1.1 me permite corregir la anchura de la barra
+
     agregar(MAT_Traslacion(1,0,0));
     agregar(MAT_Escalado(-1,1,1));
     agregar(viga_diag);
@@ -121,10 +121,10 @@ ContrapesoBrazoHorizontal::ContrapesoBrazoHorizontal(unsigned longitud){
 }
 
 CablesTensores::CablesTensores(unsigned longitud_brazo, unsigned longitud_contrapeso){
-    double offset_izda = 2 - 0.1 - sqrt(1-0.5*0.5);
+    double offset_izda = 2 - sqrt(1-0.5*0.5);
     double longitud_dcha = sqrt((longitud_contrapeso-1)*(longitud_contrapeso-1) + 4);
     double longitud_izda = sqrt((longitud_brazo-1)*(longitud_brazo-1) + offset_izda*offset_izda);
-    double ang_contrapeso = -180+180*atan((longitud_contrapeso-1)/(2.0-0.1))/PI;
+    double ang_contrapeso = -180+180*atan((longitud_contrapeso-1)/(2.0))/PI;
     double ang_brazo = 180-180*atan((longitud_brazo-1)/offset_izda)/PI;
 
     NodoGrafoEscena *cable_dcha = new NodoGrafoEscena;
@@ -137,7 +137,7 @@ CablesTensores::CablesTensores(unsigned longitud_brazo, unsigned longitud_contra
     cable_izda->agregar(MAT_Escalado(0.1,longitud_izda,0.1));
     cable_izda->agregar(new Viga);
 
-    agregar(MAT_Traslacion(0.5,2-0.1,0.5));
+    agregar(MAT_Traslacion(0.5,2,0.5));
     agregar(cable_dcha);
     agregar(cable_izda);
 }
