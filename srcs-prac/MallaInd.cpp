@@ -51,3 +51,10 @@ void MallaInd::visualizar(unsigned modo_vis){
         glDisableClientState(GL_VERTEX_ARRAY);
     }
 }
+
+
+void MallaInd::calcularNormales(){
+    // Implementar cálculo de las normales de vértices y de caras
+
+
+}

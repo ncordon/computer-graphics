@@ -18,12 +18,13 @@
 #include "practica1.hpp"
 #include "practica2.hpp"
 #include "practica3.hpp"
+#include "practica4.hpp"
 
 // evita la necesidad de escribir std::
 using namespace std ;
 
 // Número de prácticas
-const unsigned N_PRACTICAS = 3;
+const unsigned N_PRACTICAS = 4;
 // *********************************************************************
 // **
 // ** Variables globales
@@ -182,6 +183,9 @@ void DibujarObjetos()
     case 3 :
         P3_DibujarObjetos(modo_vis) ; // definido en 'practica3.hpp'
         break ;
+    case 4 :
+        P4_DibujarObjetos(modo_vis) ; // definido en 'practica3.hpp'
+        break ;
     default :
         cout << "El valor de 'practica_actual' (" << practica_actual  << ") es incorrecto" << endl ;
         break ;
@@ -269,6 +273,9 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
             redibujar = P2_FGE_PulsarTeclaNormal(tecla);
             break;
         case 3:
+            redibujar = P3_FGE_PulsarTeclaNormal(tecla);
+            break;
+        case 4:
             redibujar = P3_FGE_PulsarTeclaNormal(tecla);
             break;
         default :
@@ -456,8 +463,11 @@ void Inicializar( int argc, char *argv[] ){
     // inicializar práctica 2.
     P2_Inicializar( argc, argv ) ;
 
-    // inicializar práctica 2.
+    // inicializar práctica 3.
     P3_Inicializar( argc, argv ) ;
+
+    // inicializar práctica 4.
+    P4_Inicializar( argc, argv ) ;
 }
 
 // *********************************************************************

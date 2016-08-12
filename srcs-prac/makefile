@@ -15,14 +15,14 @@
 ## unidades a enlazar y nombre del binario ejecutable
 
 target_name	:= prac
-units_loc   :=$(patsubst %.cpp, %, $(wildcard *.cpp)) 
+units_loc   :=$(patsubst %.cpp, %, $(wildcard *.cpp))
 ### nota: añadir a 'units_loc' los módulos practica2 practica3, etc.....
 
 units       := jpg_memsrc jpg_readwrite\
                shaders matrices-tr\
                file_ply_stl\
-               aux
-
+               aux\
+               jpg_imagen
 ## ---------------------------------------------------------------------
 ## aspectos configurables
 
