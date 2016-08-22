@@ -54,7 +54,29 @@ void MallaInd::visualizar(unsigned modo_vis){
 
 
 void MallaInd::calcularNormales(){
-    // Implementar cálculo de las normales de vértices y de caras
+    std::vector< std::vector<int> > adyacentes_vertices (vertices.size(), std::vector<int>());
 
+    for (int i = 0; i < caras.size(); i++){
+        Tupla3f a = vertices[ caras[i](1) ] - vertices[ caras[i](0) ];
+        Tupla3f b = vertices[ caras[i](2) ] - vertices[ caras[i](0) ];
 
+        normal_caras.push_back (a.cross(b).normalized());
+    }
+
+    // Cálculo de las caras adyacentes a cada vector
+    for (int i = 0; i < caras.size(); i++){
+
+        for (int j = 0; j < 3; j++)
+          adyacentes_vertices[caras[i][j]].push_back(i);
+    }
+
+    for (int i = 0; i < vertices.size(); i++){
+        Tupla3f m(0,0,0);
+
+        for (int j = 0; j < adyacentes_vertices[i].size(); j++){
+            m = m + normal_caras[ adyacentes_vertices[i][j] ];
+        }
+
+        normal_vertices.push_back(m.normalized());
+    }
 }
