@@ -14,3 +14,10 @@ A list of usable keys:
 * <kbd>\<\></kbd>: increases/decreases value of current freedom degree (when applicable)
 
 ![Torus](./imgs/toro.png)
+
+# Dependencies
+
+* `g++`
+* `freeglut3-dev`
+* `libglew-dev`
+* `libjpeg-dev`
