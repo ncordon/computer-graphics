@@ -14,6 +14,7 @@
 unsigned p1_objeto_activo = 0 ; // objeto activo: cubo (0), tetraedro (1), otros....
 int N = 20;
 std::vector<MallaInd> p1_objetos;
+ContextoVis p1_cv;
 
 
 Cubo::Cubo(){
@@ -198,5 +199,6 @@ bool P1_FGE_PulsarTeclaNormal(unsigned char tecla){
 // modo: 0 - puntos, 1 - alambre, 2 - sólido, 3 - sólido ajedrez , >=4 otros....
 
 void P1_DibujarObjetos(unsigned modo){
-    p1_objetos[p1_objeto_activo].visualizar(modo);
+    p1_cv.modo_vis = modo;
+    p1_objetos[p1_objeto_activo].visualizar(p1_cv);
 }

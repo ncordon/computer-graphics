@@ -14,6 +14,7 @@ static MallaPLY* obj_ply = NULL;
 static MallaRev* obj_rev = NULL;
 static MallaBarrido* obj_barrido = NULL;
 const unsigned N_OBJETOS = 3;
+ContextoVis p2_cv;
 
 void P2_Inicializar( int argc, char *argv[]){
     // Crear objeto de tipo malla PLY y objeto de revolución con new.
@@ -54,12 +55,14 @@ void P2_Inicializar( int argc, char *argv[]){
 
 
 void P2_DibujarObjetos( unsigned modo ){
+    p2_cv.modo_vis = modo;
+
     if (p2_objeto_activo == 0)
-         obj_ply -> visualizar(modo);
+         obj_ply -> visualizar(p2_cv);
     else if(p2_objeto_activo == 1)
-         obj_rev -> visualizar(modo);
+         obj_rev -> visualizar(p2_cv);
     else
-        obj_barrido -> visualizar(modo);
+        obj_barrido -> visualizar(p2_cv);
 }
 
 

@@ -1,6 +1,6 @@
 #include "escena.hpp"
 
-void NodoGrafoEscena::visualizar(unsigned modo){
+void NodoGrafoEscena::visualizar(ContextoVis &cv){
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
 
@@ -10,7 +10,7 @@ void NodoGrafoEscena::visualizar(unsigned modo){
         }
         else{
             // Visualizar el objeto
-            entradas[i].objeto-> visualizar(modo);
+            entradas[i].objeto-> visualizar(cv);
         }
     }
 

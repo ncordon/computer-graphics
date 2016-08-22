@@ -1,12 +1,10 @@
 #include "MallaInd.hpp"
 
-void MallaInd::visualizar(unsigned modo_vis){
-
-
-    if (modo_vis < 3){
+void MallaInd::visualizar(ContextoVis &cv){
+    if (cv.modo_vis < 3){
         glColor3f(color(R), color(G), color(B));
 
-        switch(modo_vis){
+        switch(cv.modo_vis){
         case(0):
             // Modo puntos
             glPolygonMode (GL_FRONT_AND_BACK, GL_POINT);
@@ -27,7 +25,7 @@ void MallaInd::visualizar(unsigned modo_vis){
         glDisableClientState(GL_VERTEX_ARRAY);
     }
     // Modo ajedrez
-    else{
+    else if (cv.modo_vis==3){
         glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
         std::vector<Tupla3i> caras_pares;
         std::vector<Tupla3i> caras_impares;
@@ -49,6 +47,10 @@ void MallaInd::visualizar(unsigned modo_vis){
         glDrawElements(GL_TRIANGLES, caras_impares.size()*3, GL_UNSIGNED_INT, caras_impares[0]);
 
         glDisableClientState(GL_VERTEX_ARRAY);
+    }
+    else if (cv.modo_vis==4){
+    }
+    else if (cv.modo_vis==5){
     }
 }
 

@@ -35,7 +35,7 @@ protected:
     // Pila de entradas
     vector<EntradaNodo> entradas;
 public:
-    virtual void visualizar(unsigned modo);
+    virtual void visualizar(ContextoVis &cv);
 
     // Introduce una nueva entrada
     void agregar(EntradaNodo *entrada){

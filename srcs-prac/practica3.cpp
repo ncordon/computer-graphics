@@ -9,6 +9,8 @@ static NodoGrafoEscena *p3_obj;
 static double   giro_offset,
                 traslacion_offset,
                 longitud_offset;
+ContextoVis p3_cv;
+
 
 void P3_Inicializar( int argc, char *argv[] ){
     p3_grado_libertad_activo = 1;
@@ -77,5 +79,6 @@ bool P3_FGE_PulsarTeclaNormal(  unsigned char tecla ){
 }
 
 void P3_DibujarObjetos( unsigned modo ){
-    p3_obj->visualizar(modo);
+    p3_cv.modo_vis = modo;
+    p3_obj->visualizar(p3_cv);
 }
