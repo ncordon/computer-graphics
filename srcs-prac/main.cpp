@@ -25,6 +25,9 @@ using namespace std ;
 
 // Número de prácticas
 const unsigned N_PRACTICAS = 4;
+
+// Número de modos de visualización
+const unsigned N_MODOS_VIS = 5;
 // *********************************************************************
 // **
 // ** Variables globales
@@ -246,8 +249,8 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
 
     switch (tecla){
     case 'M' :
+        modo_vis %= N_MODOS_VIS;
         modo_vis += 1;
-        modo_vis %= 4;
         break;
     case 'Q' :
         exit( 0 );

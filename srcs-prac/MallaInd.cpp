@@ -1,6 +1,10 @@
 #include "MallaInd.hpp"
 
 void MallaInd::visualizar(ContextoVis &cv){
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, 0, vertices[0]);
+
+
     if (cv.modo_vis < 3){
         glColor3f(color(R), color(G), color(B));
 
@@ -18,11 +22,7 @@ void MallaInd::visualizar(ContextoVis &cv){
             glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
             break;
         }
-
-        glEnableClientState(GL_VERTEX_ARRAY);
-        glVertexPointer(3, GL_FLOAT, 0, vertices[0]);
         glDrawElements(GL_TRIANGLES, caras.size()*3, GL_UNSIGNED_INT, caras[0]);
-        glDisableClientState(GL_VERTEX_ARRAY);
     }
     // Modo ajedrez
     else if (cv.modo_vis==3){
@@ -36,22 +36,30 @@ void MallaInd::visualizar(ContextoVis &cv){
             else
                 caras_impares.push_back(caras[i]);
 
-        glEnableClientState(GL_VERTEX_ARRAY);
         // Dibuja las caras pares en un color
         glColor3f(0.2, 0.2, 0.2);
-        glVertexPointer(3, GL_FLOAT, 0, vertices[0]);
         glDrawElements(GL_TRIANGLES, caras_pares.size()*3, GL_UNSIGNED_INT, caras_pares[0]);
         // Dibuja las caras impares en otro color
         glColor3f(0.8, 0.8, 0.8);
-        glVertexPointer(3, GL_FLOAT, 0, vertices[0]);
         glDrawElements(GL_TRIANGLES, caras_impares.size()*3, GL_UNSIGNED_INT, caras_impares[0]);
+    }
+    else{
+        // Modo con iluminación y sombreado plano
+        if (cv.modo_vis==4)
+            glShadeModel(GL_FLAT);
+        // Modo con iluminación y sombreado de suave
+        else if (cv.modo_vis==5)
+            glShadeModel(GL_SMOOTH);
 
-        glDisableClientState(GL_VERTEX_ARRAY);
+        glEnableClientState(GL_NORMAL_ARRAY);
+
+        if (!normal_caras.empty())
+          glNormalPointer(GL_FLOAT, 0, normal_caras[0]);
+
+        glDrawElements(GL_TRIANGLES, caras.size()*3, GL_UNSIGNED_INT, caras[0]);
+        glDisableClientState(GL_NORMAL_ARRAY);
     }
-    else if (cv.modo_vis==4){
-    }
-    else if (cv.modo_vis==5){
-    }
+    glDisableClientState(GL_VERTEX_ARRAY);
 }
 
 
@@ -62,7 +70,7 @@ void MallaInd::calcularNormales(){
         Tupla3f a = vertices[ caras[i](1) ] - vertices[ caras[i](0) ];
         Tupla3f b = vertices[ caras[i](2) ] - vertices[ caras[i](0) ];
 
-        normal_caras.push_back (a.cross(b).normalized());
+        normal_caras.push_back (b.cross(a).normalized());
     }
 
     // Cálculo de las caras adyacentes a cada vector
