@@ -20,9 +20,11 @@ protected:
 
     // Vector de texturas
     std::vector<Tupla2f> textura_coords;
+
+    // Función para calcular las normales
+    void calcularNormales();
 public:
     virtual void visualizar(ContextoVis &cv);
-    void calcularNormales();
 };
 
 #endif

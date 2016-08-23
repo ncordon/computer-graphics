@@ -44,20 +44,31 @@ void MallaInd::visualizar(ContextoVis &cv){
         glDrawElements(GL_TRIANGLES, caras_impares.size()*3, GL_UNSIGNED_INT, caras_impares[0]);
     }
     else{
+        glEnableClientState(GL_NORMAL_ARRAY);
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
         // Modo con iluminación y sombreado plano
-        if (cv.modo_vis==4)
+        if (cv.modo_vis==4){
             glShadeModel(GL_FLAT);
+
+            if (!normal_caras.empty())
+                glNormalPointer(GL_FLOAT, 0, normal_caras[0]);
+        }
         // Modo con iluminación y sombreado de suave
-        else if (cv.modo_vis==5)
+        else if (cv.modo_vis==5){
             glShadeModel(GL_SMOOTH);
 
-        glEnableClientState(GL_NORMAL_ARRAY);
+            if (!normal_vertices.empty())
+                glNormalPointer(GL_FLOAT, 0, normal_vertices[0]);
+        }
 
-        if (!normal_caras.empty())
-          glNormalPointer(GL_FLOAT, 0, normal_caras[0]);
+        // Si hay coordenadas de textura...
+        if (!textura_coords.empty())
+            glTexCoordPointer( 2, GL_FLOAT, 0, textura_coords[0]);
 
         glDrawElements(GL_TRIANGLES, caras.size()*3, GL_UNSIGNED_INT, caras[0]);
         glDisableClientState(GL_NORMAL_ARRAY);
+        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     }
     glDisableClientState(GL_VERTEX_ARRAY);
 }
