@@ -1,5 +1,19 @@
 #include "custom.h"
 
+void MaterialEstandar::activar(){
+    glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, color[0]);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, color[1]);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color[2]);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, color[3]);
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, exponente);
+
+    if(text == NULL)
+        glDisable( GL_TEXTURE_2D );
+    else
+        text->activar();
+}
+
+
 Textura::Textura( const std::string & archivoJPG ){
     img = new jpg::Imagen(archivoJPG);
 
@@ -8,27 +22,27 @@ Textura::Textura( const std::string & archivoJPG ){
 void Textura::activar(){
     glEnable( GL_TEXTURE_2D );
 
-    if (img == NULL){
-        glGenTextures(1, &id_text);
 
-        switch(mgct){
-            case 1:
-                glTexGenfv(GL_S, GL_OBJECT_PLANE, cs);
-                glTexGenfv(GL_T, GL_OBJECT_PLANE, cs);
-                break;
-            case 2:
-                glTexGenfv(GL_S, GL_EYE_PLANE, cs);
-                glTexGenfv(GL_T, GL_EYE_PLANE, cs);
-                break;
+    glGenTextures(1, &id_text);
 
-            default:
-                gluBuild2DMipmaps(
-                    GL_TEXTURE_2D, GL_RGB, img->tamX(), img->tamY(),
-                    GL_RGB, GL_UNSIGNED_BYTE, (void*)img
-                );
-                break;
-        }
+    switch(mgct){
+        case 1:
+            glTexGenfv(GL_S, GL_OBJECT_PLANE, cs);
+            glTexGenfv(GL_T, GL_OBJECT_PLANE, cs);
+            break;
+        case 2:
+            glTexGenfv(GL_S, GL_EYE_PLANE, cs);
+            glTexGenfv(GL_T, GL_EYE_PLANE, cs);
+            break;
+
+        default:
+            gluBuild2DMipmaps(
+                GL_TEXTURE_2D, GL_RGB, img->tamX(), img->tamY(),
+                GL_RGB, GL_UNSIGNED_BYTE, (void*)img
+            );
+            break;
     }
+
 }
 
 
