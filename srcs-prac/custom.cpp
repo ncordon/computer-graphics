@@ -1,5 +1,37 @@
 #include "custom.h"
 
+Textura::Textura( const std::string & archivoJPG ){
+    img = new jpg::Imagen(archivoJPG);
+
+}
+
+void Textura::activar(){
+    glEnable( GL_TEXTURE_2D );
+
+    if (img == NULL){
+        glGenTextures(1, &id_text);
+
+        switch(mgct){
+            case 1:
+                glTexGenfv(GL_S, GL_OBJECT_PLANE, cs);
+                glTexGenfv(GL_T, GL_OBJECT_PLANE, cs);
+                break;
+            case 2:
+                glTexGenfv(GL_S, GL_EYE_PLANE, cs);
+                glTexGenfv(GL_T, GL_EYE_PLANE, cs);
+                break;
+
+            default:
+                gluBuild2DMipmaps(
+                    GL_TEXTURE_2D, GL_RGB, img->tamX(), img->tamY(),
+                    GL_RGB, GL_UNSIGNED_BYTE, (void*)img
+                );
+                break;
+        }
+    }
+}
+
+
 FuenteDireccional::FuenteDireccional( float alpha_inicial, float beta_inicial ){
     long_rot = alpha_inicial;
     lat_rot = beta_inicial;
@@ -54,7 +86,7 @@ ColeccionFuentesP4::ColeccionFuentesP4(){}
 
 void ColeccionFL::activar(){
     for (int i=0; i < fuentes.size(); i++){
-        fuentes[i] -> activar();
+        fuentes[i] -> activar(i);
     }
 
     for (int i=fuentes.size(); i<8; i++){

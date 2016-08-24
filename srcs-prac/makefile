@@ -18,11 +18,10 @@ target_name	:= prac
 units_loc   :=$(patsubst %.cpp, %, $(wildcard *.cpp))
 ### nota: añadir a 'units_loc' los módulos practica2 practica3, etc.....
 
-units       := jpg_memsrc jpg_readwrite\
+units       := jpg_memsrc jpg_readwrite jpg_imagen\
                shaders matrices-tr\
                file_ply_stl\
                aux\
-               jpg_imagen
 ## ---------------------------------------------------------------------
 ## aspectos configurables
 
