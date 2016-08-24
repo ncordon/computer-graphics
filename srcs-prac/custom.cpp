@@ -1,1 +1,63 @@
 #include "custom.h"
+
+FuenteDireccional::FuenteDireccional( float alpha_inicial, float beta_inicial ){
+    long_rot = alpha_inicial;
+    lat_rot = beta_inicial;
+    direccional = true;
+}
+
+void FuenteDireccional::variarAngulo( unsigned angulo, float incremento ){
+    if (angulo == 0)
+        long_rot += incremento;
+    if (angulo == 1)
+        lat_rot += incremento;
+}
+
+
+void FuenteLuz::activar(int i){
+    glMatrixMode( GL_MODELVIEW );
+
+    // Fuente de luz direccional
+    if (direccional){
+        const float ejeZ[4] = {0.0, 0.0, 1.0, 0.0};
+
+        glPushMatrix();
+
+        glLoadIdentity();
+        glRotatef( long_rot, 0.0, 1.0, 0.0);
+        glRotatef( lat_rot, -1.0, 0.0, 0.0);
+        glLightfv( GL_LIGHT0 + i, GL_POSITION, ejeZ);
+
+        glPopMatrix();
+    }
+    // Fuente de luz posicional
+    else{
+        glLightfv( GL_LIGHT0 + i, GL_POSITION, posvec);
+
+    }
+
+    glLightfv(GL_LIGHT0+i, GL_AMBIENT, colores[0]);
+    glLightfv(GL_LIGHT0+i, GL_DIFFUSE, colores[1]);
+    glLightfv(GL_LIGHT0+i, GL_SPECULAR, colores[2]);
+    glEnable (GL_LIGHT0+i);
+}
+
+FuentePosicional::FuentePosicional( const Tupla3f & posicion ){
+    posvec[0] = posicion(X);
+    posvec[1] = posicion(Y);
+    posvec[2] = posicion(Z);
+    posvec[3] = 1;
+    direccional = false;
+}
+
+ColeccionFuentesP4::ColeccionFuentesP4(){}
+
+void ColeccionFL::activar(){
+    for (int i=0; i < fuentes.size(); i++){
+        fuentes[i] -> activar();
+    }
+
+    for (int i=fuentes.size(); i<8; i++){
+        glDisable(GL_LIGHT0+i);
+    }
+}
