@@ -107,3 +107,10 @@ void ColeccionFL::activar(){
         glDisable(GL_LIGHT0+i);
     }
 }
+
+
+MaterialLata::MaterialLata(){}
+MaterialTapasLata::MaterialTapasLata(){}
+MaterialPeonMadera::MaterialPeonMadera(){}
+MaterialPeonBlanco::MaterialPeonBlanco(){}
+MaterialPeonNegro::MaterialPeonNegro(){}
