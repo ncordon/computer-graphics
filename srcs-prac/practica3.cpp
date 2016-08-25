@@ -18,6 +18,7 @@ void P3_Inicializar( int argc, char *argv[] ){
     traslacion_offset = 1;
     longitud_offset = 1;
     p3_obj = new Grua(10,7,8,6,45);
+    p3_cv.materialActivo = NULL;
 }
 
 

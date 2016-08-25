@@ -1,5 +1,6 @@
 #include "matrices-tr.hpp"
 #include "aux.hpp"
+#include "custom.hpp"
 #include "Objeto3D.hpp"
 using namespace std;
 
@@ -8,24 +9,37 @@ using namespace std;
 
 // Entrada de un nodo. Puede ser un objeto o una transformación
 struct EntradaNodo{
-    bool es_transformacion;
+    enum TipoNodo {es_transformacion, es_objeto, es_material};
+
+    TipoNodo tipoE;
 
     union{
+        Material * material;
         Objeto3D * objeto;
         Matriz4f * transformacion;
     };
 
     // Crea el nodo con un objeto 3D
     EntradaNodo(Objeto3D *obj) : objeto(obj){
-        es_transformacion = false;
+        tipoE = es_objeto;
     }
     // Crea el nodo con una matriz de transformación
     EntradaNodo(const Matriz4f &mat) : transformacion(new Matriz4f(mat)){
-        es_transformacion = true;
+        tipoE = es_transformacion;
     }
-    // Destructor
-    // ¿Esto funcionará?
-    //~EntradaNodo();
+
+    EntradaNodo(Material* mat) : material(mat){
+        tipoE = es_material;
+    }
+
+    bool esTransformacion(){
+        return (tipoE == es_transformacion);
+    }
+
+
+    bool esObjeto(){
+        return (tipoE == es_objeto);
+    }
 };
 
 

@@ -3,10 +3,13 @@
 #include "tuplasg.hpp"   // Tupla3f
 #include <string>
 
+class Material;
+
 // Clase para almacenar el modo de visualización, material,...
 struct ContextoVis{
 public:
     unsigned modo_vis;
+    Material* materialActivo;
 };
 
 // clase abstracta para objetos 3D visualizables con OpenGL

@@ -1,4 +1,4 @@
-#include "custom.h"
+#include "custom.hpp"
 
 void MaterialEstandar::activar(){
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, color[0]);
@@ -109,8 +109,14 @@ void ColeccionFL::activar(){
 }
 
 
-MaterialLata::MaterialLata(){}
-MaterialTapasLata::MaterialTapasLata(){}
-MaterialPeonMadera::MaterialPeonMadera(){}
+MaterialLata::MaterialLata(){
+    text = new Textura("../imgs/lata-coke.jpg");
+}
+MaterialTapasLata::MaterialTapasLata(){
+
+}
+MaterialPeonMadera::MaterialPeonMadera(){
+    text = new Textura("../imgs/text-madera.jpg");
+}
 MaterialPeonBlanco::MaterialPeonBlanco(){}
 MaterialPeonNegro::MaterialPeonNegro(){}
