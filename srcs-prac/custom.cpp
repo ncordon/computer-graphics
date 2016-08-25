@@ -117,6 +117,17 @@ MaterialTapasLata::MaterialTapasLata(){
 }
 MaterialPeonMadera::MaterialPeonMadera(){
     text = new Textura("../imgs/text-madera.jpg");
+    // Duda: diferencia entre poner 1 y 2 aquí
+    text->mgct = 1;
+    // s proporcional a la X, t a la Y
+    text->cs[0] = 2;
+    text->cs[1] = 0;
+    text->cs[2] = 0;
+    text->cs[3] = 0;
+    text->cs[0] = 0;
+    text->ct[1] = 2;
+    text->ct[2] = 0;
+    text->ct[3] = 0;
 }
 MaterialPeonBlanco::MaterialPeonBlanco(){}
 MaterialPeonNegro::MaterialPeonNegro(){}

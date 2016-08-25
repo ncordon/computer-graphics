@@ -221,9 +221,9 @@ BaseGrua::BaseGrua(){
     cubo->changeColor(Tupla3f(0.74,0.74,0.66));
     agregar(cubo);
 }
-//(10,7,8,6,45)
-Grua::Grua(unsigned longitud_vertical, unsigned longitud_gancho,
-     unsigned longitud_horizontal, unsigned longitud_contrapeso, double giro_cabeza){
+
+Grua::Grua( unsigned longitud_vertical, unsigned longitud_gancho,
+            unsigned longitud_horizontal, unsigned longitud_contrapeso, double giro_cabeza ){
 
     this->giro_cabeza = giro_cabeza;
 
