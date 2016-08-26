@@ -16,33 +16,40 @@ void MaterialEstandar::activar(){
 
 Textura::Textura( const std::string & archivoJPG ){
     img = new jpg::Imagen(archivoJPG);
+    glGenTextures(1, &id_text);
+    glBindTexture( GL_TEXTURE_2D, idTex );
 
+    gluBuild2DMipmaps(
+        GL_TEXTURE_2D, GL_RGB, img->tamX(), img->tamY(),
+        GL_RGB, GL_UNSIGNED_BYTE, img->leerPixels()
+    );
+
+    // Falta desactivar textura?
 }
 
 void Textura::activar(){
+    const GLenum TEXTURE_MODE = {GL_OBJECT_LINEAR, GL_EYE_LINEAR};
+    const GLenum TEXTURE_RELATIVE = {GL_OBJECT_PLANE, GL_EYE_PLANE};
+
     glEnable( GL_TEXTURE_2D );
-
-
-    glGenTextures(1, &id_text);
+    glBindTexture( GL_TEXTURE_2D, idTex );
 
     switch(mgct){
-        case 1:
-            glTexGenfv(GL_S, GL_OBJECT_PLANE, cs);
-            glTexGenfv(GL_T, GL_OBJECT_PLANE, cs);
-            break;
-        case 2:
-            glTexGenfv(GL_S, GL_EYE_PLANE, cs);
-            glTexGenfv(GL_T, GL_EYE_PLANE, cs);
-            break;
+    case 1||2:
+        glEnable( GL_TEXTURE_GEN_S );
+        glEnable( GL_TEXTURE_GEN_T );
 
-        default:
-            gluBuild2DMipmaps(
-                GL_TEXTURE_2D, GL_RGB, img->tamX(), img->tamY(),
-                GL_RGB, GL_UNSIGNED_BYTE, (void*)img
-            );
-            break;
+        glTexGeni(GL_S, TEXTURE_MODE[i-1], GL_OBJECT_LINEAR);
+        glTexGeni(GL_T, TEXTURE_MODE[i-1], GL_OBJECT_LINEAR);
+        glTexGenfv(GL_S, TEXTURE_RELATIVE[i-1], cs);
+        glTexGenfv(GL_T, TEXTURE_RELATIVE[i-1], cs);
+        break;
+    // Desactivado
+    default:
+        glDisable( GL_TEXTURE_GEN_S );
+        glDisable( GL_TEXTURE_GEN_T );
+        break;
     }
-
 }
 
 
