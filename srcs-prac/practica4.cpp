@@ -3,7 +3,7 @@
 
 string p4_peon_file = "../plys/peon.ply";
 uint p4_resolucion_peon;
-ColeccionFuentesP4 p4_fuentes;
+ColeccionFL p4_fuentes;
 int p4_angulo_actual;
 
 
@@ -43,11 +43,11 @@ bool P4_FGE_PulsarTeclaNormal(  unsigned char tecla ){
         break;
     case '>':
         tecla_correcta = true;
-        ((FuenteDireccional*) p4_fuentes.fuentes[0])->variarAngulo( p4_angulo_actual, 1.0 );
+        ((FuenteDireccional*) p4_fuentes.fuentes[0])->variarAngulo( 0, p4_angulo_actual, 1.0 );
         break;
     case '<':
         tecla_correcta = true;
-        ((FuenteDireccional*) p4_fuentes.fuentes[0])->variarAngulo( p4_angulo_actual, -1.0 );
+        ((FuenteDireccional*) p4_fuentes.fuentes[0])->variarAngulo( 0, p4_angulo_actual, -1.0 );
         break;
     default:
         tecla_correcta = false;

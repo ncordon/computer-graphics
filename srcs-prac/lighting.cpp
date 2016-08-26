@@ -1,4 +1,4 @@
-#include "custom.hpp"
+#include "lighting.hpp"
 
 void MaterialEstandar::activar(){
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, color[0]);
@@ -52,19 +52,20 @@ FuenteDireccional::FuenteDireccional( float alpha_inicial, float beta_inicial ){
     direccional = true;
 }
 
-void FuenteDireccional::variarAngulo( unsigned angulo, float incremento ){
+void FuenteDireccional::variarAngulo( int i, unsigned angulo, float incremento){
     if (angulo == 0)
         long_rot += incremento;
     if (angulo == 1)
         lat_rot += incremento;
+
+    activar(i);
 }
 
 
 void FuenteLuz::activar(int i){
-    glMatrixMode( GL_MODELVIEW );
-
     // Fuente de luz direccional
     if (direccional){
+        glMatrixMode( GL_MODELVIEW );
         const float ejeZ[4] = {0.0, 0.0, 1.0, 0.0};
 
         glPushMatrix();
@@ -79,7 +80,6 @@ void FuenteLuz::activar(int i){
     // Fuente de luz posicional
     else{
         glLightfv( GL_LIGHT0 + i, GL_POSITION, posvec);
-
     }
 
     glLightfv(GL_LIGHT0+i, GL_AMBIENT, colores[0]);
@@ -96,13 +96,18 @@ FuentePosicional::FuentePosicional( const Tupla3f & posicion ){
     direccional = false;
 }
 
-ColeccionFuentesP4::ColeccionFuentesP4(){}
-
 void ColeccionFL::activar(){
+    glEnable(GL_LIGHTING);
+    glEnable(GL_NORMALIZE);
+    glEnable(GL_RESCALE_NORMAL);
+    glLightModeli(GL_LIGHT_MODEL_COLOR_CONTROL, GL_SEPARATE_SPECULAR_COLOR);
+    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+
     for (int i=0; i < fuentes.size(); i++){
         fuentes[i] -> activar(i);
     }
 
+    // Desactivamos las fuentes sobrantes
     for (int i=fuentes.size(); i<8; i++){
         glDisable(GL_LIGHT0+i);
     }

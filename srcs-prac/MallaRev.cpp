@@ -14,7 +14,6 @@ MallaRev::MallaRev( const char * nombre_arch, unsigned n_perfiles, bool con_text
     for (int j=0; j <= n_perfiles; ++j){
         for (int i=0; i < n_vertices; ++i){
             angulo = 2*PI*j/n_perfiles;
-            // Asumimos el último valor para cada vértice nulo
             coseno = cos(angulo);
             seno = sin(angulo);
 

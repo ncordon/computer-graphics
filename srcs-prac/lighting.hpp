@@ -95,17 +95,12 @@ public:
 class FuenteDireccional : public FuenteLuz{
 public:
     FuenteDireccional( float alpha_inicial, float beta_inicial );
-    void variarAngulo( unsigned angulo, float incremento );  // angulo=0 --> variar alpha, angulo=1 --> variar beta
+    void variarAngulo( int i, unsigned angulo, float incremento );  // angulo=0 --> variar alpha, angulo=1 --> variar beta
 };
 
 class FuentePosicional : public FuenteLuz{
 public:
     FuentePosicional( const Tupla3f & posicion );
-};
-
-class ColeccionFuentesP4 : public ColeccionFL{
-public:
-    ColeccionFuentesP4();
 };
 
 #endif

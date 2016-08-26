@@ -86,7 +86,6 @@ void MallaInd::calcularNormales(){
 
     // Cálculo de las caras adyacentes a cada vector
     for (int i = 0; i < caras.size(); i++){
-
         for (int j = 0; j < 3; j++)
           adyacentes_vertices[caras[i][j]].push_back(i);
     }

@@ -1,6 +1,6 @@
 #include "matrices-tr.hpp"
 #include "aux.hpp"
-#include "custom.hpp"
+#include "lighting.hpp"
 #include "Objeto3D.hpp"
 using namespace std;
 
