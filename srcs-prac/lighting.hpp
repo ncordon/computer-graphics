@@ -48,7 +48,6 @@ public:
     Tupla4f  posvec;       // posición (si w=1) o vector (w=0)
     Tupla4f  colores[3];   // colores: 0=ambiental, 1=difuso, 2=especular.
     float    long_rot, lat_rot;      // ángulos de rotación (fuente direccional modificable interactivamente)
-    bool direccional;       // Indica si la fuente es direccional
     void activar( int i ); // activa la fuente de luz (con número GL_LIGHT0+i)
 };
 
