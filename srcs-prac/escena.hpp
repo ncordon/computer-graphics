@@ -65,6 +65,11 @@ public:
     void agregar(const Matriz4f &mat){
         entradas.push_back(EntradaNodo(mat));
     }
+
+    // Agrega una textura
+    void agregar(Material* mat){
+        entradas.push_back(EntradaNodo(mat));
+    }
 };
 
 #endif
