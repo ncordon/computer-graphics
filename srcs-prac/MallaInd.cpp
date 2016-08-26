@@ -81,7 +81,7 @@ void MallaInd::calcularNormales(){
         Tupla3f a = vertices[ caras[i](1) ] - vertices[ caras[i](0) ];
         Tupla3f b = vertices[ caras[i](2) ] - vertices[ caras[i](0) ];
 
-        normal_caras.push_back (b.cross(a).normalized());
+        normal_caras.push_back (normalize(b.cross(a)));
     }
 
     // Cálculo de las caras adyacentes a cada vector
@@ -97,6 +97,13 @@ void MallaInd::calcularNormales(){
             m = m + normal_caras[ adyacentes_vertices[i][j] ];
         }
 
-        normal_vertices.push_back(m.normalized());
+        normal_vertices.push_back(normalize(m));
     }
+}
+
+Tupla3f MallaInd::normalize(Tupla3f m){
+    if (m(X) || m(Y) || m(Z))
+        return m.normalized();
+    else
+        return Tupla3f(0,0,0);
 }

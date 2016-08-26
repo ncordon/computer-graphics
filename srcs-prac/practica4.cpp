@@ -2,24 +2,33 @@
 
 
 string p4_peon_file = "../plys/peon.ply";
-uint p4_resolucion_peon;
+string p4_lata_file = "./lata-pcue.ply";
+string p4_lata_inf = "./lata-pinf.ply";
+string p4_lata_sup = "./lata-psup.ply";
+uint p4_resolucion_objs = 50;
 ColeccionFL p4_fuentes;
 int p4_angulo_actual;
 static NodoGrafoEscena *p4_obj;
 ContextoVis p4_cv;
 
+Lata::Lata(){
+    agregar(new MallaRev(&p4_lata_file[0], p4_resolucion_objs, false));
+    agregar(new MallaRev(&p4_lata_inf[0], p4_resolucion_objs, false));
+    agregar(new MallaRev(&p4_lata_sup[0], p4_resolucion_objs, false));
+}
+
 PeonMadera::PeonMadera(){
-    agregar(new MallaRev(&p4_peon_file[0], p4_resolucion_peon, false));
+    agregar(new MallaRev(&p4_peon_file[0], p4_resolucion_objs, false));
 }
 
 
 PeonBlanco::PeonBlanco(){
-    agregar(new MallaRev(&p4_peon_file[0], p4_resolucion_peon, true));
+    agregar(new MallaRev(&p4_peon_file[0], p4_resolucion_objs, true));
 }
 
 
 PeonNegro::PeonNegro(){
-    agregar(new MallaRev(&p4_peon_file[0], p4_resolucion_peon, true));
+    agregar(new MallaRev(&p4_peon_file[0], p4_resolucion_objs, true));
 }
 
 
@@ -28,10 +37,13 @@ void P4_Inicializar( int argc, char *argv[] ){
     p4_fuentes.fuentes.push_back(new FuenteDireccional(0,0));
     p4_fuentes.fuentes.push_back(new FuentePosicional(Tupla3f(0,0,0)));
     p4_angulo_actual = 0;
-    p4_resolucion_peon = 50;
+    p4_resolucion_objs = 50;
 
     p4_obj = new NodoGrafoEscena;
+
+    p4_obj->agregar(new Lata);
     // Valor 1.4 tomado del peon.ply
+    p4_obj->agregar(MAT_Escalado(0.2,0.2,0.2));  
     p4_obj->agregar(MAT_Traslacion(1,1.4,3));
     p4_obj->agregar(new PeonMadera);
     p4_obj->agregar(MAT_Traslacion(2.2,0,0.5));
