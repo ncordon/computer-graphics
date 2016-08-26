@@ -128,27 +128,47 @@ void ColeccionFL::activar(){
     }
 }
 
-
 MaterialLata::MaterialLata(){
     text = new Textura("../imgs/lata-coke.jpg");
+    color[0] = Tupla4f(0, 0, 0, 1);
+    color[1] = Tupla4f(0, 0, 0, 1);
+    color[2] = Tupla4f(0.2, 0.2, 0.2, 1);
+    color[3] = Tupla4f(0.2, 0.2, 0.2, 1);
+    exponente = 5;
 }
-MaterialTapasLata::MaterialTapasLata(){
 
+MaterialTapasLata::MaterialTapasLata(){
+    color[0] = Tupla4f(0, 0, 0, 1);
+    color[1] = Tupla4f(0, 0, 0, 1);
+    color[2] = Tupla4f(0.2, 0.2, 0.2, 1);
+    color[3] = Tupla4f(0.2, 0.2, 0.2, 1);
+    exponente = 5;
 }
+
 MaterialPeonMadera::MaterialPeonMadera(){
     text = new Textura("../imgs/text-madera.jpg");
     // Duda: diferencia entre poner 1 y 2 aquí
     text->mgct = 1;
     // s proporcional a la X, t a la Y
-    text->cs[0] = 2;
-    text->cs[1] = 0;
-    text->cs[2] = 0;
-    text->cs[3] = 0;
-    text->cs[0] = 0;
-    text->ct[1] = 2;
-    text->ct[2] = 0;
-    text->ct[3] = 0;
+    text->cs[0] = 2 = text->cs[1] = 2;
+    text->cs[1] = text->cs[2] = text->cs[3] = text->cs[0] = text->ct[2] = text->ct[3] = 0;
+
+    color[0] = Tupla4f(0, 0, 0, 1);
+    color[1] = Tupla4f(0, 0, 0, 1);
+    color[2] = Tupla4f(1, 1, 1, 1);
+    color[3] = Tupla4f(0.6, 0.6, 0.6, 1);
 }
 
-MaterialPeonBlanco::MaterialPeonBlanco(){}
-MaterialPeonNegro::MaterialPeonNegro(){}
+MaterialPeonBlanco::MaterialPeonBlanco(){
+    color[0] = Tupla4f(0, 0, 0, 1);
+    color[1] = Tupla4f(0, 0, 0, 1);
+    color[2] = Tupla4f(1, 1, 1, 1);
+    color[3] = Tupla4f(0, 0, 0, 1);
+}
+MaterialPeonNegro::MaterialPeonNegro(){
+    color[0] = Tupla4f(0, 0, 0, 1);
+    color[1] = Tupla4f(0, 0, 0, 1);
+    color[2] = Tupla4f(0.1, 0.1, 0.1, 1);
+    color[3] = Tupla4f(0.1, 0.1, 0.1, 1);
+    exponente = 5;
+}
