@@ -65,7 +65,7 @@ FuenteDireccional::FuenteDireccional( float alpha_inicial, float beta_inicial ){
     colores[0] = colores[1] = colores[2] = Tupla4f(0.8, 0.8, 0.8, 1);
     long_rot = alpha_inicial;
     lat_rot = beta_inicial;
-    posvec[3] = 1;
+    posvec[3] = 0;
 }
 
 void FuenteDireccional::variarAngulo( int i, unsigned angulo, float incremento){
