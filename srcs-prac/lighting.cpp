@@ -62,6 +62,7 @@ void Textura::activar(){
 
 
 FuenteDireccional::FuenteDireccional( float alpha_inicial, float beta_inicial ){
+    colores[0] = colores[1] = colores[2] = Tupla4f(0.8, 0.8, 0.8, 1);
     long_rot = alpha_inicial;
     lat_rot = beta_inicial;
     posvec[3] = 1;
@@ -105,6 +106,7 @@ void FuenteLuz::activar(int i){
 }
 
 FuentePosicional::FuentePosicional( const Tupla3f & posicion ){
+    colores[0] = colores[1] = colores[2] = Tupla4f(0.3, 0, 0, 1);
     posvec[0] = posicion(X);
     posvec[1] = posicion(Y);
     posvec[2] = posicion(Z);
@@ -113,10 +115,10 @@ FuentePosicional::FuentePosicional( const Tupla3f & posicion ){
 
 void ColeccionFL::activar(){
     glEnable(GL_LIGHTING);
-    glEnable(GL_NORMALIZE);
     glEnable(GL_RESCALE_NORMAL);
-    glLightModeli(GL_LIGHT_MODEL_COLOR_CONTROL, GL_SEPARATE_SPECULAR_COLOR);
     glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+    glLightModeli(GL_LIGHT_MODEL_COLOR_CONTROL, GL_SEPARATE_SPECULAR_COLOR);
+
 
     for (int i=0; i < fuentes.size(); i++){
         fuentes[i] -> activar(i);
