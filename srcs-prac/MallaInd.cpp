@@ -79,29 +79,20 @@ void MallaInd::visualizar(ContextoVis &cv){
 
 
 void MallaInd::calcularNormales(){
-    std::vector< std::vector<int> > adyacentes_vertices (vertices.size(), std::vector<int>());
+    normal_vertices = std::vector< Tupla3f > (vertices.size(), Tupla3f(0,0,0));
 
     for (int i = 0; i < caras.size(); i++){
         Tupla3f a = vertices[ caras[i](1) ] - vertices[ caras[i](0) ];
         Tupla3f b = vertices[ caras[i](2) ] - vertices[ caras[i](0) ];
+        Tupla3f normal = normalize(a.cross(b));
+        normal_caras.push_back (normal);
 
-        normal_caras.push_back (normalize(a.cross(b)));
-    }
-
-    // Cálculo de las caras adyacentes a cada vector
-    for (int i = 0; i < caras.size(); i++){
         for (int j = 0; j < 3; j++)
-          adyacentes_vertices[caras[i][j]].push_back(i);
+            normal_vertices[caras[i][j]] = normal_vertices[caras[i][j]] + normal;
     }
 
     for (int i = 0; i < vertices.size(); i++){
-        Tupla3f m(0,0,0);
-
-        for (int j = 0; j < adyacentes_vertices[i].size(); j++){
-            m = m + normal_caras[ adyacentes_vertices[i][j] ];
-        }
-
-        normal_vertices.push_back(normalize(m));
+        normal_vertices[i] = normalize(normal_vertices[i]);
     }
 }
 
@@ -109,5 +100,5 @@ Tupla3f MallaInd::normalize(Tupla3f m){
     if (m(X) || m(Y) || m(Z))
         return m.normalized();
     else
-        return Tupla3f(0,1,0);
+        return Tupla3f(0,0,1);
 }
