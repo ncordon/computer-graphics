@@ -1,10 +1,10 @@
 #include "MallaInd.hpp"
 
 void MallaInd::visualizar(ContextoVis &cv){
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glVertexPointer(3, GL_FLOAT, 0, vertices[0]);
-
     if (cv.modo_vis < 3){
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glVertexPointer(3, GL_FLOAT, 0, vertices[0]);
+
         glColor3f(color(R), color(G), color(B));
 
         switch(cv.modo_vis){
@@ -25,6 +25,9 @@ void MallaInd::visualizar(ContextoVis &cv){
     }
     // Modo ajedrez
     else if (cv.modo_vis==3){
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glVertexPointer(3, GL_FLOAT, 0, vertices[0]);
+
         glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
         std::vector<Tupla3i> caras_pares;
         std::vector<Tupla3i> caras_impares;
@@ -48,32 +51,49 @@ void MallaInd::visualizar(ContextoVis &cv){
         // Modo con iluminación y sombreado plano
         if (cv.modo_vis==4){
             glShadeModel(GL_FLAT);
+            glBegin(GL_TRIANGLES);
 
-            if (!normal_caras.empty()){
-                glEnableClientState(GL_NORMAL_ARRAY);
-                glNormalPointer(GL_FLOAT, 0, normal_caras[0]);
+            for (int i=0; i < caras.size(); i++){
+                Tupla3f m = normal_caras[i];
+                glNormal3f( m(X), m(Y), m(Z) );
+
+                for (int j=0; j < 3; j++){
+                    Tupla3f v = vertices[ caras[i][j] ];
+
+                    if (!textura_coords.empty()){
+                        Tupla2f t = textura_coords[ caras[i][j] ];
+                        glTexCoord2f( t(X),t(Y) );
+                    }
+
+                    glVertex3f( v(X),v(Y),v(Z) );
+                }
             }
+
+            glEnd();
+
         }
         // Modo con iluminación y sombreado de suave
         else if (cv.modo_vis==5){
             glShadeModel(GL_SMOOTH);
+            glEnableClientState(GL_VERTEX_ARRAY);
+            glVertexPointer(3, GL_FLOAT, 0, vertices[0]);
 
             if (!normal_vertices.empty()){
                 glEnableClientState(GL_NORMAL_ARRAY);
                 glNormalPointer(GL_FLOAT, 0, normal_vertices[0]);
             }
-        }
 
-        // Si hay coordenadas de textura...
-        if (!textura_coords.empty()){
-            glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-            glTexCoordPointer( 2, GL_FLOAT, 0, textura_coords[0] );
-        }
+            // Si hay coordenadas de textura...
+            if (!textura_coords.empty()){
+                glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+                glTexCoordPointer( 2, GL_FLOAT, 0, textura_coords[0] );
+            }
 
-        glDrawElements(GL_TRIANGLES, caras.size()*3, GL_UNSIGNED_INT, caras[0]);
-        glDisableClientState(GL_NORMAL_ARRAY);
-        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+            glDrawElements(GL_TRIANGLES, caras.size()*3, GL_UNSIGNED_INT, caras[0]);
+        }
     }
+    glDisableClientState(GL_NORMAL_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     glDisableClientState(GL_VERTEX_ARRAY);
 }
 

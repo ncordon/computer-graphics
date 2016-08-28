@@ -64,7 +64,9 @@ void Textura::activar(){
 
 
 FuenteDireccional::FuenteDireccional( float alpha_inicial, float beta_inicial ){
-    colores[0] = colores[1] = colores[2] = Tupla4f(0.8, 0.8, 0.8, 1);
+    colores[0] = Tupla4f(0.5, 0.5, 0.5, 1);
+    colores[1] = Tupla4f(1, 1, 1, 1);
+    colores[2] = Tupla4f(1, 0.6, 0.6, 1);
     long_rot = alpha_inicial;
     lat_rot = beta_inicial;
     posvec[3] = 0;
@@ -108,7 +110,7 @@ void FuenteLuz::activar(int i){
 }
 
 FuentePosicional::FuentePosicional( const Tupla3f & posicion ){
-    colores[0] = colores[1] = colores[2] = Tupla4f(0.3, 0, 0, 1);
+    colores[0] = colores[1] = colores[2] = Tupla4f(0.3, 0.3, 1, 1);
     posvec[0] = posicion(X);
     posvec[1] = posicion(Y);
     posvec[2] = posicion(Z);
@@ -136,18 +138,18 @@ MaterialLata::MaterialLata(){
     text = new Textura("../imgs/lata-coke.jpg");
     text->mgct = 0;
     color[0] = Tupla4f(0.7, 0.7, 0.7, 1);
-    color[1] = Tupla4f(0, 0, 0, 1);
-    color[2] = Tupla4f(0.2, 0.2, 0.2, 1);
-    color[3] = Tupla4f(0.2, 0.2, 0.2, 1);
+    color[1] = Tupla4f(0.1, 0.1, 0.1, 1);
+    color[2] = Tupla4f(0.1, 0.1, 0.1, 1);
+    color[3] = Tupla4f(1, 1, 1, 1);
     exponente = 5;
 }
 
 MaterialTapasLata::MaterialTapasLata(){
-    color[0] = Tupla4f(0.8, 0.8, 0.8, 1);
-    color[1] = Tupla4f(0, 0, 0, 1);
-    color[2] = Tupla4f(0.2, 0.2, 0.2, 1);
-    color[3] = Tupla4f(0.4, 0.4, 0.4, 1);
-    exponente = 3;
+    color[0] = Tupla4f(0.7, 0.7, 0.7, 1);
+    color[1] = Tupla4f(0.1, 0.1, 0.1, 1);
+    color[2] = Tupla4f(0.1, 0.1, 0.1, 1);
+    color[3] = Tupla4f(1, 1, 1, 1);
+    exponente = 5;
 }
 
 MaterialPeonMadera::MaterialPeonMadera(){
