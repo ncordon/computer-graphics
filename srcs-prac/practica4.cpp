@@ -20,16 +20,19 @@ Lata::Lata(){
 }
 
 PeonMadera::PeonMadera(){
-    agregar(new MallaRev(&p4_peon_file[0], p4_resolucion_objs, false, true));
+    agregar(new MaterialPeonMadera);
+    agregar(new MallaRev(&p4_peon_file[0], p4_resolucion_objs, true, true));
 }
 
 
 PeonBlanco::PeonBlanco(){
+    agregar(new MaterialPeonBlanco);
     agregar(new MallaRev(&p4_peon_file[0], p4_resolucion_objs, true, true));
 }
 
 
 PeonNegro::PeonNegro(){
+    agregar(new MaterialPeonNegro);
     agregar(new MallaRev(&p4_peon_file[0], p4_resolucion_objs, true, true));
 }
 
@@ -50,9 +53,9 @@ void P4_Inicializar( int argc, char *argv[] ){
     // Valor 1.4 tomado del peon.ply
     p4_obj->agregar(MAT_Traslacion(1,1.4,3));
     p4_obj->agregar(new PeonMadera);
-    p4_obj->agregar(MAT_Traslacion(2.2,0,0.5));
+    p4_obj->agregar(MAT_Traslacion(2.2,0,0));
     p4_obj->agregar(new PeonBlanco);
-    p4_obj->agregar(MAT_Traslacion(2.2,0,0.5));
+    p4_obj->agregar(MAT_Traslacion(2.2,0,0));
     p4_obj->agregar(new PeonNegro);
 }
 

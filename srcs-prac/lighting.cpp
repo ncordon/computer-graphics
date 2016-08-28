@@ -37,21 +37,22 @@ Textura::Textura( const std::string & archivoJPG ){
 }
 
 void Textura::activar(){
-    const GLenum TEXTURE_MODE[] = {GL_OBJECT_LINEAR, GL_EYE_LINEAR};
+    const GLint TEXTURE_MODE[] = {GL_OBJECT_LINEAR, GL_EYE_LINEAR};
     const GLenum TEXTURE_RELATIVE[] = {GL_OBJECT_PLANE, GL_EYE_PLANE};
 
     glEnable( GL_TEXTURE_2D );
     glBindTexture( GL_TEXTURE_2D, id_text );
+
 
     switch(mgct){
     case 1||2:
         glEnable( GL_TEXTURE_GEN_S );
         glEnable( GL_TEXTURE_GEN_T );
 
-        glTexGeni(GL_S, TEXTURE_MODE[mgct-1], GL_OBJECT_LINEAR);
-        glTexGeni(GL_T, TEXTURE_MODE[mgct-1], GL_OBJECT_LINEAR);
+        glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, TEXTURE_MODE[mgct-1]);
+        glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, TEXTURE_MODE[mgct-1]);
         glTexGenfv(GL_S, TEXTURE_RELATIVE[mgct-1], cs);
-        glTexGenfv(GL_T, TEXTURE_RELATIVE[mgct-1], cs);
+        glTexGenfv(GL_T, TEXTURE_RELATIVE[mgct-1], ct);
         break;
     // Desactivado
     default:
@@ -154,8 +155,8 @@ MaterialPeonMadera::MaterialPeonMadera(){
     // Duda: diferencia entre poner 1 y 2 aquí
     text->mgct = 1;
     // s proporcional a la X, t a la Y
-    text->cs[0] = text->cs[1] = 2;
-    text->cs[1] = text->cs[2] = text->cs[3] = text->cs[0] = text->ct[2] = text->ct[3] = 0;
+    text->cs[0] = text->ct[1] = 2;
+    text->cs[1] = text->cs[2] = text->cs[3] = text->ct[0] = text->ct[2] = text->ct[3] = 0;
 
     color[0] = Tupla4f(0, 0, 0, 1);
     color[1] = Tupla4f(0, 0, 0, 1);
