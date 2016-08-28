@@ -1,6 +1,7 @@
 #include "MallaRev.hpp"
 
-MallaRev::MallaRev( const char * nombre_arch, unsigned n_perfiles, bool con_textura ){
+MallaRev::MallaRev( const char * nombre_arch, unsigned n_perfiles,
+                    bool con_textura, bool con_tapas){
     std::vector<float> vertices_ply;
 
     ply::read_vertices(nombre_arch, vertices_ply);
@@ -38,33 +39,33 @@ MallaRev::MallaRev( const char * nombre_arch, unsigned n_perfiles, bool con_text
         }
     }
 
+    if (con_tapas){
+        // Ejes superior e inferior
+        vertices.push_back(Tupla3f(0.0, vertices_ply[1], 0.0));
+        vertices.push_back(Tupla3f(0.0, vertices_ply[n_vertices*3-2], 0.0));
 
-    // Ejes superior e inferior
-    vertices.push_back(Tupla3f(0.0, vertices_ply[1], 0.0));
-    vertices.push_back(Tupla3f(0.0, vertices_ply[n_vertices*3-2], 0.0));
-
-    int upper_vertex = vertices.size()-1;
-    int lower_vertex = vertices.size()-2;
+        int upper_vertex = vertices.size()-1;
+        int lower_vertex = vertices.size()-2;
 
 
 
-    // Metemos las tapas superior e inferior
-    for (int j=0; j < n_perfiles; ++j){
-        caras.push_back(Tupla3i(
-            (j+1)*n_vertices-1,
-            upper_vertex,
-            (j+2)*n_vertices - 1
-        ));
+        // Metemos las tapas superior e inferior
+        for (int j=0; j < n_perfiles; ++j){
+            caras.push_back(Tupla3i(
+                (j+1)*n_vertices-1,
+                upper_vertex,
+                (j+2)*n_vertices - 1
+            ));
+        }
+
+        for (int j=0; j < n_perfiles; ++j){
+            caras.push_back(Tupla3i(
+                j * n_vertices,
+                (j+1) * n_vertices,
+                lower_vertex
+            ));
+        }
     }
-
-    for (int j=0; j < n_perfiles; ++j){
-        caras.push_back(Tupla3i(
-            j * n_vertices,
-            (j+1) * n_vertices,
-            lower_vertex
-        ));
-    }
-
 
     // Calculamos las coordenadas de textura
     if (con_textura)
@@ -89,7 +90,7 @@ void MallaRev::calcularTexturas(unsigned n_perfiles, unsigned n_vertices){
 
     for (int j=0; j <= n_perfiles; ++j){
         for (int i=0; i < n_vertices; ++i){
-            textura_coords.push_back(Tupla2f((j*1.0)/n_perfiles, distancias[i]));
+            textura_coords.push_back(Tupla2f(1-(j*1.0)/n_perfiles, 1-distancias[i]));
         }
     }
 }

@@ -15,7 +15,8 @@ public:
     //                      número de copias del perfil
     //                      si se desea especificar coordenadas de textura o no
 
-    MallaRev( const char * nombre_arch, unsigned n_perfiles, bool con_textura = false) ;
+    MallaRev( const char * nombre_arch, unsigned n_perfiles,
+              bool con_textura, bool con_tapas) ;
 };
 
 #endif

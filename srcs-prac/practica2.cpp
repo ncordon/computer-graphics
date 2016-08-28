@@ -47,7 +47,7 @@ void P2_Inicializar( int argc, char *argv[]){
     }
 
     obj_ply = new MallaPLY(&archivo_ply[0]);
-    obj_rev = new MallaRev(&archivo_rev[0], n_perfiles);
+    obj_rev = new MallaRev(&archivo_rev[0], n_perfiles, false, true);
     obj_barrido = new MallaBarrido(&archivo_barrido[0], dir);
     // Objeto 0 = ply, objeto 1 = revolución
     p2_objeto_activo = 0;

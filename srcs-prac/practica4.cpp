@@ -12,25 +12,25 @@ static NodoGrafoEscena *p4_obj;
 ContextoVis p4_cv;
 
 Lata::Lata(){
-    //agregar(new MaterialLata);
-    agregar(new MallaRev(&p4_lata_file[0], p4_resolucion_objs, false));
-    //agregar(new MaterialTapasLata);
-    agregar(new MallaRev(&p4_lata_inf[0], p4_resolucion_objs, false));
-    agregar(new MallaRev(&p4_lata_sup[0], p4_resolucion_objs, false));
+    agregar(new MaterialTapasLata);
+    agregar(new MallaRev(&p4_lata_inf[0], p4_resolucion_objs, false, false));
+    agregar(new MallaRev(&p4_lata_sup[0], p4_resolucion_objs, false, false));
+    agregar(new MaterialLata);
+    agregar(new MallaRev(&p4_lata_file[0], p4_resolucion_objs, true, false));
 }
 
 PeonMadera::PeonMadera(){
-    agregar(new MallaRev(&p4_peon_file[0], p4_resolucion_objs, false));
+    agregar(new MallaRev(&p4_peon_file[0], p4_resolucion_objs, false, true));
 }
 
 
 PeonBlanco::PeonBlanco(){
-    agregar(new MallaRev(&p4_peon_file[0], p4_resolucion_objs, true));
+    agregar(new MallaRev(&p4_peon_file[0], p4_resolucion_objs, true, true));
 }
 
 
 PeonNegro::PeonNegro(){
-    agregar(new MallaRev(&p4_peon_file[0], p4_resolucion_objs, true));
+    agregar(new MallaRev(&p4_peon_file[0], p4_resolucion_objs, true, true));
 }
 
 

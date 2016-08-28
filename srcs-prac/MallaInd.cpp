@@ -4,7 +4,6 @@ void MallaInd::visualizar(ContextoVis &cv){
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, vertices[0]);
 
-
     if (cv.modo_vis < 3){
         glColor3f(color(R), color(G), color(B));
 
@@ -44,27 +43,32 @@ void MallaInd::visualizar(ContextoVis &cv){
         glDrawElements(GL_TRIANGLES, caras_impares.size()*3, GL_UNSIGNED_INT, caras_impares[0]);
     }
     else{
-        glEnableClientState(GL_NORMAL_ARRAY);
-        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
 
         // Modo con iluminación y sombreado plano
         if (cv.modo_vis==4){
             glShadeModel(GL_FLAT);
 
-            if (!normal_caras.empty())
+            if (!normal_caras.empty()){
+                glEnableClientState(GL_NORMAL_ARRAY);
                 glNormalPointer(GL_FLOAT, 0, normal_caras[0]);
+            }
         }
         // Modo con iluminación y sombreado de suave
         else if (cv.modo_vis==5){
             glShadeModel(GL_SMOOTH);
 
-            if (!normal_vertices.empty())
+            if (!normal_vertices.empty()){
+                glEnableClientState(GL_NORMAL_ARRAY);
                 glNormalPointer(GL_FLOAT, 0, normal_vertices[0]);
+            }
         }
 
         // Si hay coordenadas de textura...
-        if (!textura_coords.empty())
-            glTexCoordPointer( 2, GL_FLOAT, 0, textura_coords[0]);
+        if (!textura_coords.empty()){
+            glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+            glTexCoordPointer( 2, GL_FLOAT, 0, textura_coords[0] );
+        }
 
         glDrawElements(GL_TRIANGLES, caras.size()*3, GL_UNSIGNED_INT, caras[0]);
         glDisableClientState(GL_NORMAL_ARRAY);
@@ -81,7 +85,7 @@ void MallaInd::calcularNormales(){
         Tupla3f a = vertices[ caras[i](1) ] - vertices[ caras[i](0) ];
         Tupla3f b = vertices[ caras[i](2) ] - vertices[ caras[i](0) ];
 
-        normal_caras.push_back (normalize(b.cross(a)));
+        normal_caras.push_back (normalize(a.cross(b)));
     }
 
     // Cálculo de las caras adyacentes a cada vector
@@ -105,5 +109,5 @@ Tupla3f MallaInd::normalize(Tupla3f m){
     if (m(X) || m(Y) || m(Z))
         return m.normalized();
     else
-        return Tupla3f(0,0,0);
+        return Tupla3f(0,1,0);
 }

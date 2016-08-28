@@ -19,6 +19,7 @@ void MaterialEstandar::activar(){
         glDisable( GL_TEXTURE_2D );
     else
         text->activar();
+
 }
 
 
@@ -132,7 +133,8 @@ void ColeccionFL::activar(){
 
 MaterialLata::MaterialLata(){
     text = new Textura("../imgs/lata-coke.jpg");
-    color[0] = Tupla4f(0, 0, 0, 1);
+    text->mgct = 0;
+    color[0] = Tupla4f(0.7, 0.7, 0.7, 1);
     color[1] = Tupla4f(0, 0, 0, 1);
     color[2] = Tupla4f(0.2, 0.2, 0.2, 1);
     color[3] = Tupla4f(0.2, 0.2, 0.2, 1);
@@ -140,11 +142,11 @@ MaterialLata::MaterialLata(){
 }
 
 MaterialTapasLata::MaterialTapasLata(){
-    color[0] = Tupla4f(0, 0, 0, 1);
+    color[0] = Tupla4f(0.8, 0.8, 0.8, 1);
     color[1] = Tupla4f(0, 0, 0, 1);
     color[2] = Tupla4f(0.2, 0.2, 0.2, 1);
-    color[3] = Tupla4f(0.2, 0.2, 0.2, 1);
-    exponente = 5;
+    color[3] = Tupla4f(0.4, 0.4, 0.4, 1);
+    exponente = 3;
 }
 
 MaterialPeonMadera::MaterialPeonMadera(){
