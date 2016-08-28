@@ -39,8 +39,8 @@ PeonNegro::PeonNegro(){
 
 
 void P4_Inicializar( int argc, char *argv[] ){
-    p4_fuentes.fuentes.push_back(new FuenteDireccional(0,0));
-    p4_fuentes.fuentes.push_back(new FuentePosicional(Tupla3f(-5,5,-5)));
+    p4_fuentes.fuentes.push_back(new FuenteDireccional(-10,0));
+    p4_fuentes.fuentes.push_back(new FuentePosicional(Tupla3f(0,5,5)));
     p4_fuentes.activar();
 
     p4_angulo_actual = 0;
