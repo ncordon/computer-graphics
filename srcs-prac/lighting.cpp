@@ -143,15 +143,15 @@ MaterialLata::MaterialLata(){
     color[1] = Tupla4f(0.1, 0.1, 0.1, 1);
     color[2] = Tupla4f(0.1, 0.1, 0.1, 1);
     color[3] = Tupla4f(1, 1, 1, 1);
-    exponente = 5;
+    exponente = 3;
 }
 
 MaterialTapasLata::MaterialTapasLata(){
-    color[0] = Tupla4f (0.6, 0.6, 0.6, 1);
-    color[1] = Tupla4f (0.1, 0.1, 0.1, 1);
-    color[2] = Tupla4f (0.8, 0.8, 0.8, 1);
-    color[3] = Tupla4f (0.9, 0.9, 0.9, 1);
-    exponente = 5;
+    color[0] = Tupla4f(0.7, 0.7, 0.7, 1);
+    color[1] = Tupla4f(0.1, 0.1, 0.1, 1);
+    color[2] = Tupla4f(0.1, 0.1, 0.1, 1);
+    color[3] = Tupla4f(1, 1, 1, 1);
+    exponente = 3;
 }
 
 MaterialPeonMadera::MaterialPeonMadera(){
