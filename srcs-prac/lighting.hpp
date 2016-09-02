@@ -1,8 +1,8 @@
 #include "aux.hpp"
 #include "tuplasg.hpp"
 #include "jpg_imagen.hpp"
-#ifndef _CUSTOM_H_
-#define _CUSTOM_H_
+#ifndef _LIGHTING_H_
+#define _LIGHTING_H_
 
 class Material{
 public:

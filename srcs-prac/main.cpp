@@ -188,10 +188,10 @@ void DibujarObjetos()
         P3_DibujarObjetos(modo_vis) ; // definido en 'practica3.hpp'
         break ;
     case 4 :
-        P4_DibujarObjetos(modo_vis) ; // definido en 'practica3.hpp'
+        P4_DibujarObjetos(modo_vis) ; // definido en 'practica4.hpp'
         break ;
     case 5 :
-        P5_DibujarObjetos(modo_vis) ; // definido en 'practica3.hpp'
+        P5_DibujarObjetos(modo_vis) ; // definido en 'practica5.hpp'
         break ;
     default :
         cout << "El valor de 'practica_actual' (" << practica_actual  << ") es incorrecto" << endl ;
