@@ -54,9 +54,10 @@ void MallaInd::visualizar(ContextoVis &cv){
             glBegin(GL_TRIANGLES);
 
             for (int i=0; i < caras.size(); i++){
-                Tupla3f m = normal_caras[i];
-                glNormal3f( m(X), m(Y), m(Z) );
-
+                if (!normal_caras.empty()){
+                    Tupla3f m = normal_caras[i];
+                    glNormal3f( m(X), m(Y), m(Z) );
+                }
                 for (int j=0; j < 3; j++){
                     Tupla3f v = vertices[ caras[i][j] ];
 
