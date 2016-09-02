@@ -19,12 +19,13 @@
 #include "practica2.hpp"
 #include "practica3.hpp"
 #include "practica4.hpp"
+#include "practica5.hpp"
 
 // evita la necesidad de escribir std::
 using namespace std ;
 
 // Número de prácticas
-const unsigned N_PRACTICAS = 4;
+const unsigned N_PRACTICAS = 5;
 
 // Número de modos de visualización
 const unsigned N_MODOS_VIS = 5;
@@ -189,6 +190,9 @@ void DibujarObjetos()
     case 4 :
         P4_DibujarObjetos(modo_vis) ; // definido en 'practica3.hpp'
         break ;
+    case 5 :
+        P5_DibujarObjetos(modo_vis) ; // definido en 'practica3.hpp'
+        break ;
     default :
         cout << "El valor de 'practica_actual' (" << practica_actual  << ") es incorrecto" << endl ;
         break ;
@@ -209,8 +213,14 @@ void FGE_Redibujado()
 {
     using namespace std ;
     //cout << "redibujado......" << endl << flush ;
-    FijarViewportProyeccion() ; // necesario pues la escala puede cambiar
-    FijarCamara();
+    if (practica_actual != 5){
+        FijarViewportProyeccion() ; // necesario pues la escala puede cambiar
+        FijarCamara();
+    }
+    else{
+      glViewport( 0,0,ventana_tam_x,ventana_tam_y );// fijar viewport (igual que en el resto de prácticas)
+      P5_FijarMVPOpenGL() ;                         // fijar proyección y vista OpenGL usando cámara activa de la práctica 5
+    }
     LimpiarVentana();
     DibujarEjes() ;
     DibujarObjetos();
@@ -280,6 +290,9 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
             break;
         case 4:
             redibujar = P4_FGE_PulsarTeclaNormal(tecla);
+            break;
+        case 5:
+            redibujar = P5_FGE_PulsarTeclaNormal(tecla);
             break;
         default :
             redibujar = false ; // la tecla no es de la práctica activa (no es necesario redibujar)
@@ -471,6 +484,9 @@ void Inicializar( int argc, char *argv[] ){
 
     // inicializar práctica 4.
     P4_Inicializar( argc, argv ) ;
+
+    // inicializar práctica 5.
+    P5_Inicializar( argc, argv ) ;
 }
 
 // *********************************************************************
