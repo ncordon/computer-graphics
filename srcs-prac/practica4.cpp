@@ -87,6 +87,10 @@ bool P4_FGE_PulsarTeclaNormal(  unsigned char tecla ){
 
 
 void P4_DibujarObjetos( unsigned modo ){
+    glEnable(GL_LIGHTING);
+
     p4_cv.modo_vis = modo;
     p4_obj->visualizar(p4_cv);
+
+    glDisable(GL_LIGHTING);
 }
