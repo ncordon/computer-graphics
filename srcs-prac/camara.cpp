@@ -5,10 +5,39 @@ static const double urot = PI/6;
 static const double dmin = 1;
 static const double porc = 1;
 
-ViewFrustum::ViewFrustum(){}
+ViewFrustum::ViewFrustum(){
+    persp = false;
+    left = bottom = -1;
+    right = top = 1;
+    near = 0;
+    far = 2;
+
+    /*
+    Matriz4f traslacion = MAT_Traslacion(
+        -0.5*(left + right),
+        -0.5*(top + bottom),
+        -0.5*(far + near)
+    );
+
+    Matriz4f escalado = MAT_Escalado(
+         2/(right - left),
+         2/(top - bottom),
+        -2/(far - near)
+    );
+
+    matrizProy = escalado * traslacion;
+    */
+    matrizProy = MAT_Ortografica(left, right, bottom, top, near, far);
+}
 
 ViewFrustum::ViewFrustum( float hfovy, float aspect, float zNear, float zFar ){
+    persp = true;
+    top = zNear * tan(0.5 * hfovy * M_PI/360.0);
+    right = top * aspect;
+    bottom = -top;
+    left = -right;
 
+    matrizProy = MAT_Frustum(left, right, bottom, top, near, far);
 }
 
 
