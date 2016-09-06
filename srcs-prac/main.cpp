@@ -320,30 +320,37 @@ void FGE_PulsarTeclaEspecial( int tecla, int x_raton, int y_raton )
     bool redisp = true ;
     const float da = 5.0 ; // incremento en grados de ángulos de camara
 
-    switch ( tecla )
-        {
-        case GLUT_KEY_LEFT:
-            camara_angulo_y = camara_angulo_y - da ;
-            break;
-        case GLUT_KEY_RIGHT:
-            camara_angulo_y = camara_angulo_y + da ;
-            break;
-        case GLUT_KEY_UP:
-            camara_angulo_x = camara_angulo_x - da ;
-            break;
-        case GLUT_KEY_DOWN:
-            camara_angulo_x = camara_angulo_x + da ;
-            break;
-        case GLUT_KEY_PAGE_UP:
-            frustum_factor_escala *= 1.05;
-            break;
-        case GLUT_KEY_PAGE_DOWN:
-            frustum_factor_escala /= 1.05;
-            break;
-        default:
-            redisp = false ;
-            break ;
-	}
+    // Si la práctica activa es la 5, gestionamos el evento desde la función
+    // de la práctica 5.
+    if (practica_actual == 5){
+        P5_FGE_PulsarTeclaEspecial(tecla);
+    }
+    else{
+        switch ( tecla )
+            {
+            case GLUT_KEY_LEFT:
+                camara_angulo_y = camara_angulo_y - da ;
+                break;
+            case GLUT_KEY_RIGHT:
+                camara_angulo_y = camara_angulo_y + da ;
+                break;
+            case GLUT_KEY_UP:
+                camara_angulo_x = camara_angulo_x - da ;
+                break;
+            case GLUT_KEY_DOWN:
+                camara_angulo_x = camara_angulo_x + da ;
+                break;
+            case GLUT_KEY_PAGE_UP:
+                frustum_factor_escala *= 1.05;
+                break;
+            case GLUT_KEY_PAGE_DOWN:
+                frustum_factor_escala /= 1.05;
+                break;
+            default:
+                redisp = false ;
+                break ;
+    	 }
+    }
     using namespace std ;
 
     // si se ha cambiado algo, forzar evento de redibujado

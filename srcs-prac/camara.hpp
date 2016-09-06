@@ -4,15 +4,20 @@
 #ifndef _CAMARA_H_
 #define _CAMARA_H_
 
-class Camara{
+// marco de coordenadas (cartesiano) de la vista
+class MarcoCoorVista{
 public:
-    MarcoCoorVista mcv; // marco de coordenadas de la vista
-    ViewFrustum vf;     // parámetros de la proyección
+    Tupla3f org,        // origen del marco de coordenadas
+            eje[3];     // ejes(0=X,1=Y, 2=Z) del marco de cc(ortonormales)
+    Matriz4f matrizML;  // matriz marco->mundo
+    Matriz4f matrizLM;  // matriz marco->mundo
 
-    Camara();           // usa constructores por defecto para mc y vf
-    void fijarMVPogl(); // fijar matrices MODELVIEW y PROJECTION de OpenGL
-
+    //foco en origen, mirando hacia Z-, vup=Y+
+    MarcoCoorVista();
+    // constructor: mismos parámetros que gluLookAt
+    MarcoCoorVista( const Tupla3f &pfoco, const Tupla3f &paten, const Tupla3f &pvup);
 };
+
 
 class ViewFrustum{
 public:
@@ -27,18 +32,14 @@ public:
     ViewFrustum( float hfovy, float aspect, float zNear, float zFar );
 };
 
- 
- 
-class Viewport{
+
+class Camara{
 public:
-    int org_x, org_y, // origen en pixels (esquina inferior izquierda)
-        ancho, alto ; // dimensiones en pixels (núm. columnas, núm. filas)
-    float ratio_yx ; // == alto/ancho (relación de aspecto)
-    Matriz4f  matrizVp ,// matriz de viewport ( pasa: NDC ==> DC )
-              matrizVpInv ; // matriz inversa ( pasa: DC ==> NDC )
-    // constructor
-    Viewport() ; // crea viewport de 512 x 512 con origen en (0,0)
-    Viewport( int p_org_x, int p_org_y, int p_ancho, int p_alto);
+    MarcoCoorVista mcv; // marco de coordenadas de la vista
+    ViewFrustum vf;     // parámetros de la proyección
+
+    Camara();           // usa constructores por defecto para mc y vf
+    void fijarMVPOpenGL(); // fijar matrices MODELVIEW y PROJECTION de OpenGL
 };
 
 class CamaraInteractiva : public Camara{
