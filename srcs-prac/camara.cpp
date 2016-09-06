@@ -102,8 +102,11 @@ void CamaraInteractiva::desplaZ( int nz ){
 }
 
 void Camara::fijarMVPOpenGL(){
+    glMatrixMode( GL_MODELVIEW );
+    glLoadIdentity();
+    glMultMatrixf(mcv.matrizML);
 
-
-
-
+    glMatrixMode( GL_PROJECTION );
+    glLoadIdentity();
+    glMultMatrixf(vf.matrizProy);
 }
