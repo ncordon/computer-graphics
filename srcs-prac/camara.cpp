@@ -1,6 +1,6 @@
 #include "camara.hpp"
 
-static const double udesp = 0.1;
+static const double udesp = 0.5;
 static const double urot = M_PI/30.0;
 static const double dmin = 1;
 static const double porc = 1;
@@ -32,12 +32,12 @@ ViewFrustum::ViewFrustum(){
 
 ViewFrustum::ViewFrustum( float hfovy, float aspect, float zNear, float zFar ){
     persp = true;
-    top = zNear * tan(0.5 * hfovy * M_PI/360.0);
+    top = zNear * tan(0.5 * hfovy * M_PI/180.0);
     right = top * aspect;
     bottom = -top;
     left = -right;
 
-    matrizProy = MAT_Frustum(left, right, bottom, top, near, far);
+    matrizProy = MAT_Frustum(left, right, bottom, top, zNear, zFar);
 }
 
 
@@ -122,6 +122,7 @@ void CamaraInteractiva::desplaZ( int nz ){
     }
     else{
         Tupla3f desp = ((float)(nz * udesp))*mcv.eje[2];
+        mcv.org = mcv.org + desp;
 
         mcv.matrizML = mcv.matrizML * MAT_Traslacion( desp(X), desp(Y), desp(Z) );
     }

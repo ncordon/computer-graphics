@@ -266,10 +266,16 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
         exit( 0 );
         break ;
     case '+' :
-        frustum_factor_escala *= 1.05;
+        if (practica_actual == 5)
+            P5_FGE_PulsarTeclaNormal(tecla);
+        else
+            frustum_factor_escala *= 1.05;
         break;
     case '-' :
-        frustum_factor_escala /= 1.05;
+        if (practica_actual == 5)
+            P5_FGE_PulsarTeclaNormal(tecla);
+        else
+            frustum_factor_escala /= 1.05;
         break;
     case 'P':
         // Cambiar cuando lleguemos a 4 prácticas

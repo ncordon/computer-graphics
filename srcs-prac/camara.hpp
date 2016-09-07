@@ -1,7 +1,10 @@
 #include "aux.hpp"
 #include "matrices-tr.hpp"
+#include <iostream>
 #ifndef _CAMARA_H_
 #define _CAMARA_H_
+
+using namespace std;
 
 // marco de coordenadas (cartesiano) de la vista
 class MarcoCoorVista{

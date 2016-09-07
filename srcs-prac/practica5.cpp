@@ -21,11 +21,12 @@ void P5_Inicializar( int argc, char *argv[] ){
     // alzado
     p5_camaras.push_back(CamaraInteractiva());
     p5_camaras[0].mcv = MarcoCoorVista(Tupla3f(0.5,1,1), Tupla3f(0.5,1,0), Tupla3f(0,1,0));
-    // perfil
+    // perfil, con proyección ortográfica
     p5_camaras.push_back(CamaraInteractiva());
     p5_camaras[1].mcv = MarcoCoorVista(Tupla3f(-1,1,0), Tupla3f(0,1,0), Tupla3f(0,1,0));
-    // frente
+    // frente, con proyección perspectiva
     p5_camaras.push_back(CamaraInteractiva());
+    p5_camaras[2].vf = ViewFrustum(45, 1, 0.5, 10);
     p5_camaras[2].mcv = MarcoCoorVista(Tupla3f(1,1,1), Tupla3f(0,0,0), Tupla3f(0,1,0));
     p5_camara_activa = 0;
 }
