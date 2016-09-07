@@ -1,23 +1,26 @@
 #include "practica5.hpp"
 
-
-// string p5_peon_file = "../plys/peon.ply";
-// string p5_lata_file = "./lata-pcue.ply";
-// string p5_lata_inf = "./lata-pinf.ply";
-//string p5_lata_sup = "./lata-psup.ply";
-//uint p5_resolucion_objs = 50;
-//ColeccionFL p5_fuentes;
-//int p5_angulo_actual;
-//static NodoGrafoEscena *p5_obj;
-//ContextoVis p5_cv;
+static NodoGrafoEscena *p5_obj;
+ContextoVis p5_cv;
 
 void P5_Inicializar( int argc, char *argv[] ){
+  p5_obj = new NodoGrafoEscena;
+
+  p5_obj->agregar(new Lata);
+  p5_obj->agregar(MAT_Escalado(0.2,0.2,0.2));
+  // Valor 1.4 tomado del peon.ply
+  p5_obj->agregar(MAT_Traslacion(1,1.4,3));
+  p5_obj->agregar(new PeonMadera);
+  p5_obj->agregar(MAT_Traslacion(2.2,0,0));
+  p5_obj->agregar(new PeonBlanco);
+  p5_obj->agregar(MAT_Traslacion(2.2,0,0));
+  p5_obj->agregar(new PeonNegro);
 
 }
 
 void P5_DibujarObjetos( unsigned modo ){
-  //p5_cv.modo_vis = modo;
-  //p5_obj->visualizar(p5_cv);
+    p5_cv.modo_vis = modo;
+    p5_obj->visualizar(p5_cv);
 }
 
 void P5_FijarMVPOpenGL(){

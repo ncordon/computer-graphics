@@ -9,6 +9,7 @@
 #define IG_PRACTICA5_HPP
 //#include "MallaInd.hpp"
 #include "stdlib.h"
+#include "practica4.hpp"
 #include <iostream>
 #include <cctype>
 

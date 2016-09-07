@@ -1,7 +1,7 @@
 #include "camara.hpp"
 
-static const double udesp = 5;
-static const double urot = PI/6;
+static const double udesp = 0.1;
+static const double urot = M_PI/30.0;
 static const double dmin = 1;
 static const double porc = 1;
 
