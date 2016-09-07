@@ -43,6 +43,7 @@ ViewFrustum::ViewFrustum( float hfovy, float aspect, float zNear, float zFar ){
 
 MarcoCoorVista::MarcoCoorVista(){
     org = Tupla3f(0,0,0);
+    pvup = Tupla3f(0,1,0);
     eje[0] = Tupla3f(1,0,0);
     eje[1] = Tupla3f(0,0,1);
     eje[2] = Tupla3f(0,1,0);
@@ -57,6 +58,7 @@ MarcoCoorVista::MarcoCoorVista(){
 
 MarcoCoorVista::MarcoCoorVista( const Tupla3f &pfoco, const Tupla3f &paten, const Tupla3f &pvup){
     org = pfoco;
+    this->pvup = pvup;
 
     eje[2] = (pfoco - paten).normalized();
     eje[0] = pvup.cross(eje[2]).normalized();  // eje Z apunta en la dir. contraria a la camara
@@ -80,6 +82,7 @@ CamaraInteractiva::CamaraInteractiva(){
     aten = Tupla3f(0,0,0);
     long_rot = 0;
     lati_rot = 0;
+    dist = 1;
 }
 
 
@@ -135,4 +138,16 @@ void Camara::fijarMVPOpenGL(){
     glMultMatrixf(vf.matrizProy);
 
     glutPostRedisplay();
+}
+
+void CamaraInteractiva::fijarAten(const Tupla3f & nuevoAten){
+    aten = nuevoAten;
+    examinar = true;
+    mcv = MarcoCoorVista(mcv.org, aten, mcv.pvup);
+}
+
+
+void CamaraInteractiva::modoPrimeraPersona(){
+    examinar = false;
+    fijarMVPOpenGL();
 }

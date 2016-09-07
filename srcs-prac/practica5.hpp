@@ -10,6 +10,7 @@
 //#include "MallaInd.hpp"
 #include "stdlib.h"
 #include "practica4.hpp"
+#include "camara.hpp"
 #include <iostream>
 #include <cctype>
 

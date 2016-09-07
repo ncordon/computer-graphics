@@ -7,7 +7,8 @@
 class MarcoCoorVista{
 public:
     Tupla3f org,        // origen del marco de coordenadas
-            eje[3];     // ejes(0=X,1=Y, 2=Z) del marco de cc(ortonormales)
+            eje[3],     // ejes(0=X,1=Y, 2=Z) del marco de cc(ortonormales)
+            pvup;       //
     Matriz4f matrizML;  // matriz marco->mundo
     Matriz4f matrizLM;  // matriz marco->mundo
 
