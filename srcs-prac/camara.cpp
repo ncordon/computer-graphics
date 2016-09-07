@@ -106,10 +106,10 @@ void CamaraInteractiva::moverHV( int nh, int nv ){
         double  desp_x = nh*udesp,
                 desp_y = nv*udesp;
 
-        mcv.org[0] -= desp_x;
-        mcv.org[1] -= desp_y;
+        mcv.org[0] += desp_x;
+        mcv.org[1] += desp_y;
 
-        mcv.matrizML = mcv.matrizML * MAT_Traslacion( desp_x, desp_y, 0 );
+        mcv.matrizML = mcv.matrizML * MAT_Traslacion( -desp_x, -desp_y, 0 );
     }
 }
 
@@ -118,13 +118,12 @@ void CamaraInteractiva::desplaZ( int nz ){
         dist = dmin + (dist - dmin)*(1.0 - nz*porc/100.0);
         Tupla3f desp = dist * mcv.eje[2];
 
-        mcv.matrizML = mcv.matrizML * MAT_Traslacion( desp(X), desp(Y), desp(Z));
+        mcv.matrizML = mcv.matrizML * MAT_Traslacion( desp(X), desp(Y), desp(Z) );
     }
     else{
-        double  desp_z = nz*udesp;
-        mcv.org[2] -= desp_z;
+        Tupla3f desp = ((float)(nz * udesp))*mcv.eje[2];
 
-        mcv.matrizML = mcv.matrizML * MAT_Traslacion( 0, 0, desp_z );
+        mcv.matrizML = mcv.matrizML * MAT_Traslacion( desp(X), desp(Y), desp(Z) );
     }
 }
 

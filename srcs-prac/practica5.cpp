@@ -20,14 +20,13 @@ void P5_Inicializar( int argc, char *argv[] ){
 
     // alzado
     p5_camaras.push_back(CamaraInteractiva());
+    p5_camaras[0].mcv = MarcoCoorVista(Tupla3f(0.5,1,1), Tupla3f(0.5,1,0), Tupla3f(0,1,0));
     // perfil
     p5_camaras.push_back(CamaraInteractiva());
-    p5_camaras[1].examinar = true;
-    p5_camaras[1].moverHV(M_PI, 0);
-    // planta
+    p5_camaras[1].mcv = MarcoCoorVista(Tupla3f(-1,1,0), Tupla3f(0,1,0), Tupla3f(0,1,0));
+    // frente
     p5_camaras.push_back(CamaraInteractiva());
-    p5_camaras[2].examinar = true;
-    p5_camaras[2].moverHV(0, M_PI);
+    p5_camaras[2].mcv = MarcoCoorVista(Tupla3f(1,1,1), Tupla3f(0,0,0), Tupla3f(0,1,0));
     p5_camara_activa = 0;
 }
 
@@ -42,6 +41,7 @@ void P5_FijarMVPOpenGL(){
 
 bool P5_FGE_PulsarTeclaNormal(  unsigned char tecla ){
     bool tecla_correcta = false;
+    const uint desp = 1;
 
     switch(tecla){
     case 'C':
@@ -53,6 +53,14 @@ bool P5_FGE_PulsarTeclaNormal(  unsigned char tecla ){
         tecla_correcta = true;
         p5_camaras[p5_camara_activa].examinar = !p5_camaras[p5_camara_activa].examinar;
         break;
+    case '+':
+        p5_camaras[p5_camara_activa].desplaZ(desp);
+        tecla_correcta = true;
+        break;
+    case '-':
+        p5_camaras[p5_camara_activa].desplaZ(-desp);
+        tecla_correcta = true;
+        break;
     default:
         tecla_correcta = false;
     }
@@ -61,20 +69,30 @@ bool P5_FGE_PulsarTeclaNormal(  unsigned char tecla ){
 }
 
 bool P5_FGE_PulsarTeclaEspecial(  unsigned char tecla ){
-  /*
-      Tecla c/C  cambia la camara activa, pasa a la siguiente, o de la última a la primera (se debe imprimir un mensaje indicando cual es la nueva cámara activa). No se usarán para esto las teclas de función (F1,F2,F3) que se indican en el guión.
-      Tecla v/V  si la camara activa está en modo examinar, ponerla en modo primera persona. Si la cámara activa está en modo primera persona, no hace nada. En cualquier caso se indica en un mensaje el nuevo modo.
-      Flecha izquierda:
-      desplazar o rotar la cámara activa en horizontal, hacia la izquierda.
-      Flecha derecha:
-      desplazar o rotar la cámara activa en horizontal, hacia la derecha.
-      Flecha arriba:
-      desplazar o rotar la cámara en vértical, hacia arriba.
-      Flecha abajo:
-      desplazar o rotar la cámara en vértical, hacia abajo.
-      Tecla + (o página arriba):
-      desplazar la camara en la direción de la vista (eje Z de la cámara), hacia adelante.
-      Tecla - (o página abajo):
-      desplazar la cámara en la direccion de la vista (eje Z de la cámara), hacia detrás.
-  */
+    bool tecla_correcta = false;
+    const uint desp = 1;
+
+    switch (tecla){
+    case GLUT_KEY_LEFT:
+        p5_camaras[p5_camara_activa].moverHV(-desp,0);
+        tecla_correcta = true;
+        break;
+    case GLUT_KEY_RIGHT:
+        p5_camaras[p5_camara_activa].moverHV(desp,0);
+        tecla_correcta = true;
+        break;
+    case GLUT_KEY_UP:
+        p5_camaras[p5_camara_activa].moverHV(0,desp);
+        tecla_correcta = true;
+        break;
+    case GLUT_KEY_DOWN:
+        p5_camaras[p5_camara_activa].moverHV(0,-desp);
+        tecla_correcta = true;
+        break;
+    default:
+        tecla_correcta = false ;
+        break ;
+    }
+
+    return tecla_correcta;
 }
