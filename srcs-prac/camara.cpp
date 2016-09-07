@@ -81,23 +81,47 @@ CamaraInteractiva::CamaraInteractiva(){
     long_rot = 0;
     lati_rot = 0;
 }
+
+
 void CamaraInteractiva::moverHV( int nh, int nv ){
     if(examinar){
+        double grad_long = nh*urot * 180 / M_PI;
+        double grad_lati = nv*urot * 180 / M_PI;
+
         long_rot += nh*urot;
         lati_rot += nv*urot;
+
+        Matriz4f rot_long = MAT_Rotacion(grad_long,1,0,0);
+        Matriz4f rot_lati = MAT_Rotacion(grad_lati,0,1,0);
+
+        for (int i=0; i<3; i++)
+            mcv.eje[i] = rot_lati * rot_long * mcv.eje[i];
+
+        mcv.matrizML = rot_lati * rot_long * mcv.matrizML;
     }
     else{
-        //V[0][0] += nh*udesp;
-        //V[0][1] += nv*udesp;
+        double  desp_x = nh*udesp,
+                desp_y = nv*udesp;
+
+        mcv.org[0] -= desp_x;
+        mcv.org[1] -= desp_y;
+
+        mcv.matrizML = mcv.matrizML * MAT_Traslacion( desp_x, desp_y, 0 );
     }
 }
 
 void CamaraInteractiva::desplaZ( int nz ){
     if(examinar){
-        dist = dmin + (dist-dmin)*(1.0-nz*porc/100.0);
+        dist = dmin + (dist - dmin)*(1.0 - nz*porc/100.0);
+        Tupla3f desp = dist * mcv.eje[2];
+
+        mcv.matrizML = mcv.matrizML * MAT_Traslacion( desp(X), desp(Y), desp(Z));
     }
     else{
-        //V[0][2] += nz*udesp;
+        double  desp_z = nz*udesp;
+        mcv.org[2] -= desp_z;
+
+        mcv.matrizML = mcv.matrizML * MAT_Traslacion( 0, 0, desp_z );
     }
 }
 
@@ -109,4 +133,6 @@ void Camara::fijarMVPOpenGL(){
     glMatrixMode( GL_PROJECTION );
     glLoadIdentity();
     glMultMatrixf(vf.matrizProy);
+
+    glutPostRedisplay();
 }
