@@ -1,5 +1,6 @@
 #include "aux.hpp"
 #include "matrices-tr.hpp"
+#include <algorithm>
 #include <iostream>
 #ifndef _CAMARA_H_
 #define _CAMARA_H_

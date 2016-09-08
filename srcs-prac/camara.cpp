@@ -115,14 +115,15 @@ void CamaraInteractiva::moverHV( int nh, int nv ){
 
 void CamaraInteractiva::desplaZ( int nz ){
     if(examinar){
-        dist = dmin + (dist - dmin)*(1.0 - nz*porc/100.0);
-        Tupla3f desp = dist * mcv.eje[2];
+        dist = sqrt((mcv.org - aten).dot(mcv.org - aten));
+        Tupla3f desp = (float)(dist - dmin - (dist - dmin)*(1.0 - nz*porc/100.0)) * mcv.eje[2];
+        mcv.org = mcv.org - desp;
 
         mcv.matrizML = mcv.matrizML * MAT_Traslacion( desp(X), desp(Y), desp(Z) );
     }
     else{
         Tupla3f desp = ((float)(nz * udesp))*mcv.eje[2];
-        mcv.org = mcv.org + desp;
+        mcv.org = mcv.org - desp;
 
         mcv.matrizML = mcv.matrizML * MAT_Traslacion( desp(X), desp(Y), desp(Z) );
     }
