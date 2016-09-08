@@ -11,14 +11,25 @@ void P5_Inicializar( int argc, char *argv[] ){
     p5_obj = new NodoGrafoEscena;
 
     p5_obj->agregar(new Lata);
+    p5_obj->asignarIdentificador(1);
+
     p5_obj->agregar(MAT_Escalado(0.2,0.2,0.2));
     // Valor 1.4 tomado del peon.ply
     p5_obj->agregar(MAT_Traslacion(1,1.4,3));
+
     p5_obj->agregar(new PeonMadera);
+    p5_obj->asignarIdentificador(2);
+
     p5_obj->agregar(MAT_Traslacion(2.2,0,0));
+
     p5_obj->agregar(new PeonBlanco);
+    p5_obj->asignarIdentificador(3);
+
     p5_obj->agregar(MAT_Traslacion(2.2,0,0));
+
     p5_obj->agregar(new PeonNegro);
+    p5_obj->asignarIdentificador(4);
+
 
     // alzado
     p5_camaras.push_back(CamaraInteractiva());

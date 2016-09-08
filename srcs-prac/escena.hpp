@@ -52,6 +52,8 @@ public:
     unsigned char identificador ;  // identificador entero (0 si el nodo no se selecciona)
     Tupla3f       centro        ;  // punto central del objeto, en coordenadas de mundo
 
+    NodoGrafoEscena() : identificador(0){};
+
     virtual void visualizar(ContextoVis &cv);
 
     // Introduce una nueva entrada
@@ -76,6 +78,9 @@ public:
 
     // Devuelve el nodo de identificador identBuscado, NULL si no existe
     NodoGrafoEscena * buscarNodoConIdent( unsigned char identBuscado );
+
+    // Asigna id como identificador al último elemento introducido
+    void asignarIdentificador(char id);
 };
 
 #endif

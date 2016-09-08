@@ -46,3 +46,8 @@ NodoGrafoEscena* NodoGrafoEscena::buscarNodoConIdent(unsigned char identBuscado)
 
     return result;
 }
+
+void NodoGrafoEscena::asignarIdentificador(char id){
+    if(!entradas.empty())
+      ((NodoGrafoEscena*)entradas[entradas.size()-1].objeto)->identificador = id;
+}
