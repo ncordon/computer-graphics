@@ -31,3 +31,18 @@ void NodoGrafoEscena::visualizar(ContextoVis &cv){
     glPopMatrix();
 
 }
+
+
+NodoGrafoEscena* NodoGrafoEscena::buscarNodoConIdent(unsigned char identBuscado){
+    NodoGrafoEscena* result = NULL;
+
+    if (this->identificador == identBuscado)
+        result = this;
+
+    for (int i = 0; i < entradas.size() && (result!=NULL); i++){
+        if(entradas[i].tipoE == EntradaNodo::es_objeto)
+            result = ((NodoGrafoEscena*) (entradas[i].objeto))->buscarNodoConIdent(identBuscado);
+    }
+
+    return result;
+}

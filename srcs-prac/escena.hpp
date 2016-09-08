@@ -49,6 +49,9 @@ protected:
     // Pila de entradas
     vector<EntradaNodo> entradas;
 public:
+    unsigned char identificador ;  // identificador entero (0 si el nodo no se selecciona)
+    Tupla3f       centro        ;  // punto central del objeto, en coordenadas de mundo
+
     virtual void visualizar(ContextoVis &cv);
 
     // Introduce una nueva entrada
@@ -70,6 +73,9 @@ public:
     void agregar(Material* mat){
         entradas.push_back(EntradaNodo(mat));
     }
+
+    // Devuelve el nodo de identificador identBuscado, NULL si no existe
+    NodoGrafoEscena * buscarNodoConIdent( unsigned char identBuscado );
 };
 
 #endif
