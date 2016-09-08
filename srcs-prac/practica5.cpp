@@ -151,8 +151,8 @@ void P5_FGE_ClickRaton( int button, int state, int x, int y ){
 
 void P5_FGE_RatonMovido( int x, int y ){
     if ( estadoRaton==MOVIENDO_CAMARA_FIRSTPERSON ){
-        int dx = xant - x;
-        int dy = yant - y;
+        int dx = x-xant;
+        int dy = y-yant;
 
         p5_camaras[p5_camara_activa].moverHV(dx, dy);
 
