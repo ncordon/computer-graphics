@@ -1,6 +1,6 @@
 #include "escena.hpp"
 
-void NodoGrafoEscena::visualizar(ContextoVis &cv){
+void NodoGrafoEscena::visualizar(ContextoVis &cv, bool colorear){
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
 
@@ -12,7 +12,7 @@ void NodoGrafoEscena::visualizar(ContextoVis &cv){
         }
         else if (entradas.at(i).esObjeto()){
             // Visualizar el objeto
-            entradas.at(i).objeto-> visualizar(cv);
+            entradas.at(i).objeto-> visualizar(cv, colorear);
         }
         // Es una textura
         else if (entradas.at(i).material != cv.materialActivo){
@@ -65,7 +65,8 @@ void NodoGrafoEscena::modoSeleccion(){
                 ((NodoGrafoEscena*)entradas.at(i).objeto) -> modoSeleccion();
             }
             else{
-                entradas[i].objeto->visualizar(cv);
+                // marcamos colorear a false para que se tome el color de glColor3ub
+                entradas[i].objeto->visualizar(cv, false);
             }
         }
     }

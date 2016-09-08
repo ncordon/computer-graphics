@@ -143,12 +143,11 @@ void Camara::fijarMVPOpenGL(){
 
 void CamaraInteractiva::fijarAten(const Tupla3f & nuevoAten){
     aten = nuevoAten;
-    examinar = true;
-    mcv = MarcoCoorVista(mcv.org, aten, mcv.pvup);
-}
 
-
-void CamaraInteractiva::modoPrimeraPersona(){
-    examinar = false;
-    fijarMVPOpenGL();
+    //La primera vez
+    if (!examinar){
+        examinar = true;
+        desplaZ(50);
+    }
+    mcv = MarcoCoorVista(mcv.org, aten, Tupla3f(0,1,0));
 }

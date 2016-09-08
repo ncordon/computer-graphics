@@ -26,7 +26,7 @@ protected:
     // Función para normalizar un vector
     Tupla3f normalize(Tupla3f m);
 public:
-    virtual void visualizar(ContextoVis &cv);
+    virtual void visualizar(ContextoVis &cv, bool colorear = true);
 };
 
 #endif

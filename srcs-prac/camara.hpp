@@ -62,7 +62,6 @@ public:
     void moverHV( int nh, int nv ) ; // desplazar o rotar la cámara en horizontal/vertical
     void desplaZ( int nz );          // desplazar en el eje Z de la cámara (hacia adelante o hacia detrás)
     void fijarAten( const Tupla3f & nuevoAten ) ; // fija el nuevo punto de atención y pasa al modo examinar
-    void modoPrimeraPersona() ;                   // pasa al modo primera persona
 };
 
 #endif

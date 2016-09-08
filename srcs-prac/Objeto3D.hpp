@@ -20,7 +20,7 @@ protected:
 public:
     Objeto3D() : color(Tupla3f(0.2,0.2,0.2)){}
     void changeColor(Tupla3f new_color);
-    virtual void visualizar(ContextoVis &cv) = 0 ; // visualizar el objeto con OpenGL
+    virtual void visualizar(ContextoVis &cv, bool colorear) = 0 ; // visualizar el objeto con OpenGL
     std::string nombre() ;  // devuelve el nombre del objeto
 };
 

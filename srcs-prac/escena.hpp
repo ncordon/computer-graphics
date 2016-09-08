@@ -62,7 +62,7 @@ public:
 
     NodoGrafoEscena() : identificador(0){};
 
-    virtual void visualizar(ContextoVis &cv);
+    virtual void visualizar(ContextoVis &cv, bool colorear = true);
 
     // Introduce una nueva entrada
     void agregar(EntradaNodo *entrada){

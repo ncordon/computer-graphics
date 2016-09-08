@@ -1,11 +1,12 @@
 #include "MallaInd.hpp"
 
-void MallaInd::visualizar(ContextoVis &cv){
+void MallaInd::visualizar(ContextoVis &cv, bool colorear){
     if (cv.modo_vis < 3){
         glEnableClientState(GL_VERTEX_ARRAY);
         glVertexPointer(3, GL_FLOAT, 0, vertices[0]);
 
-//        glColor3f(color(R), color(G), color(B));
+        if (colorear)
+            glColor3f(color(R), color(G), color(B));
 
         switch(cv.modo_vis){
         case(0):

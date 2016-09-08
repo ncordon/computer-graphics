@@ -25,7 +25,7 @@ Lata::Lata(){
 PeonMadera::PeonMadera(){
     nombre_obj = "Peón de madera";
     identificador = 2;
-    centro = Tupla3f(1, 0.28, 3);
+    centro = Tupla3f(0.2, 0.28, 0.6);
     agregar(new MaterialPeonMadera);
     agregar(new MallaRev(&p4_peon_file[0], p4_resolucion_objs, true, true));
 }
@@ -34,7 +34,7 @@ PeonMadera::PeonMadera(){
 PeonBlanco::PeonBlanco(){
     nombre_obj = "Peón blanco";
     identificador = 3;
-    centro = Tupla3f(3.2, 0.28, 3);
+    centro = Tupla3f(0.64, 0.28, 0.6);
     agregar(new MaterialPeonBlanco);
     agregar(new MallaRev(&p4_peon_file[0], p4_resolucion_objs, true, true));
 }
@@ -43,7 +43,7 @@ PeonBlanco::PeonBlanco(){
 PeonNegro::PeonNegro(){
     nombre_obj = "Peón negro";
     identificador = 4;
-    centro = Tupla3f(4.4, 0.28, 3);
+    centro = Tupla3f(0.88, 0.28, 0.6);
     agregar(new MaterialPeonNegro);
     agregar(new MallaRev(&p4_peon_file[0], p4_resolucion_objs, true, true));
 }
