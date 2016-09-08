@@ -4,7 +4,9 @@ static NodoGrafoEscena *p5_obj;
 static ContextoVis p5_cv;
 static vector< CamaraInteractiva > p5_camaras;
 static int p5_camara_activa;
-
+static int xant, yant;
+enum estado{MOVIENDO_CAMARA_FIRSTPERSON, NONE};
+static estado estadoRaton;
 void P5_Inicializar( int argc, char *argv[] ){
     p5_obj = new NodoGrafoEscena;
 
@@ -96,4 +98,31 @@ bool P5_FGE_PulsarTeclaEspecial(  unsigned char tecla ){
     }
 
     return tecla_correcta;
+}
+
+void P5_FGE_ClickRaton( int button, int state, int x, int y ){
+    if (button == GLUT_RIGHT_BUTTON){
+        if (state == GLUT_DOWN){
+            // Se pulsa el botón, por lo que se entra en el estado "moviendo cámara"
+            estadoRaton = MOVIENDO_CAMARA_FIRSTPERSON;
+            xant = x;
+            yant = y;
+        }
+        else{
+            // Se levanta el botón, por lo que se sale del estado "moviendo cámara"
+            estadoRaton = NONE;
+        }
+    }
+}
+
+void P5_FGE_RatonMovido( int x, int y ){
+    if ( estadoRaton==MOVIENDO_CAMARA_FIRSTPERSON ){
+        int dx = xant - x;
+        int dy = yant - y;
+
+        p5_camaras[p5_camara_activa].moverHV(dx, dy);
+
+        xant = x;
+        yant = y;
+    }
 }

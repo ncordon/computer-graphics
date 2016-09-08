@@ -364,6 +364,21 @@ void FGE_PulsarTeclaEspecial( int tecla, int x_raton, int y_raton )
         glutPostRedisplay();
 }
 
+// función gestora del evento de pulsar/levantar tecla del ratón
+void FGE_ClickRaton( int button, int state, int x, int y ){
+  if(practica_actual == 5)
+      P5_FGE_ClickRaton( button, state, x, y );
+}
+
+// función gestora del evento de ratón movido con alguna tecla pulsada
+void FGE_RatonMovido( int x, int y ){
+    if(practica_actual == 5){
+        P5_FGE_RatonMovido( x, y );
+        glutPostRedisplay();
+    }
+}
+
+
 // *********************************************************************
 // **
 // ** Funciones de inicialización
@@ -407,6 +422,12 @@ void Inicializa_GLUT( int argc, char * argv[] )
 
     // establece función gestora del evento de pulsación de tecla especial:
     glutSpecialFunc( FGE_PulsarTeclaEspecial );
+
+    // función gestora de click de ratón definida para la práctica 5
+    glutMouseFunc( FGE_ClickRaton );
+
+    // función gestora de click de movimiento de ratón definida para la práctica 5
+    glutMotionFunc( FGE_RatonMovido );
 }
 
 // ---------------------------------------------------------------------
