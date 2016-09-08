@@ -5,30 +5,21 @@ static ContextoVis p5_cv;
 static vector< CamaraInteractiva > p5_camaras;
 static int p5_camara_activa;
 static int xant, yant;
-enum estado{MOVIENDO_CAMARA_FIRSTPERSON, NONE};
+enum estado{MOVIENDO_CAMARA_FIRSTPERSON, OTHER};
 static estado estadoRaton;
+
 void P5_Inicializar( int argc, char *argv[] ){
     p5_obj = new NodoGrafoEscena;
 
-    p5_obj->agregar(new Lata);
-    p5_obj->asignarIdentificador(1);
-
+    p5_obj->agregar(new Lata, true);
     p5_obj->agregar(MAT_Escalado(0.2,0.2,0.2));
     // Valor 1.4 tomado del peon.ply
     p5_obj->agregar(MAT_Traslacion(1,1.4,3));
-
-    p5_obj->agregar(new PeonMadera);
-    p5_obj->asignarIdentificador(2);
-
+    p5_obj->agregar(new PeonMadera, true);
     p5_obj->agregar(MAT_Traslacion(2.2,0,0));
-
-    p5_obj->agregar(new PeonBlanco);
-    p5_obj->asignarIdentificador(3);
-
+    p5_obj->agregar(new PeonBlanco, true);
     p5_obj->agregar(MAT_Traslacion(2.2,0,0));
-
-    p5_obj->agregar(new PeonNegro);
-    p5_obj->asignarIdentificador(4);
+    p5_obj->agregar(new PeonNegro, true);
 
 
     // alzado
@@ -40,7 +31,7 @@ void P5_Inicializar( int argc, char *argv[] ){
     // frente, con proyección perspectiva
     p5_camaras.push_back(CamaraInteractiva());
     p5_camaras[2].vf = ViewFrustum(45, 1, 0.5, 10);
-    p5_camaras[2].mcv = MarcoCoorVista(Tupla3f(1,1,1), Tupla3f(0,0,0), Tupla3f(0,1,0));
+    p5_camaras[2].mcv = MarcoCoorVista(Tupla3f(2,2,2), Tupla3f(0,0,0), Tupla3f(0,1,0));
     p5_camara_activa = 0;
 }
 
@@ -121,7 +112,37 @@ void P5_FGE_ClickRaton( int button, int state, int x, int y ){
         }
         else{
             // Se levanta el botón, por lo que se sale del estado "moviendo cámara"
-            estadoRaton = NONE;
+            estadoRaton = OTHER;
+        }
+    }
+    else if(button == GLUT_LEFT_BUTTON){
+        if(state == GLUT_DOWN){
+            GLubyte pixels[3];
+            NodoGrafoEscena *obj;
+            glDisable(GL_LIGHTING);
+            glDisable(GL_TEXTURE_2D);
+            glDisable(GL_DITHER);
+            //glShadeModel(GL_FLAT);
+            glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            glColor3ub(0,0,0);
+            p5_obj->modoSeleccion();
+
+            glReadPixels(x, y, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+            cerr << "x " << x << endl;
+            cerr << "y " << y << endl;
+            cerr << (int) pixels[0] << endl;
+
+            obj = p5_obj->buscarNodoConIdent(pixels[0]);
+
+            if(obj != NULL){
+                cout << "Centrando imagen sobre objeto" << pixels[0] << endl;
+                p5_camaras[p5_camara_activa].fijarAten( obj->centro );
+            }
+            else
+                cout << "Ningún nodo seleccionado" << endl;
+
+            glEnable(GL_DITHER);
         }
     }
 }

@@ -23,5 +23,4 @@ void P5_DibujarObjetos( unsigned modo ) ;
 void P5_FijarMVPOpenGL();
 void P5_FGE_ClickRaton( int button, int state, int x, int y );
 void P5_FGE_RatonMovido( int x, int y );
-
 #endif

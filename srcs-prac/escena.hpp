@@ -9,7 +9,7 @@ using namespace std;
 
 // Entrada de un nodo. Puede ser un objeto o una transformación
 struct EntradaNodo{
-    enum TipoNodo {es_transformacion, es_objeto, es_material};
+    enum TipoNodo {TRANSFORMACION, OBJETO, MATERIAL, NODO};
 
     TipoNodo tipoE;
 
@@ -20,25 +20,33 @@ struct EntradaNodo{
     };
 
     // Crea el nodo con un objeto 3D
-    EntradaNodo(Objeto3D *obj) : objeto(obj){
-        tipoE = es_objeto;
+    EntradaNodo(Objeto3D *obj, bool es_nodo) : objeto(obj){
+        if (es_nodo)
+            tipoE = NODO;
+        else
+            tipoE = OBJETO;
     }
+
     // Crea el nodo con una matriz de transformación
     EntradaNodo(const Matriz4f &mat) : transformacion(new Matriz4f(mat)){
-        tipoE = es_transformacion;
+        tipoE = TRANSFORMACION;
     }
 
     EntradaNodo(Material* mat) : material(mat){
-        tipoE = es_material;
+        tipoE = MATERIAL;
     }
 
     bool esTransformacion(){
-        return (tipoE == es_transformacion);
+        return (tipoE == TRANSFORMACION);
     }
 
 
     bool esObjeto(){
-        return (tipoE == es_objeto);
+        return (tipoE == OBJETO || tipoE == NODO);
+    }
+
+    bool esNodo(){
+        return (tipoE == NODO);
     }
 };
 
@@ -62,8 +70,8 @@ public:
     }
 
     // Agrega un objeto 3D
-    void agregar(Objeto3D *obj){
-        entradas.push_back(EntradaNodo(obj));
+    void agregar(Objeto3D *obj, bool es_nodo = false){
+        entradas.push_back(EntradaNodo(obj, es_nodo));
     }
 
     // Agrega una matriz de transformación
@@ -79,8 +87,8 @@ public:
     // Devuelve el nodo de identificador identBuscado, NULL si no existe
     NodoGrafoEscena * buscarNodoConIdent( unsigned char identBuscado );
 
-    // Asigna id como identificador al último elemento introducido
-    void asignarIdentificador(char id);
+    // Modo selección de objeto
+    void modoSeleccion();
 };
 
 #endif
