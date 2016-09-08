@@ -12,6 +12,7 @@ static NodoGrafoEscena *p4_obj;
 ContextoVis p4_cv;
 
 Lata::Lata(){
+    centro = Tupla3f(0,0.5,0);
     agregar(new MaterialTapasLata);
     agregar(new MallaRev(&p4_lata_inf[0], p4_resolucion_objs, false, false));
     agregar(new MallaRev(&p4_lata_sup[0], p4_resolucion_objs, false, false));
@@ -20,18 +21,21 @@ Lata::Lata(){
 }
 
 PeonMadera::PeonMadera(){
+    centro = Tupla3f(1, 0.28, 3);
     agregar(new MaterialPeonMadera);
     agregar(new MallaRev(&p4_peon_file[0], p4_resolucion_objs, true, true));
 }
 
 
 PeonBlanco::PeonBlanco(){
+    centro = Tupla3f(3.2, 0.28, 3);
     agregar(new MaterialPeonBlanco);
     agregar(new MallaRev(&p4_peon_file[0], p4_resolucion_objs, true, true));
 }
 
 
 PeonNegro::PeonNegro(){
+    centro = Tupla3f(4.4, 0.28, 3);
     agregar(new MaterialPeonNegro);
     agregar(new MallaRev(&p4_peon_file[0], p4_resolucion_objs, true, true));
 }
