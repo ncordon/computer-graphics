@@ -147,7 +147,7 @@ void CamaraInteractiva::fijarAten(const Tupla3f & nuevoAten){
     //La primera vez
     if (!examinar){
         examinar = true;
-        desplaZ(50);
+        desplaZ(75);
     }
     mcv = MarcoCoorVista(mcv.org, aten, Tupla3f(0,1,0));
 }

@@ -117,6 +117,7 @@ void P5_FGE_ClickRaton( int button, int state, int x, int y ){
     }
     else if(button == GLUT_LEFT_BUTTON){
         if(state == GLUT_DOWN){
+            estadoRaton = OTHER;
             GLubyte pixels[3];
             NodoGrafoEscena *obj;
             glDisable(GL_LIGHTING);
@@ -144,6 +145,7 @@ void P5_FGE_ClickRaton( int button, int state, int x, int y ){
 
             glEnable(GL_DITHER);
         }
+        glutPostRedisplay();
     }
 }
 
