@@ -5,7 +5,7 @@ void MallaInd::visualizar(ContextoVis &cv){
         glEnableClientState(GL_VERTEX_ARRAY);
         glVertexPointer(3, GL_FLOAT, 0, vertices[0]);
 
-        glColor3f(color(R), color(G), color(B));
+//        glColor3f(color(R), color(G), color(B));
 
         switch(cv.modo_vis){
         case(0):

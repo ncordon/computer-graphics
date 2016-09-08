@@ -40,8 +40,8 @@ NodoGrafoEscena* NodoGrafoEscena::buscarNodoConIdent(unsigned char identBuscado)
         if (this->identificador == identBuscado)
             result = this;
 
-        for (int i = 0; i < entradas.size() && (result!=NULL); i++){
-            if(entradas[i].esNodo())
+        for (int i = 0; i < entradas.size() && (result==NULL); i++){
+            if(entradas.at(i).esNodo())
                 result = ((NodoGrafoEscena*) (entradas[i].objeto))->buscarNodoConIdent(identBuscado);
         }
     }
@@ -51,6 +51,8 @@ NodoGrafoEscena* NodoGrafoEscena::buscarNodoConIdent(unsigned char identBuscado)
 void NodoGrafoEscena::modoSeleccion(){
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
+    ContextoVis cv;
+    cv.modo_vis = 2;
     glColor3ub(identificador,0,0);
 
     for (int i=0; i<entradas.size(); ++i){
@@ -60,9 +62,10 @@ void NodoGrafoEscena::modoSeleccion(){
         else if (entradas.at(i).esObjeto()){
             // Visualizar el objeto
             if(entradas.at(i).esNodo()){
-                cerr << entradas.at(i).objeto->nombre() << endl;
-                cerr << " " << (int) (((NodoGrafoEscena*)entradas.at(i).objeto)) -> identificador << endl;
                 ((NodoGrafoEscena*)entradas.at(i).objeto) -> modoSeleccion();
+            }
+            else{
+                entradas[i].objeto->visualizar(cv);
             }
         }
     }

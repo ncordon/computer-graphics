@@ -122,21 +122,21 @@ void P5_FGE_ClickRaton( int button, int state, int x, int y ){
             glDisable(GL_LIGHTING);
             glDisable(GL_TEXTURE_2D);
             glDisable(GL_DITHER);
-            //glShadeModel(GL_FLAT);
+            glShadeModel(GL_FLAT);
             glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             glColor3ub(0,0,0);
             p5_obj->modoSeleccion();
 
-            glReadPixels(x, y, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixels);
-            cerr << "x " << x << endl;
-            cerr << "y " << y << endl;
-            cerr << (int) pixels[0] << endl;
+            glReadPixels(x, (glutGet( GLUT_WINDOW_HEIGHT ) - y), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+            //cerr << "x " << x << endl;
+            //cerr << "y " << y << endl;
+            //cerr << (int) pixels[0] << endl;
 
             obj = p5_obj->buscarNodoConIdent(pixels[0]);
 
             if(obj != NULL){
-                cout << "Centrando imagen sobre objeto" << pixels[0] << endl;
+                cout << "Centrando imagen sobre " << obj->nombre() << endl;
                 p5_camaras[p5_camara_activa].fijarAten( obj->centro );
             }
             else
