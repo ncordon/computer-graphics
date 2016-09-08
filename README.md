@@ -27,3 +27,7 @@ A list of usable keys:
 * `freeglut3-dev`
 * `libglew-dev`
 * `libjpeg-dev`
+
+# License
+
+GPL v3 licensed
