@@ -96,17 +96,16 @@ void CamaraInteractiva::moverHV( int nh, int nv ){
         Matriz4f rot_long = MAT_Rotacion(grad_long,0,1,0);
         Matriz4f rot_lati = MAT_Rotacion(grad_lati,1,0,0);
         mcv.org = aten + rot_lati * rot_long * (mcv.org-aten);
+        mcv.eje[1] = rot_lati * rot_long * mcv.eje[1];
 
-        mcv = MarcoCoorVista( mcv.org, aten, Tupla3f(0,1,0));
+        mcv = MarcoCoorVista( mcv.org, aten, mcv.eje[1]);
     }
     else{
-        double  desp_x = nh*udesp,
-                desp_y = nv*udesp;
+        Tupla3f desp_x = mcv.eje[0] * ((float) nh*udesp),
+                desp_y = mcv.eje[1] * ((float) nv*udesp);
 
-        mcv.org[0] += desp_x;
-        mcv.org[1] += desp_y;
-
-        mcv.matrizML = mcv.matrizML * MAT_Traslacion( -desp_x, -desp_y, 0 );
+        Tupla3f desp = desp_x + desp_y;
+        mcv.matrizML = mcv.matrizML * MAT_Traslacion( -desp(X), -desp(Y), -desp(Z) );
     }
 }
 

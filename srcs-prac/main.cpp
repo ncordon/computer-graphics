@@ -237,7 +237,14 @@ void FGE_CambioTamano( int nuevoAncho, int nuevoAlto )
     ventana_tam_y  = nuevoAlto ;
 
     // reestablecer frustum, viewport y proyección
-    FijarViewportProyeccion();
+    if (practica_actual != 5){
+        FijarViewportProyeccion() ; // necesario pues la escala puede cambiar
+        FijarCamara();
+    }
+    else{
+      glViewport( 0,0,ventana_tam_x,ventana_tam_y );// fijar viewport (igual que en el resto de prácticas)
+      P5_FijarMVPOpenGL() ;                         // fijar proyección y vista OpenGL usando cámara activa de la práctica 5
+    }
 
     // forzar un nuevo evento de redibujado, para actualizar ventana
     glutPostRedisplay();
